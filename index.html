@@ -22,78 +22,70 @@
     <div class="grain" aria-hidden="true"></div>
 
     <header class="still">
-      <figure class="still__frame">
-        <img
-          class="still__img"
-          src="./photos/cover.jpg"
-          alt="Andrew paddleboarding on open water at sunset, looking toward the horizon."
-          width="2200"
-          height="1650"
-        />
-      </figure>
+      <img
+        class="still__img"
+        src="./photos/cover.jpg"
+        alt="Andrew paddleboarding on open water at sunset, looking toward the horizon."
+        width="2200"
+        height="1650"
+      />
+      <nav class="still__credits" aria-label="On this page">
+        <a href="#letter">about</a>
+        <a href="#gather">gather</a>
+        <a href="#make">make</a>
+        <a href="#stills">stills</a>
+        <a href="#close">say hi</a>
+      </nav>
       <p class="still__vname" lang="zh-Hant">承翰</p>
-      <div class="still__caption">
+      <div class="still__title">
         <p class="still__place">Taipei · Berkeley · San Francisco</p>
         <h1>Andrew Chuang</h1>
         <p class="still__mission">I foster joy for humanity.</p>
       </div>
     </header>
 
-    <nav class="contents" aria-label="On this page">
-      <a href="#letter">About</a>
-      <a href="#gather">Gather</a>
-      <a href="#make">Make</a>
-      <a href="#stills">Stills</a>
-      <a href="#close">Say hi</a>
-    </nav>
-
     <main>
       <section class="letter" id="letter">
-        <div class="letter__type">
-          <p class="eyebrow">A note</p>
-          <p class="lead">
-            The dance of tech, art &amp; people make my heart sing.
-          </p>
-          <p>
-            I was born in Taipei. I studied CS at Berkeley. I live in San
-            Francisco now, in the first Associate Product Builder cohort at
-            LinkedIn.
-          </p>
-          <p>
-            Night markets taught me warmth. Living rooms taught me how to host.
-            I keep five things close: a strong body, a quiet mind, the people I
-            love, a reason to get up, and making someone else’s day lighter.
-          </p>
-          <p class="links">
-            <a href="https://www.linkedin.com/in/andrew-chuang-903215192/"
-              >LinkedIn</a
-            >
-            <a href="https://www.instagram.com/andrewcchuang/">Instagram</a>
-            <a href="https://medium.com/@andrewcchuang">Medium</a>
-          </p>
-        </div>
-        <figure class="print portrait-print" data-print>
-          <img
-            src="./photos/portrait.jpg"
-            alt="Andrew looking back over his shoulder, standing in a geometric light tunnel."
-            width="1400"
-            height="1662"
-          />
-          <figcaption>Andrew. 莊承翰.</figcaption>
-        </figure>
+        <p class="lead">
+          The dance of tech, art &amp; people make my heart sing.
+        </p>
+        <p>
+          I was born in Taipei. I studied CS at Berkeley. I live in San
+          Francisco now, in the first Associate Product Builder cohort at
+          LinkedIn.
+        </p>
+        <p>
+          Night markets taught me warmth. Living rooms taught me how to host.
+          I keep five things close: a strong body, a quiet mind, the people I
+          love, a reason to get up, and making someone else’s day lighter.
+        </p>
+        <p class="links">
+          <a href="https://www.linkedin.com/in/andrew-chuang-903215192/"
+            >LinkedIn</a
+          >
+          <a href="https://www.instagram.com/andrewcchuang/">Instagram</a>
+          <a href="https://medium.com/@andrewcchuang">Medium</a>
+        </p>
       </section>
 
-      <section class="gather" id="gather">
-        <div class="gather__intro">
-          <p class="eyebrow">The point</p>
-          <h2>I gather people.</h2>
-          <p>
-            Not as a brand. As a habit. A room, some food, a reason to stay
-            past the planned end time.
-          </p>
-        </div>
+      <figure class="frame" data-print>
+        <img
+          src="./photos/portrait.jpg"
+          alt="Andrew looking back over his shoulder, standing in a geometric light tunnel."
+          width="1400"
+          height="1662"
+        />
+        <figcaption>Andrew. 莊承翰.</figcaption>
+      </figure>
 
-        <figure class="print wide-print" data-print>
+      <section class="gather" id="gather">
+        <h2>I gather people.</h2>
+        <p class="gather__lede">
+          Not as a brand. As a habit. A room, some food, a reason to stay past
+          the planned end time.
+        </p>
+
+        <figure class="print print--tedx" data-print>
           <img
             src="./photos/tedx.jpg"
             alt="Empty chairs facing a homemade TEDx stage with large red letters at Rongxing Garden."
@@ -108,7 +100,7 @@
         </figure>
 
         <div class="gather__rest">
-          <figure class="print workshop-print" data-print>
+          <figure class="print print--workshop" data-print>
             <img
               src="./photos/workshop.jpg"
               alt="About eighty students posing with a purple Defying Gravity workshop banner."
@@ -146,23 +138,20 @@
       </section>
 
       <section class="make" id="make">
-        <p class="eyebrow">On the side of the program</p>
-        <h2>I also ship things.</h2>
-        <p class="make__body">
+        <p>
           <a href="https://www.blazemessenger.com/home-en">Blaze Messenger</a>
           is an AI voice messenger. You talk. It writes. Two hundred thousand
           people use it.
           <a href="https://www.feelable.ai/dashboard">feelable.ai</a>
-          is a mood journal for the quieter hours. I mention it. It is not the
-          whole story. LinkedIn Product Builder is the work in front of me now.
+          is a mood journal I built for the quieter hours. LinkedIn Product
+          Builder is the work in front of me now.
         </p>
       </section>
 
       <section class="stills" id="stills">
-        <p class="eyebrow">Other hours</p>
         <h2>Writing, films, roads.</h2>
         <div class="stills__table">
-          <figure class="print stills__shot stills__shot--write" data-print>
+          <figure class="print stills__shot" data-print>
             <img
               src="./photos/medium.jpg"
               alt="Andrew’s Medium page, with essays including All I need for life."
@@ -196,18 +185,27 @@
     </main>
 
     <footer class="close" id="close">
-      <blockquote>
-        Have the courage to become a novice again and again.
-      </blockquote>
-      <p>
-        If you want to talk,
-        <a href="https://www.instagram.com/andrewcchuang/">DM Instagram</a>
-        or
-        <a href="https://www.linkedin.com/in/andrew-chuang-903215192/"
-          >LinkedIn</a
-        >.
-      </p>
-      <p class="close__mark" lang="zh-Hant">承翰</p>
+      <img
+        class="close__img"
+        src="./photos/cover.jpg"
+        alt=""
+        width="2200"
+        height="1650"
+      />
+      <div class="close__type">
+        <blockquote>
+          Have the courage to become a novice again and again.
+        </blockquote>
+        <p>
+          If you want to talk,
+          <a href="https://www.instagram.com/andrewcchuang/">DM Instagram</a>
+          or
+          <a href="https://www.linkedin.com/in/andrew-chuang-903215192/"
+            >LinkedIn</a
+          >.
+        </p>
+        <p class="close__mark" lang="zh-Hant">承翰</p>
+      </div>
     </footer>
 
     <script type="module" src="/src/main.js"></script>
