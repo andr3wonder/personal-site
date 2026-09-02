@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { LensSwitcher } from '../../components/LensSwitcher';
+import { EditionFooter } from '../../components/EditionFooter';
 import { useActiveSection } from '../../hooks/useActiveSection';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useLensTheme } from '../../hooks/useLensTheme';
@@ -55,12 +55,10 @@ const Out = ({ href, children }: { href: string; children: React.ReactNode }) =>
 function BigStat({ value }: { value: string }) {
   const [figure, ...rest] = value.split(' ');
   return (
-    <p className="flex flex-wrap items-baseline gap-x-3 font-display text-[clamp(3rem,8vw,5.5rem)] leading-[0.85] text-jade-50">
-      <span>{figure}</span>
+    <p className="font-display text-[clamp(3.4rem,9vw,6.5rem)] uppercase leading-[0.84] text-jade-50">
+      <span className="block">{figure}</span>
       {rest.length > 0 && (
-        <span className="font-mono text-[0.4em] font-medium uppercase leading-none tracking-[0.24em] text-amber-400">
-          {rest.join(' ')}
-        </span>
+        <span className="block text-jade-100/35">{rest.join(' ')}</span>
       )}
     </p>
   );
@@ -95,7 +93,7 @@ function Strip({ images }: { images: { src: string; alt: string }[] }) {
 function Credit({ role, children }: { role: string; children: React.ReactNode }) {
   return (
     <div className="grid grid-cols-1 items-baseline gap-x-10 gap-y-1 py-4 sm:grid-cols-[13rem_1fr]">
-      <dt className="font-mono text-[10px] uppercase leading-[1.7] tracking-[0.24em] text-amber-400/85">
+      <dt className="font-mono text-[10px] uppercase leading-[1.7] tracking-[0.14em] text-amber-400/85">
         {role}
       </dt>
       <dd className="m-0 text-[0.95rem] leading-[1.7] text-jade-100/85">{children}</dd>
@@ -126,7 +124,6 @@ export function ReelLens() {
       <a href="#main" className="skip-link">
         Skip to content
       </a>
-      <LensSwitcher variant="reel" />
       <SprocketSpine chapters={scenes} active={active} progress={scrollYProgress} />
 
       <main id="main">
@@ -154,7 +151,7 @@ export function ReelLens() {
               initial={reduced ? false : { opacity: 0 }}
               animate={reduced ? undefined : { opacity: 1 }}
               transition={{ delay: 0.15, duration: 0.5 }}
-              className="mb-5 font-mono text-[10px] uppercase tracking-[0.4em] text-amber-400"
+              className="mb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-amber-400"
             >
               Taipei · Berkeley · San Francisco
             </motion.p>
@@ -285,7 +282,7 @@ export function ReelLens() {
               <SceneTitle>
                 <Out href={blaze.href!}>Blaze Messenger</Out>
               </SceneTitle>
-              <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.24em] text-jade-100/60">
+              <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-jade-100/60">
                 {blaze.kicker}
               </p>
               <figure className="mt-10 hidden lg:block">
@@ -331,7 +328,7 @@ export function ReelLens() {
               <SceneTitle>
                 <Out href={feelable.href!}>feelable.ai</Out>
               </SceneTitle>
-              <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.24em] text-jade-100/60">
+              <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-jade-100/60">
                 {feelable.kicker}
               </p>
             </>
@@ -342,7 +339,7 @@ export function ReelLens() {
             the shelf where the half-built things sit.
           </Lede>
 
-          <p className="mt-12 font-mono text-[10px] uppercase tracking-[0.28em] text-amber-400/85">
+          <p className="mt-12 font-mono text-[10px] uppercase tracking-[0.16em] text-amber-400/85">
             Before that
           </p>
           <ul className="mt-3 list-none space-y-0 pl-0">
@@ -365,6 +362,21 @@ export function ReelLens() {
           <Strip images={feelable.images} />
         </Scene>
 
+        {/* ------------------------------------------------- interstitial */}
+        <section aria-hidden className="relative h-[62vh] overflow-hidden lg:pl-16">
+          <img
+            src={communities.find((c) => c.id === 'genz')!.images![1].src}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-cover object-[50%_45%]"
+          />
+          <div className="absolute inset-0 bg-jade-950/55" />
+          <p className="absolute inset-x-0 bottom-10 mx-auto max-w-6xl px-5 font-display text-[clamp(1.6rem,4vw,3rem)] uppercase leading-[1.05] text-jade-50 sm:px-8">
+            Before the products, the rooms.
+          </p>
+        </section>
+
         {/* ------------------------------------------------------------- 06 */}
         <Scene
           id="genz"
@@ -375,7 +387,7 @@ export function ReelLens() {
           title={
             <>
               <SceneTitle>GenZ Taiwan</SceneTitle>
-              <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.24em] text-jade-100/60">
+              <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-jade-100/60">
                 Founder
               </p>
               <figure className="mt-9 hidden lg:block">
@@ -414,7 +426,7 @@ export function ReelLens() {
             ))}
           </p>
 
-          <p className="mt-12 font-mono text-[10px] uppercase tracking-[0.28em] text-amber-400/85">
+          <p className="mt-12 font-mono text-[10px] uppercase tracking-[0.16em] text-amber-400/85">
             And three more rooms
           </p>
           <ul className="mt-3 list-none space-y-0 pl-0">
@@ -448,7 +460,7 @@ export function ReelLens() {
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.55, ease: [0.16, 0.84, 0.24, 1] }}
             >
-              <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.34em] text-amber-400">
+              <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.18em] text-amber-400">
                 End credits
               </p>
               <p className="mb-10 max-w-3xl font-display text-[clamp(1.5rem,3.4vw,2.4rem)] uppercase leading-[1.1] text-jade-100/80">
@@ -475,7 +487,7 @@ export function ReelLens() {
                 </Credit>
               </dl>
 
-              <p className="mt-16 font-mono text-[10px] uppercase tracking-[0.28em] text-amber-400/85">
+              <p className="mt-16 font-mono text-[10px] uppercase tracking-[0.16em] text-amber-400/85">
                 Off the clock
               </p>
               <dl className="mt-3 divide-y divide-jade-800">
@@ -505,7 +517,7 @@ export function ReelLens() {
               </dl>
 
               <div className="mt-16 grid gap-x-8 gap-y-1 sm:grid-cols-[11rem_1fr]">
-                <p className="m-0 font-mono text-[10px] uppercase tracking-[0.24em] text-amber-400/85 sm:text-right">
+                <p className="m-0 font-mono text-[10px] uppercase tracking-[0.14em] text-amber-400/85 sm:text-right">
                   Published
                 </p>
                 <div>
@@ -549,22 +561,24 @@ export function ReelLens() {
           aria-labelledby="close-title"
           className="relative flex min-h-[92vh] items-center overflow-hidden lg:pl-16"
         >
-          <div className="relative z-10 mx-auto w-full max-w-6xl px-5 py-24 sm:px-8">
-            <blockquote className="m-0 max-w-3xl">
+          <div className="relative z-10 mx-auto w-full max-w-3xl px-5 py-rhythm4 text-center sm:px-8">
+            <blockquote className="m-0">
               <p className="m-0 font-display text-[clamp(2.6rem,8vw,6rem)] uppercase leading-[0.95] tracking-[-0.015em] text-jade-50">
                 Don’t follow your dreams, follow your curiosity!
               </p>
-              <footer className="mt-4 text-sm text-jade-100/60">
+              <footer className="mt-5 text-sm text-jade-100/60">
                 <Out href="https://substack.com/home/post/p-148637074">And find your style</Out>
               </footer>
             </blockquote>
+
+            <span aria-hidden className="mx-auto mt-14 block h-px w-14 bg-amber-400/50" />
 
 
             <h2 id="close-title" className="mt-16 font-display text-4xl uppercase text-jade-50">
               {closing.title}
             </h2>
-            <p className="mt-3 max-w-xl text-jade-100/75">{closing.body}</p>
-            <p className="mt-6 flex flex-wrap gap-x-7 gap-y-3 font-mono text-xs uppercase tracking-[0.24em]">
+            <p className="mx-auto mt-3 max-w-xl text-jade-100/75">{closing.body}</p>
+            <p className="mt-7 flex flex-wrap justify-center gap-x-7 gap-y-3 font-mono text-xs uppercase tracking-[0.14em]">
               {closing.links.map((l) => (
                 <a
                   key={l.href}
@@ -578,14 +592,16 @@ export function ReelLens() {
               ))}
             </p>
 
-            <p className="mt-20 font-mono text-[10px] uppercase tracking-[0.3em] text-jade-100/70">
+            <p className="mt-16 font-mono text-[11px] uppercase tracking-[0.14em] text-jade-100/70">
               <a href={notionHome} target="_blank" rel="noreferrer" className="rule-link">
-                Also on Notion
+                The original, still on Notion
               </a>
             </p>
           </div>
         </section>
       </main>
+
+      <EditionFooter variant="reel" />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { LensSwitcher } from '../../components/LensSwitcher';
+import { EditionFooter } from '../../components/EditionFooter';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useLensTheme } from '../../hooks/useLensTheme';
 import {
@@ -201,7 +201,6 @@ export function VolumeLens() {
       <a href="#main" className="skip-link">
         Skip to content
       </a>
-      <LensSwitcher variant="volume" />
 
       {!reduced && (
         <div
@@ -573,12 +572,16 @@ export function VolumeLens() {
         <Chapter
           {...toc[9]}
           verso={
-            <Plate
-              src={hobbies[0].image!.src}
-              alt={hobbies[0].image!.alt}
-              ratio="aspect-[4/3]"
-              caption="Plate X. The essays, as they sit on Medium."
-            />
+            <div>
+              <Label>Selected writing</Label>
+              <ul className="mt-4 list-none space-y-4 pl-0 font-serif">
+                {hobbies[0].essays!.map((e) => (
+                  <li key={e.href} className="text-[1.02rem] leading-[1.5]">
+                    <Out href={e.href}>{e.title}</Out>
+                  </li>
+                ))}
+              </ul>
+            </div>
           }
         >
           <Label>{contentStat}</Label>
@@ -647,13 +650,15 @@ export function VolumeLens() {
             </p>
 
             <p className="mt-20 font-serif text-[0.72rem] uppercase tracking-[0.26em] text-paper-700">
-              <Out href={notionHome}>Also on Notion</Out>
+              <Out href={notionHome}>The original, still on Notion</Out>
             </p>
           </div>
 
           <Folio page={120} />
         </section>
       </main>
+
+      <EditionFooter variant="volume" />
     </div>
   );
 }

@@ -259,6 +259,7 @@ export type Hobby = {
   note?: string;
   links?: Link[];
   bullets?: { text: string; href?: string }[];
+  essays?: { title: string; href: string }[];
   image?: { src: string; alt: string };
 };
 
@@ -272,10 +273,20 @@ export const hobbies: Hobby[] = [
       { label: 'Threads', href: 'https://www.threads.net/@andrewcchuang?xmt=AQGzdGYo3K1EgA9nCCNhaepF7VlQhvV_MOXMEkjAJVOOYy4' },
       { label: 'Medium', href: 'https://medium.com/@andrewcchuang' },
     ],
-    image: {
-      src: '/img/medium-profile.jpg',
-      alt: 'Andrew’s Medium profile, with the pinned essay “All I need for life (Written on a train to Strasbourg)” at the top.',
-    },
+    essays: [
+      {
+        title: 'All I need for life (Written on a train to Strasbourg)',
+        href: 'https://andrewcchuang.medium.com/all-i-need-for-life-written-on-a-train-to-strasbourg-845ac2a35a1f',
+      },
+      {
+        title: '“Don’t follow your dreams, follow your curiosity!” And find your style',
+        href: 'https://substack.com/home/post/p-148637074',
+      },
+      {
+        title: 'The story of GenZ Taiwan / GenZ 的故事',
+        href: 'https://andrewchuang0110.medium.com/the-story-of-genz-taiwan-genz-%E7%9A%84%E6%95%85%E4%BA%8B-d3fa598bd735',
+      },
+    ],
   },
   {
     id: 'film',

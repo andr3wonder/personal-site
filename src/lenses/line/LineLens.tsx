@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView, useScroll, useSpring, useTransform } from 'framer-motion';
-import { LensSwitcher } from '../../components/LensSwitcher';
+import { EditionFooter } from '../../components/EditionFooter';
 import { useActiveSection } from '../../hooks/useActiveSection';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useLensTheme } from '../../hooks/useLensTheme';
@@ -235,7 +235,6 @@ export function LineLens() {
       <a href="#main" className="skip-link">
         Skip to content
       </a>
-      <LensSwitcher variant="line" />
       <RouteLine active={active} />
 
       <main id="main">
@@ -280,7 +279,7 @@ export function LineLens() {
               <tbody>
                 {[
                   ['TPE', 'Taipei, Taiwan', 'Born'],
-                  ['BER', 'Berkeley, CS', 'Studied'],
+                  ['UCB', 'Berkeley, Computer Science', 'Studied'],
                   ['SFO', 'San Francisco', 'Now'],
                 ].map(([code, place, note]) => (
                   <tr key={code} className="border-t border-jade-100/25 last:border-b">
@@ -366,8 +365,9 @@ export function LineLens() {
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-jade-100/55">
             {blaze.kicker}
           </p>
-          <p className="mt-2 font-transit text-[clamp(2rem,5vw,3rem)] font-semibold uppercase leading-none text-jade-50">
-            200k <span className="text-cyanEdge">users</span>
+          <p className="mt-2 font-transit text-[clamp(2.4rem,6vw,3.8rem)] font-semibold uppercase leading-[0.9] text-jade-50">
+            <span className="block">200k</span>
+            <span className="block text-jade-100/40">users</span>
           </p>
           <div className="mt-7">
             {blaze.bullets.map((b) => (
@@ -506,10 +506,24 @@ export function LineLens() {
         {/* ---------------------------------------------------------- ST 10 */}
         <Station
           {...st.content}
-          media={<Shot src={hobbies[0].image!.src} alt={hobbies[0].image!.alt} caption="Essays on Medium" />}
+          media={
+            <div>
+              <p className="font-mono text-xs uppercase tracking-[0.18em] text-jade-100/60">
+                Selected writing
+              </p>
+              <ul className="mt-4 list-none space-y-0 pl-0">
+                {hobbies[0].essays!.map((e) => (
+                  <li key={e.href} className="border-t border-jade-800 py-4 last:border-b">
+                    <Out href={e.href}>{e.title}</Out>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          }
         >
-          <p className="font-transit text-[clamp(2rem,5vw,3rem)] font-semibold uppercase leading-none text-jade-50">
-            1M+ <span className="text-cyanEdge">views</span>
+          <p className="font-transit text-[clamp(2.4rem,6vw,3.8rem)] font-semibold uppercase leading-[0.9] text-jade-50">
+            <span className="block">1M+</span>
+            <span className="block text-jade-100/40">views</span>
           </p>
           <div className="mt-7">
             {guides.map((g) => (
@@ -566,11 +580,13 @@ export function LineLens() {
 
           <p className="mt-20 font-mono text-xs uppercase tracking-[0.28em] text-jade-100/70">
             <a href={notionHome} target="_blank" rel="noreferrer" className="rule-link">
-              Also on Notion
+              The original, still on Notion
             </a>
           </p>
         </section>
       </main>
+
+      <EditionFooter variant="line" />
     </div>
   );
 }
