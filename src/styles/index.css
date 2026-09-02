@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: hsl(160 34% 6%);
+    color: hsl(150 26% 88%);
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  }
+
+  /* Visible, high-contrast focus for keyboard users on every lens. */
+  :focus-visible {
+    outline: 2px solid hsl(179 60% 60%);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: hsl(141 46% 41%);
+    color: hsl(150 30% 96%);
+  }
+}
+
+@layer components {
+  .skip-link {
+    @apply absolute left-3 top-3 z-[100] -translate-y-24 rounded-sm bg-jade-500 px-4 py-2 text-sm
+           font-medium text-jade-50 transition-transform focus-visible:translate-y-0;
+  }
+
+  /* Underline that draws in on hover instead of appearing all at once. */
+  .rule-link {
+    @apply relative inline;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 260ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .rule-link:hover,
+  .rule-link:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+/* 35mm grain, generated rather than downloaded. Used only by the Reel lens. */
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  pointer-events: none;
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain-shift 900ms steps(3) infinite;
+}
+
+@keyframes grain-shift {
+  0% { transform: translate(0, 0); }
+  33% { transform: translate(-3%, 2%); }
+  66% { transform: translate(2%, -3%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Laid paper tooth for the Volume lens. */
+.tooth {
+  background-image:
+    repeating-linear-gradient(0deg, hsl(30 14% 14% / 0.022) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, hsl(30 14% 14% / 0.015) 0 1px, transparent 1px 4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .grain::after {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
