@@ -1,0 +1,127 @@
+html.is-diet,
+body.is-diet {
+  background: #e7dfd0;
+  color: #221c16;
+}
+
+body.is-diet {
+  font-family: "Newsreader", "Noto Serif TC", Georgia, serif;
+  font-size: 1.12rem;
+  line-height: 1.5;
+}
+
+.diet {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 1.2rem 1.2rem 4rem;
+  background-image: repeating-linear-gradient(
+    transparent 0 31px,
+    rgba(80, 50, 30, 0.08) 31px 32px
+  );
+}
+
+.wnav--diet {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.72rem;
+  margin-bottom: 1.4rem;
+}
+
+.wnav--diet a {
+  color: #6a4c32;
+}
+
+.diet__kicker {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  margin: 0;
+  color: #8a5a32;
+}
+
+.diet h1 {
+  font-family: "Fraunces", serif;
+  font-size: clamp(2.4rem, 6vw, 3.8rem);
+  margin: 0.2rem 0 0.8rem;
+  letter-spacing: -0.03em;
+}
+
+.diet h2 {
+  font-family: "Fraunces", serif;
+  font-size: 1.5rem;
+  margin: 2rem 0 0.8rem;
+}
+
+.diet a {
+  color: #8a2a1c;
+}
+
+.cabinet {
+  columns: 2;
+  gap: 1.6rem;
+}
+
+.cabinet__cat {
+  break-inside: avoid;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0.2rem 0.6rem;
+}
+
+.cabinet__cat h3 {
+  margin: 0;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8a5a32;
+}
+
+.cabinet__cat p {
+  margin: 0.25rem 0 0;
+}
+
+.slips {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem;
+}
+
+.slips h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.05rem;
+}
+
+.slips ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.slips li {
+  padding: 0.45rem 0;
+  border-bottom: 1px solid rgba(80, 50, 30, 0.18);
+}
+
+.slips span {
+  display: block;
+  font-size: 0.88rem;
+  color: #6a5340;
+}
+
+.slips em {
+  font-size: 0.78rem;
+  color: #8a2a1c;
+}
+
+.diet__honest,
+.diet__trust {
+  color: #5c4636;
+}
+
+@media (max-width: 720px) {
+  .cabinet,
+  .slips {
+    columns: 1;
+    grid-template-columns: 1fr;
+  }
+}

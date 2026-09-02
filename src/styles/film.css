@@ -1,0 +1,350 @@
+html.is-film {
+  scroll-snap-type: y proximity;
+  background: #070605;
+}
+
+body.is-film {
+  margin: 0;
+  background: #070605;
+  color: #f3eadc;
+  font-family: "Source Serif 4", "Noto Serif TC", Georgia, serif;
+  font-size: 1.12rem;
+  line-height: 1.45;
+}
+
+.film {
+  position: relative;
+}
+
+.letterbox {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 8;
+  box-shadow: inset 0 7vh #050403, inset 0 -7vh #050403;
+}
+
+.wnav--film {
+  position: fixed;
+  top: 1.2vh;
+  left: 1rem;
+  right: 1rem;
+  z-index: 12;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  justify-content: center;
+}
+
+.wnav--film a {
+  color: #c9b89a;
+  text-decoration: none;
+}
+
+.wnav--film a:hover,
+.wnav--film a[aria-current="page"] {
+  color: #f3eadc;
+}
+
+.scene {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  padding: 11vh clamp(1rem, 5vw, 4rem) 11vh;
+  position: relative;
+  display: grid;
+  align-content: center;
+}
+
+.slate {
+  margin: 0 0 0.8rem;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  color: #d4a45a;
+}
+
+.scene--card {
+  text-align: center;
+  background: #050403;
+}
+
+.scene--card h1 {
+  margin: 0;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(4.2rem, 16vw, 11rem);
+  line-height: 0.82;
+  letter-spacing: 0.06em;
+  font-weight: 400;
+}
+
+.vname {
+  margin: 0.6rem 0 0;
+  font-family: "Noto Serif TC", serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+.card-sub {
+  margin: 1.4rem 0 0;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  letter-spacing: 0.28em;
+  font-size: 0.72rem;
+}
+
+.still-wrap {
+  position: absolute;
+  inset: 7vh 0;
+  overflow: hidden;
+  background: #000;
+}
+
+.still-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(8px) saturate(0.75) contrast(1.05);
+  transform: scale(1.12);
+  transition: filter 0.9s ease;
+}
+
+.scene.is-on .still-wrap img,
+.still-wrap:hover img {
+  filter: blur(0) saturate(0.92) contrast(1.08);
+}
+
+.still-wrap--water img {
+  object-position: 70% 50%;
+}
+
+.ken {
+  animation: ken linear both;
+  animation-timeline: view();
+  animation-range: contain 0% contain 100%;
+}
+
+@keyframes ken {
+  from {
+    transform: scale(1.08) translate(1.5%, 0);
+  }
+  to {
+    transform: scale(1.2) translate(-3%, -2%);
+  }
+}
+
+.grain-local {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background-image: url("../grain.png");
+  mix-blend-mode: overlay;
+  transition: opacity 0.4s ease;
+}
+
+.still-wrap:hover .grain-local,
+.scene.is-on .still-wrap:hover .grain-local {
+  opacity: 0.42;
+}
+
+.on-still {
+  position: relative;
+  z-index: 2;
+  max-width: 34rem;
+  padding: 1.1rem 1.2rem 1.2rem;
+  background: linear-gradient(180deg, rgba(8, 6, 5, 0.08), rgba(8, 6, 5, 0.55));
+}
+
+.on-still p {
+  margin: 0 0 0.65rem;
+}
+
+.on-still__lead {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(2.1rem, 6vw, 3.6rem);
+  line-height: 0.95;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.8rem !important;
+}
+
+.on-still a,
+.scene a {
+  color: #e8c27a;
+}
+
+.on-still--right {
+  justify-self: end;
+}
+
+.scene-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.1rem;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+}
+
+.scene--pri,
+.scene--work,
+.scene--hobbies,
+.scene--credits,
+.scene--end {
+  background: #0c0a09;
+}
+
+.pri {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.pri li {
+  display: grid;
+  grid-template-columns: 3.2rem 1fr;
+  gap: 0.2rem 0.8rem;
+  border-top: 1px solid rgba(232, 194, 122, 0.25);
+  padding-top: 0.65rem;
+}
+
+.pri span {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.8rem;
+  color: #d4a45a;
+}
+
+.pri strong {
+  font-weight: 600;
+}
+
+.pri em {
+  font-style: italic;
+  color: #d7cbb8;
+  grid-column: 2;
+}
+
+.pri-note {
+  margin: 0 0 1.2rem;
+  color: #c9b89a;
+}
+
+.scene--work {
+  gap: 1.4rem;
+}
+
+.scene--work h2 {
+  margin: 0 0 0.3rem;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+.scene--work article {
+  max-width: 40rem;
+}
+
+.hobby-stills {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.hobby-stills figure {
+  margin: 0;
+  overflow: hidden;
+  max-height: 46vh;
+}
+
+.hobby-stills img {
+  width: 100%;
+  height: 38vh;
+  object-fit: cover;
+  object-position: top;
+  filter: contrast(1.05);
+  transition: transform 0.6s ease, filter 0.6s ease;
+}
+
+.hobby-stills figure:hover img {
+  transform: scale(1.04);
+  filter: contrast(1.12) saturate(0.85);
+}
+
+.hobby-stills figcaption,
+.hobby-lines {
+  font-size: 0.98rem;
+}
+
+.hobby-lines {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.45rem;
+  max-width: 46rem;
+}
+
+.credits-call {
+  max-width: 36rem;
+}
+
+.credits {
+  columns: 2;
+  column-gap: 2.2rem;
+  margin-top: 1rem;
+}
+
+.credits__cat {
+  break-inside: avoid;
+  margin-bottom: 0.9rem;
+}
+
+.credits__cat h3 {
+  margin: 0 0 0.2rem;
+  font-family: "Bebas Neue", sans-serif;
+  letter-spacing: 0.08em;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #d4a45a;
+}
+
+.credits__cat p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #d7cbb8;
+}
+
+.scene--end blockquote {
+  margin: 0;
+  max-width: 22ch;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(2.2rem, 6vw, 3.8rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+}
+
+@media (max-width: 760px) {
+  .letterbox {
+    box-shadow: inset 0 5vh #050403, inset 0 -5vh #050403;
+  }
+
+  html.is-film {
+    scroll-snap-type: none;
+  }
+
+  .hobby-stills,
+  .credits {
+    columns: 1;
+    grid-template-columns: 1fr;
+  }
+
+  .pri li {
+    grid-template-columns: 2.4rem 1fr;
+  }
+
+  .on-still {
+    max-width: 100%;
+  }
+}

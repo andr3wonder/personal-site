@@ -1,0 +1,148 @@
+html.is-story,
+body.is-story {
+  background: #efe6d4;
+  color: #2a241c;
+}
+
+body.is-story {
+  font-family: "Literata", "Noto Serif TC", Georgia, serif;
+  font-size: 1.28rem;
+  line-height: 1.7;
+}
+
+.story {
+  padding: 1rem 0 5rem;
+}
+
+.wnav--story {
+  width: min(34rem, calc(100% - 2rem));
+  margin: 0 auto 2rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+}
+
+.wnav--story a {
+  color: #6a5340;
+}
+
+.letter-scroll {
+  width: min(34rem, calc(100% - 2.2rem));
+  margin: 0 auto;
+}
+
+.letter-scroll h1 {
+  font-weight: 600;
+  font-size: clamp(2.2rem, 6vw, 3.2rem);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 0 0 1.4rem;
+}
+
+.breath {
+  margin: 3.4rem 0 0.8rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8a6544;
+}
+
+[data-set] {
+  opacity: 0;
+  filter: blur(5px);
+  transform: translateY(0.55rem);
+}
+
+[data-set].is-set {
+  opacity: 1;
+  filter: none;
+  transform: none;
+  transition: opacity 0.9s ease, filter 0.9s ease, transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.letter-scroll a {
+  color: #8a3b22;
+  text-underline-offset: 0.18em;
+}
+
+.flash {
+  width: 100vw;
+  margin: 2.4rem calc(50% - 50vw);
+  overflow: hidden;
+  max-height: 78vh;
+}
+
+.flash img {
+  width: 100%;
+  height: 78vh;
+  object-fit: cover;
+  animation: memory linear both;
+  animation-timeline: view();
+}
+
+.flash--portrait img {
+  object-position: 50% 20%;
+}
+
+.flash img {
+  object-position: 72% 50%;
+}
+
+@keyframes memory {
+  from {
+    transform: scale(1.08);
+    filter: saturate(0.7);
+  }
+  to {
+    transform: scale(1);
+    filter: saturate(1);
+  }
+}
+
+.two-stills {
+  width: 100vw;
+  margin: 2rem calc(50% - 50vw);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.two-stills img {
+  width: 100%;
+  height: 52vh;
+  object-fit: cover;
+  object-position: top;
+}
+
+.story-reads {
+  margin: 1rem 0 2rem;
+}
+
+.story-reads__cat h3 {
+  margin: 1rem 0 0.2rem;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a6544;
+}
+
+.story-reads__cat p {
+  margin: 0;
+  font-size: 1.02rem;
+}
+
+.close-line {
+  font-size: 1.45rem;
+  font-style: italic;
+  max-width: 28ch;
+}
+
+@media (max-width: 720px) {
+  .two-stills {
+    grid-template-columns: 1fr;
+  }
+
+  .flash img,
+  .two-stills img {
+    height: 52vh;
+  }
+}

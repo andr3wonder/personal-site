@@ -1,0 +1,25 @@
+{
+  "snapshotDate": "2026-09-02",
+  "note": "Static snapshot from My Info Diet (Notion, fed by Readwise). Not live. Titles and authors only. No paywalled Readwise URLs.",
+  "fullDiet": "https://app.notion.com/p/097874201d9e418d8bab528ad69f93a6",
+  "books": [
+    { "title": "The 12 Levers", "author": "Spencer Greenberg", "kind": "Books" },
+    { "title": "The Subtle Art of Not Giving a F*ck", "author": "Mark Manson", "kind": "Books" },
+    { "title": "Poor Charlie's Almanack", "author": "Charles T. Munger", "kind": "Books" },
+    { "title": "Models", "author": "Mark Manson", "kind": "Books" },
+    { "title": "臺灣漫遊錄", "author": "青山千鶴子, 楊双子", "kind": "Books" },
+    { "title": "Ancillary Justice", "author": "Ann Leckie", "kind": "Books" },
+    { "title": "Man's Search for Meaning", "author": "Viktor E. Frankl", "kind": "Books" },
+    { "title": "8 Rules of Love", "author": "Jay Shetty", "kind": "Books" },
+    { "title": "Respect for Acting", "author": "Uta Hagen", "kind": "Books", "tag": "favorite" }
+  ],
+  "articles": [
+    { "title": "How to Turn Your AI Into a World-Class Designer", "author": "Anshu", "kind": "Articles" },
+    { "title": "10,000 Hours With Reid Hoffman", "author": "Ben Casnocha", "kind": "Articles" },
+    { "title": "Inner Strength", "author": "alearningaday", "kind": "Articles" },
+    { "title": "Superintelligence Is a Dragon", "author": "Casey Newton", "kind": "Articles" },
+    { "title": "Taiwan Travelogue rethinks history", "author": "Jan Camenzind Broomby", "kind": "Articles" },
+    { "title": "Avoiding the Unintended Consequences of Casual Feedback", "author": "Jeff Weiner", "kind": "Articles" },
+    { "title": "From Vision to Values", "author": "Jeff Weiner", "kind": "Articles" }
+  ]
+}

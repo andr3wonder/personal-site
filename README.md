@@ -1,6 +1,13 @@
 # Andrew Chuang 承翰
 
-Personal site. Photographed, not generated.
+Personal site. Four tellings of the same page, plus a foyer.
+
+- `/` foyer
+- `/film` stills
+- `/book` sewn copy
+- `/story` one letter
+- `/taiwan` a ticketed road
+- `/diet` info diet cabinet (static snapshot)
 
 ## Local
 
@@ -15,4 +22,4 @@ npm run dev
 npm run build
 ```
 
-Static output lands in `dist/`. Deploy that folder to [Vercel](https://vercel.com) or GitHub Pages.
+Deploy `dist/` to Vercel. Client routes rewrite to `index.html`.
