@@ -29,7 +29,7 @@ export const mission = {
   paragraphs: [
     'I’m a creator at heart, I started by building communities in TW, connecting students to do passion projects.',
     'At UC Berkeley, I found my passion in building products: AI Voice Messenger. Now, I’m part of the 1st cohort of Product Builders at LinkedIn.',
-    'Join me in bringing joy to the world 🥳',
+    'Join me in bringing joy to the world',
   ],
   inlineLinks: {
     passionProjects: 'https://www.instagram.com/genz_taiwan/',
@@ -53,7 +53,7 @@ export const priorities = {
 } as const;
 
 export const aboutFacts: { icon: string; text: string }[] = [
-  { icon: '📌', text: 'San Francisco (Berkeley CS 🐻)' },
+  { icon: '📌', text: 'San Francisco (Berkeley CS)' },
   { icon: '🇹🇼', text: 'Born and raised in Taipei, Taiwan' },
   { icon: '🌉', text: 'I cherish books, cities, and communities' },
 ];
@@ -98,7 +98,7 @@ export const products: Product[] = [
   {
     id: 'feelable',
     name: 'feelable.ai',
-    kicker: 'a mood journaling companion 📓',
+    kicker: 'a mood journaling companion',
     href: 'https://www.feelable.ai/dashboard',
     bullets: [],
     images: [
@@ -145,7 +145,7 @@ export const communities: Community[] = [
   {
     id: 'genz',
     name: 'GenZ Taiwan',
-    role: 'Nonprofit — Founder',
+    role: 'Nonprofit, Founder',
     href: 'https://www.instagram.com/genz_taiwan/',
     bullets: [
       { text: 'Held 1st TW cross-schooled TEDx event (100-pax) → connect likeminded students', href: 'https://www.ted.com/tedx/events/36338' },
@@ -181,7 +181,7 @@ export const communities: Community[] = [
   {
     id: 'eyes-english',
     name: 'Eyes English',
-    role: 'English for Mandarin speakers — Cofounder',
+    role: 'English for Mandarin speakers, Cofounder',
     href: 'https://www.tiktok.com/@andrewcchuang',
   },
 ];
@@ -301,7 +301,7 @@ export const hobbies: Hobby[] = [
     bullets: [
       { text: 'Hitchhiked in Taiwan (USD 15)', href: 'https://andrewcchuang.substack.com/p/2021-2-17-20-76318a567869' },
       { text: 'Solo backpacked in Europe' },
-      { text: 'SF 1st Half Marathon 🏆' },
+      { text: 'SF 1st Half Marathon' },
       { text: 'Biked 111 Miles in East Shore TW', href: 'https://medium.com/@Felix.helps.you/%E5%8F%B0%E6%9D%B1-%E8%8A%B1%E8%93%AE%E5%96%AE%E8%BB%8A%E6%97%85%E8%A1%8C-2023-6-e11706ff1c97' },
       { text: 'Climbed Mt Fuji', href: 'https://www.youtube.com/watch?v=y_dcX6zxTAQ' },
       { text: 'Swam across Sun Moon Lake', href: 'https://www.youtube.com/watch?v=y_dcX6zxTAQ' },
@@ -312,7 +312,7 @@ export const hobbies: Hobby[] = [
     },
   },
   { id: 'dance', icon: '💃', label: 'Salsa / Bachata', note: 'a rookie but lovin’ it' },
-  { id: 'sports', icon: '🏓', label: 'Sports', note: 'Loving 🏀🏓🏋️🏊‍♂️🏃🚴 — I play 🏐🏸⚾️🎳🥒 too~' },
+  { id: 'sports', icon: '🏓', label: 'Sports', note: 'Loving 🏀🏓🏋️🏊‍♂️🏃🚴. I play 🏐🏸⚾️🎳🥒 too~' },
   { id: 'acting', icon: '🎭', label: 'Acting', note: 'I tried acting too!' },
   {
     id: 'cooking',

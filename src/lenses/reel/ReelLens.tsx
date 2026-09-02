@@ -94,8 +94,8 @@ function Strip({ images }: { images: { src: string; alt: string }[] }) {
 /** A credits row: role on the left, names on the right, as on a title card. */
 function Credit({ role, children }: { role: string; children: React.ReactNode }) {
   return (
-    <div className="grid grid-cols-1 gap-x-8 gap-y-1 py-3 sm:grid-cols-[11rem_1fr]">
-      <dt className="font-mono text-[10px] uppercase tracking-[0.24em] text-amber-400/85 sm:text-right">
+    <div className="grid grid-cols-1 items-baseline gap-x-10 gap-y-1 py-4 sm:grid-cols-[13rem_1fr]">
+      <dt className="font-mono text-[10px] uppercase leading-[1.7] tracking-[0.24em] text-amber-400/85">
         {role}
       </dt>
       <dd className="m-0 text-[0.95rem] leading-[1.7] text-jade-100/85">{children}</dd>
@@ -143,10 +143,10 @@ export function ReelLens() {
               alt=""
               fetchPriority="high"
               decoding="async"
-              className="h-[118%] w-full object-cover object-[74%_50%] sm:object-[62%_50%] lg:object-center"
+              className="h-[118%] w-full object-cover object-[86%_34%] sm:object-[68%_36%] lg:object-[50%_36%]"
             />
-            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-jade-950 via-jade-950/75 to-transparent" />
-            <div className="absolute inset-0 bg-jade-950/25" />
+            <div className="absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-jade-950 via-jade-950/92 to-transparent" />
+            <div className="absolute inset-0 bg-jade-950/15" />
           </motion.div>
 
           <div className="relative z-10 mx-auto w-full max-w-6xl px-5 pb-20 sm:px-8 sm:pb-28">
@@ -164,7 +164,7 @@ export function ReelLens() {
               initial={reduced ? false : { opacity: 0, y: 24 }}
               animate={reduced ? undefined : { opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6, ease: [0.16, 0.84, 0.24, 1] }}
-              className="font-display text-[clamp(3.2rem,12vw,8.5rem)] uppercase leading-[0.82] tracking-tight text-jade-50"
+              className="font-display text-[clamp(3.6rem,12.5vw,10.5rem)] uppercase leading-[0.8] tracking-[-0.028em] text-jade-50"
             >
               Andrew Chuang
             </motion.h1>
@@ -173,7 +173,7 @@ export function ReelLens() {
               initial={reduced ? false : { opacity: 0 }}
               animate={reduced ? undefined : { opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="mt-2 font-sans text-[clamp(2rem,6vw,4.2rem)] font-extralight leading-none tracking-[0.22em] text-jade-50"
+              className="mt-2 font-sans text-[clamp(2rem,6vw,4.2rem)] font-light leading-none tracking-[0.04em] text-jade-50/95"
             >
               {identity.nameZh}
             </motion.p>
@@ -234,15 +234,26 @@ export function ReelLens() {
           id="about"
           index={3}
           slate="About"
-          image={photos.portrait}
-          align="left"
-          focal="85% 40%"
+          layout="split"
+          title={
+            <>
+              <SceneTitle>The dance of tech, art &amp; people</SceneTitle>
+              <Lede>{identity.taglineTail}</Lede>
+            </>
+          }
         >
-          <SceneTitle>The dance of tech, art &amp; people</SceneTitle>
-          <Lede>{identity.taglineTail}</Lede>
+          <figure className="m-0">
+            <img
+              src={photos.portrait.src}
+              alt={photos.portrait.alt}
+              loading="lazy"
+              decoding="async"
+              className="aspect-[3/2] w-full border border-jade-800 object-cover object-[50%_28%]"
+            />
+          </figure>
           <ul className="mt-9 list-none space-y-0 pl-0">
             {aboutFacts.map((f) => (
-              <li key={f.text} className="border-t border-jade-100/25 py-3 text-jade-100/85 last:border-b">
+              <li key={f.text} className="border-t border-jade-800 py-3.5 text-jade-100/85 last:border-b">
                 {f.text}
               </li>
             ))}
@@ -283,7 +294,7 @@ export function ReelLens() {
                   alt={blaze.images[0].alt}
                   loading="lazy"
                   decoding="async"
-                  className="w-full border border-jade-800 object-cover"
+                  className="w-full border border-jade-800 object-cover brightness-[0.88] contrast-[1.04]"
                 />
               </figure>
             </>
@@ -303,7 +314,7 @@ export function ReelLens() {
               alt={blaze.images[0].alt}
               loading="lazy"
               decoding="async"
-              className="w-full border border-jade-800 object-cover"
+              className="w-full border border-jade-800 object-cover brightness-[0.88] contrast-[1.04]"
             />
           </figure>
         </Scene>
@@ -327,7 +338,7 @@ export function ReelLens() {
           }
         >
           <Lede>
-            A journal partner that remembers and grows with you. Alongside it, a Vibecode Playground —
+            A journal partner that remembers and grows with you. Alongside it, a Vibecode Playground,
             the shelf where the half-built things sit.
           </Lede>
 
@@ -380,7 +391,7 @@ export function ReelLens() {
           }
         >
           <Lede>
-            Before the products, this — getting students across Taiwan into the same room.
+            Before the products, this. Getting students across Taiwan into the same room.
           </Lede>
           <ul className="mt-9 list-none space-y-0 pl-0">
             {genz.bullets!.map((b) => (
@@ -430,7 +441,7 @@ export function ReelLens() {
           aria-labelledby="credits-title"
           className="relative overflow-hidden lg:pl-16"
         >
-          <div className="mx-auto w-full max-w-4xl px-5 py-rhythm4 sm:px-8">
+          <div className="mx-auto w-full max-w-6xl px-5 py-rhythm4 sm:px-8">
             <motion.div
               initial={reduced ? false : { opacity: 0, y: 24 }}
               whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
@@ -440,7 +451,7 @@ export function ReelLens() {
               <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.34em] text-amber-400">
                 End credits
               </p>
-              <p className="mb-9 max-w-measure text-jade-100/60">
+              <p className="mb-10 max-w-3xl font-display text-[clamp(1.5rem,3.4vw,2.4rem)] uppercase leading-[1.1] text-jade-100/80">
                 “Have the courage to become a novice again and again and be in a constant state of
                 growing, changing, and reinventing yourself.”
               </p>
@@ -540,7 +551,7 @@ export function ReelLens() {
         >
           <div className="relative z-10 mx-auto w-full max-w-6xl px-5 py-24 sm:px-8">
             <blockquote className="m-0 max-w-3xl">
-              <p className="m-0 font-display text-[clamp(1.9rem,5.2vw,3.4rem)] uppercase leading-[1.02] text-jade-50">
+              <p className="m-0 font-display text-[clamp(2.6rem,8vw,6rem)] uppercase leading-[0.95] tracking-[-0.015em] text-jade-50">
                 Don’t follow your dreams, follow your curiosity!
               </p>
               <footer className="mt-4 text-sm text-jade-100/60">

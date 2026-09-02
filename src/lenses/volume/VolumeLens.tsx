@@ -55,7 +55,7 @@ const ROMAN = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
 
 function RunningHead({ left, right }: { left: string; right: string }) {
   return (
-    <div className="mb-rhythm3 flex items-baseline justify-between gap-6 border-b border-paper-300 pb-2 font-serif text-[0.68rem] uppercase tracking-[0.24em] text-paper-700/75">
+    <div className="mb-rhythm3 flex items-baseline justify-between gap-6 border-b border-paper-300 pb-2 font-serif text-[0.68rem] uppercase tracking-[0.24em] text-paper-700">
       <span>{left}</span>
       <span className="text-right">{right}</span>
     </div>
@@ -64,7 +64,7 @@ function RunningHead({ left, right }: { left: string; right: string }) {
 
 function Folio({ page }: { page: number }) {
   return (
-    <p className="mt-rhythm3 text-center font-serif text-[0.78rem] tabular-nums text-paper-700/70">
+    <p className="mt-rhythm3 text-center font-serif text-[0.78rem] tabular-nums text-paper-700">
       {page}
     </p>
   );
@@ -108,9 +108,9 @@ function Pull({ children }: { children: React.ReactNode }) {
 }
 
 /**
- * A chapter set as a spread. The verso column always carries apparatus — the
- * chapter number, the running title, and either a plate or a pull quote — so
- * neither column is ever left as a void.
+ * A chapter set as a spread. The verso column always carries apparatus (the
+ * running title, and either a plate or a pull quote) so neither column is ever
+ * left as a void.
  */
 function Chapter({
   id,
@@ -170,7 +170,7 @@ const Rows = ({ children }: { children: React.ReactNode }) => (
 );
 
 const Label = ({ children }: { children: React.ReactNode }) => (
-  <p className="m-0 text-[0.7rem] uppercase tracking-[0.24em] text-paper-700/75">{children}</p>
+  <p className="m-0 text-[0.7rem] uppercase tracking-[0.24em] text-paper-700">{children}</p>
 );
 
 export function VolumeLens() {
@@ -250,7 +250,7 @@ export function VolumeLens() {
             <Plate
               src={photos.hero.src}
               alt={photos.hero.alt}
-              caption="Frontispiece — open water, before the day started."
+              caption="Frontispiece. Open water, before the day started."
             />
           </div>
         </section>
@@ -278,11 +278,11 @@ export function VolumeLens() {
                   href={`#${c.id}`}
                   className="group grid grid-cols-[2.4rem_1fr_auto] items-baseline gap-4 border-b border-paper-300 py-3 font-serif"
                 >
-                  <span className="text-[0.76rem] tabular-nums text-paper-700/70">{ROMAN[c.n]}</span>
+                  <span className="text-[0.76rem] tabular-nums text-paper-700">{ROMAN[c.n]}</span>
                   <span className="text-[1.04rem] text-paper-900 underline decoration-transparent underline-offset-[3px] transition-colors group-hover:decoration-paper-300">
                     {c.title}
                   </span>
-                  <span className="text-[0.8rem] tabular-nums text-paper-700/70">{c.page}</span>
+                  <span className="text-[0.8rem] tabular-nums text-paper-700">{c.page}</span>
                 </a>
               </li>
             ))}
@@ -295,7 +295,7 @@ export function VolumeLens() {
           {...toc[0]}
           verso={
             <Pull>
-              Written on a train to Strasbourg. The order is the argument —{' '}
+              Written on a train to Strasbourg. The order is the argument.{' '}
               <Out href={priorities.articleHref}>read the essay</Out>.
             </Pull>
           }
@@ -303,7 +303,7 @@ export function VolumeLens() {
           <ol className="list-none space-y-5 pl-0">
             {priorities.items.map((p, i) => (
               <li key={p.label} className="grid grid-cols-[1.5rem_1fr] gap-3">
-                <span className="pt-1 text-[0.76rem] tabular-nums text-paper-700/70">{i + 1}</span>
+                <span className="pt-1 text-[0.76rem] tabular-nums text-paper-700">{i + 1}</span>
                 <span className="text-[1.05rem] leading-[1.62]">
                   <span className="text-paper-900">{p.label}.</span>{' '}
                   <span className="text-paper-700">{p.body}</span>
@@ -320,7 +320,7 @@ export function VolumeLens() {
             <Plate
               src={photos.portrait.src}
               alt={photos.portrait.alt}
-              caption="Plate I — at the rim, Grand Canyon."
+              caption="Plate I. At the rim, Grand Canyon."
             />
           }
         >
@@ -354,7 +354,7 @@ export function VolumeLens() {
               src={blaze.images[0].src}
               alt={blaze.images[0].alt}
               ratio="aspect-[4/3]"
-              caption="Plate II — the onboarding flow, screen by screen."
+              caption="Plate II. Blaze on the wrist."
             />
           }
         >
@@ -364,7 +364,7 @@ export function VolumeLens() {
           <ol className="mt-6 list-none space-y-5 pl-0">
             {blaze.bullets.map((b, i) => (
               <li key={b} className="grid grid-cols-[1.5rem_1fr] gap-3">
-                <span className="pt-1 text-[0.8rem] tabular-nums text-paper-700/70">{i + 1}</span>
+                <span className="pt-1 text-[0.8rem] tabular-nums text-paper-700">{i + 1}</span>
                 <span className="text-[1.05rem] leading-[1.62] text-paper-900">{b}</span>
               </li>
             ))}
@@ -382,7 +382,7 @@ export function VolumeLens() {
               src={feelable.images[1].src}
               alt={feelable.images[1].alt}
               ratio="aspect-[4/3]"
-              caption="Plate III — the mood picker: energy against pleasantness."
+              caption="Plate III. The mood picker, energy against pleasantness."
             />
           }
         >
@@ -390,7 +390,7 @@ export function VolumeLens() {
             A mood journaling companion. A journal partner that remembers and grows with you.
           </p>
           <p className="mt-5 text-body text-paper-700">
-            Alongside it, a Vibecode Playground — the shelf where the unfinished things sit.
+            Alongside it, a Vibecode Playground, the shelf where the unfinished things sit.
           </p>
           <p className="mt-7 text-[1.02rem]">
             <Out href={feelable.href!}>Open feelable.ai</Out>
@@ -405,7 +405,7 @@ export function VolumeLens() {
               src={feelable.images[2].src}
               alt={feelable.images[2].alt}
               ratio="aspect-[4/3]"
-              caption="Plate IV — feelable.ai, the mood dashboard."
+              caption="Plate IV. feelable.ai, the mood dashboard."
             />
           }
         >
@@ -416,7 +416,7 @@ export function VolumeLens() {
                   <Out href={w.href}>{w.name}</Out>
                 </p>
                 <p className="m-0 mt-1 text-[0.98rem] text-paper-700">{w.note}</p>
-                <p className="m-0 mt-1.5 text-[0.7rem] uppercase tracking-[0.24em] text-paper-700/75">
+                <p className="m-0 mt-1.5 text-[0.7rem] uppercase tracking-[0.24em] text-paper-700">
                   {w.role}
                 </p>
               </li>
@@ -433,13 +433,13 @@ export function VolumeLens() {
                 src={genz.images![0].src}
                 alt={genz.images![0].alt}
                 ratio="aspect-[4/3]"
-                caption="Plate V — everyone who turned up."
+                caption="Plate V. Everyone who turned up."
               />
               <Plate
                 src={genz.images![1].src}
                 alt={genz.images![1].alt}
                 ratio="aspect-[4/3]"
-                caption="Plate VI — the stage, before doors."
+                caption="Plate VI. The stage, before doors."
               />
             </div>
           }
@@ -474,7 +474,7 @@ export function VolumeLens() {
               src={genz.images![3].src}
               alt={genz.images![3].alt}
               ratio="aspect-[4/3]"
-              caption="Plate VII — mid-session, microphone in hand."
+              caption="Plate VII. Mid-session, microphone in hand."
             />
           }
         >
@@ -484,7 +484,7 @@ export function VolumeLens() {
                 <p className="m-0 text-[1.05rem] text-paper-900">
                   {c.href ? <Out href={c.href}>{c.name}</Out> : c.name}
                 </p>
-                <p className="m-0 mt-1.5 text-[0.7rem] uppercase tracking-[0.24em] text-paper-700/75">
+                <p className="m-0 mt-1.5 text-[0.7rem] uppercase tracking-[0.24em] text-paper-700">
                   {c.role}
                 </p>
               </li>
@@ -507,7 +507,7 @@ export function VolumeLens() {
           <dl className="space-y-6">
             {reads.map((r) => (
               <div key={r.label}>
-                <dt className="text-[0.7rem] uppercase tracking-[0.24em] text-paper-700/75">
+                <dt className="text-[0.7rem] uppercase tracking-[0.24em] text-paper-700">
                   {r.label}
                 </dt>
                 <dd className="m-0 mt-1.5 text-[1.02rem] leading-[1.6] text-paper-900">
@@ -526,13 +526,13 @@ export function VolumeLens() {
               <Plate
                 src={travel.image!.src}
                 alt={travel.image!.alt}
-                caption="Plate VIII — the start line, San Francisco."
+                caption="Plate VIII. The start line, San Francisco."
               />
               <Plate
                 src={cooking.image!.src}
                 alt={cooking.image!.alt}
                 ratio="aspect-[4/3]"
-                caption="Plate IX — meal prep, allegedly."
+                caption="Plate IX. Meal prep, allegedly."
               />
             </div>
           }
@@ -542,7 +542,7 @@ export function VolumeLens() {
               <li key={h.id}>
                 <p className="m-0 text-[1.05rem] text-paper-900">
                   {h.label}
-                  {h.stat && <span className="text-paper-700"> — {h.stat}</span>}
+                  {h.stat && <span className="text-paper-700">, {h.stat}</span>}
                 </p>
                 {h.note && (
                   <p className="m-0 mt-1 text-[0.98rem] leading-[1.55] text-paper-700">{h.note}</p>
@@ -577,7 +577,7 @@ export function VolumeLens() {
               src={hobbies[0].image!.src}
               alt={hobbies[0].image!.alt}
               ratio="aspect-[4/3]"
-              caption="Plate X — the essays, as they sit on Medium."
+              caption="Plate X. The essays, as they sit on Medium."
             />
           }
         >

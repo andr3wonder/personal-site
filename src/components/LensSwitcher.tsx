@@ -5,18 +5,10 @@ import { lenses } from '../lenses/registry';
 
 type Variant = 'reel' | 'volume' | 'line';
 
-const placement: Record<Variant, string> = {
-  // each lens puts the control somewhere native to its own object
-  reel: 'bottom-5 left-5 sm:bottom-7 sm:left-7 lg:left-24',
-  volume: 'bottom-6 left-1/2 -translate-x-1/2',
-  line: 'top-4 right-4 sm:top-6 sm:right-6',
-};
-
-const menuAnchor: Record<Variant, string> = {
-  reel: 'bottom-full left-0 mb-1',
-  volume: 'bottom-full left-1/2 -translate-x-1/2 mb-1',
-  line: 'top-full right-0 mt-1',
-};
+/* One position for all three so it never lands on artwork or body text. The
+   treatment differs per lens; the placement does not. */
+const PLACEMENT = 'top-3 right-3 sm:top-5 sm:right-5';
+const MENU_ANCHOR = 'top-full right-0 mt-1';
 
 /**
  * Quiet but obvious way to move between the three complete versions. Styled and
@@ -55,7 +47,7 @@ export function LensSwitcher({ variant = 'reel' }: { variant?: Variant }) {
         : 'bg-paper-50 px-3 py-2 font-serif text-[0.72rem] uppercase tracking-[0.26em] text-paper-700 shadow-[0_0_0_1px_hsl(36_18%_78%)] hover:text-paper-900';
 
   return (
-    <div ref={wrap} className={`fixed z-50 ${placement[variant]}`}>
+    <div ref={wrap} className={`fixed z-50 ${PLACEMENT}`}>
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -73,13 +65,13 @@ export function LensSwitcher({ variant = 'reel' }: { variant?: Variant }) {
         {open && (
           <motion.ul
             role="menu"
-            initial={{ opacity: 0, y: variant === 'line' ? -4 : 4 }}
+            initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: variant === 'line' ? -4 : 4 }}
+            exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.16, ease: [0.2, 0.7, 0.2, 1] }}
             className={[
               'absolute w-60 backdrop-blur',
-              menuAnchor[variant],
+              MENU_ANCHOR,
               paper
                 ? 'bg-paper-50/97 text-paper-900 ring-1 ring-paper-300'
                 : 'bg-jade-950/97 text-jade-100 ring-1 ring-jade-800',

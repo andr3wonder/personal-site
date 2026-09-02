@@ -252,7 +252,7 @@ export function LineLens() {
               alt=""
               fetchPriority="high"
               decoding="async"
-              className="h-[122%] w-full object-cover object-[74%_50%] sm:object-[62%_50%] lg:object-center"
+              className="h-[122%] w-full object-cover object-[86%_40%] sm:object-[68%_44%] lg:object-[52%_42%]"
             />
             {/* Cyan never sits over the photograph. A flat scrim keeps every
                 line of hero type above 7:1 against near-white. */}
@@ -360,10 +360,7 @@ export function LineLens() {
         <Station
           {...st.blaze}
           media={
-            <div className="space-y-6">
-              <Shot src={blaze.images[0].src} alt={blaze.images[0].alt} caption="Onboarding flow" />
-              <Shot src={blaze.images[1].src} alt={blaze.images[1].alt} caption="On the wrist" />
-            </div>
+            <Shot src={blaze.images[0].src} alt={blaze.images[0].alt} caption="Blaze on the wrist" />
           }
         >
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-jade-100/55">
@@ -393,7 +390,7 @@ export function LineLens() {
           }
         >
           <p className="max-w-measure text-jade-100/85">
-            A mood journaling companion — a journal partner that remembers and grows with you.
+            A mood journaling companion. A journal partner that remembers and grows with you.
           </p>
           <div className="mt-7">
             <Row label="Also">Vibecode Playground, for everything still half-built</Row>
