@@ -1,7 +1,6 @@
 import {
   L,
   photos,
-  flags,
   mission,
   about,
   priorities,
@@ -23,8 +22,11 @@ export function renderTaiwan(app) {
     <div class="tw" id="stage">
       ${worldNav("taiwan", "wnav--tw")}
       <aside class="route" aria-hidden="true">
+        <div class="rail">
+          <div class="rail__fill" id="rail-fill"></div>
+        </div>
         <svg viewBox="0 0 40 1200" preserveAspectRatio="none">
-          <path id="hitch" d="M20 8 C 20 80, 8 140, 20 210 S 32 340, 18 430 S 8 560, 22 660 S 30 820, 16 940 S 20 1100, 20 1188" fill="none" stroke="#e8a54b" stroke-width="1.6" stroke-dasharray="3 7" />
+          <path id="hitch" d="M20 8 C 20 80, 8 140, 20 210 S 32 340, 18 430 S 8 560, 22 660 S 30 820, 16 940 S 20 1100, 20 1188" fill="none" stroke="#e8a54b" stroke-width="2.4" stroke-dasharray="2 9" />
         </svg>
       </aside>
 
@@ -37,9 +39,8 @@ export function renderTaiwan(app) {
 
       <section class="stop" id="taipei">
         <p class="km">01 · 台北 Taipei</p>
-        <h2>Night air, not a postcard.</h2>
         <p data-ink>${about.dance} ${about.warrior}</p>
-        <p data-ink>Born and raised in Taipei. ${about.place} ${about.cherish}</p>
+        <p data-ink>${about.place} ${about.cherish}</p>
         <p data-ink><a href="/diet" data-nav>My Info Diet</a> · <a href="${L.medium}">My Writings</a> · <a href="${L.models}">My Mental Models</a></p>
         <figure class="still">
           <img src="${photos.portrait}" alt="Andrew looking back over his shoulder in a geometric light tunnel." width="1400" height="1662" />
@@ -50,8 +51,6 @@ export function renderTaiwan(app) {
         <p class="km">02 · hitch</p>
         <h2>USD 15 across the island.</h2>
         <p data-ink>${hobbies.travel}</p>
-        <p data-ink>${hobbies.dance} ${hobbies.sports} ${hobbies.acting} ${hobbies.cooking} ${hobbies.drawing}</p>
-        <p class="flags">${flags}</p>
       </section>
 
       <section class="stop" id="rooms">
@@ -80,6 +79,7 @@ export function renderTaiwan(app) {
             .join("")}
         </ol>
         <p data-ink>${products.linkedin.what}</p>
+        <p data-ink>${hobbies.dance} ${hobbies.sports} ${hobbies.acting} ${hobbies.cooking} ${hobbies.drawing}</p>
         <figure class="still still--water">
           <img src="${photos.cover}" alt="Andrew paddleboarding at sunset." width="2200" height="1650" />
         </figure>
@@ -116,10 +116,12 @@ function bindTaiwan() {
   path.style.strokeDasharray = `${len}`;
   path.style.strokeDashoffset = `${len}`;
 
+  const fill = document.getElementById("rail-fill");
   const onScroll = () => {
     const el = document.documentElement;
     const t = el.scrollTop / Math.max(1, el.scrollHeight - innerHeight);
     path.style.strokeDashoffset = String(len * (1 - t));
+    if (fill) fill.style.height = `${Math.round(t * 100)}%`;
   };
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });

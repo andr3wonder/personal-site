@@ -40,6 +40,10 @@ a {
   align-items: baseline;
 }
 
+.wnav a {
+  text-decoration: none;
+}
+
 .wnav a[aria-current="page"] {
   text-decoration: underline;
   text-underline-offset: 0.22em;

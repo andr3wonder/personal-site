@@ -30,7 +30,6 @@ export function renderBook(app) {
         <p class="leaf__zh" lang="zh-Hant">莊承翰</p>
         <p class="drop">${mission.line}</p>
         <p>Creator at heart. Started by building communities in Taiwan, connecting students to do passion projects. <a href="${L.genzIg}">GenZ Taiwan</a>. At Berkeley found passion in building products: AI Voice Messenger. Now 1st cohort of Product Builders at LinkedIn. Join me in bringing joy to the world.</p>
-        <aside class="marg">a sewn copy, not a résumé</aside>
       </header>
 
       <section class="leaf leaf--spread" data-leaf>
@@ -49,7 +48,7 @@ export function renderBook(app) {
         </div>
         <figure class="verso">
           <img src="${photos.portrait}" alt="Andrew looking back over his shoulder in a geometric light tunnel." width="1400" height="1662" />
-          <figcaption>A plate. Not a headshot for LinkedIn.</figcaption>
+          <figcaption>Andrew. 莊承翰.</figcaption>
         </figure>
       </section>
 

@@ -24,10 +24,12 @@ export function renderFilm(app) {
       ${worldNav("film", "wnav--film")}
 
       <section class="scene scene--card" data-scene>
-        <p class="slate">SCENE 00 · TITLE</p>
-        <h1>ANDREW<br />CHUANG</h1>
-        <p class="vname" lang="zh-Hant">承翰</p>
-        <p class="card-sub">A TELLING IN STILLS</p>
+        <div class="gate">
+          <p class="slate">SCENE 00 · TITLE</p>
+          <h1>ANDREW<br />CHUANG</h1>
+          <p class="vname" lang="zh-Hant">承翰</p>
+          <p class="card-sub">A TELLING IN STILLS</p>
+        </div>
       </section>
 
       <section class="scene scene--still" data-scene>

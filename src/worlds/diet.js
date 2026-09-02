@@ -23,11 +23,6 @@ export async function renderDiet(app) {
         <p class="diet__trust">The live shelf lives in Notion, for people I trust. <a href="${snap.fullDiet || L.dietNotion}">Full diet</a>. Writings: <a href="${L.medium}">Medium</a>. Films: Letterboxd, in the other tellings.</p>
       </header>
 
-      <section class="diet__spine">
-        <h2>Favorite reads</h2>
-        <div class="cabinet">${readsMarkup("cabinet")}</div>
-      </section>
-
       <section class="diet__snap">
         <h2>Recent, as of ${snap.snapshotDate || "this snapshot"}</h2>
         <p class="diet__honest">A frozen copy of the Readwise feed. Not scraped paywalls. Titles and authors only.</p>
@@ -55,6 +50,11 @@ export async function renderDiet(app) {
             </ul>
           </div>
         </div>
+      </section>
+
+      <section class="diet__spine">
+        <h2>Favorite reads</h2>
+        <div class="cabinet">${readsMarkup("cabinet")}</div>
       </section>
     </div>
   `;

@@ -1,5 +1,4 @@
 import { photos, worlds, mission } from "../content.js";
-import { worldNav } from "../chrome.js";
 
 const stills = [photos.cover, photos.portrait, photos.tedx];
 
@@ -32,7 +31,6 @@ export function renderFoyer(app) {
       <p class="foyer__note">
         The <a href="/diet" data-nav>info diet</a> sits in a cabinet, not on the counter.
       </p>
-      ${worldNav("foyer", "wnav--foyer")}
     </div>
   `;
 }

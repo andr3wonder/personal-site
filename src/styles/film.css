@@ -66,7 +66,22 @@ body.is-film {
 
 .scene--card {
   text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 40%, #3a2a1c 0%, #16110d 55%, #070605 100%);
+  place-items: center;
+}
+
+.gate {
+  width: min(78vw, 980px);
+  min-height: 56vh;
+  display: grid;
+  place-content: center;
+  padding: 7vh 5vw;
   background: #050403;
+  box-shadow:
+    0 0 0 1px #1c1610,
+    0 0 90px rgba(232, 180, 90, 0.14);
+  transform: perspective(900px) rotateX(3.5deg);
 }
 
 .scene--card h1 {
@@ -96,6 +111,12 @@ body.is-film {
   inset: 7vh 0;
   overflow: hidden;
   background: #000;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.7s cubic-bezier(0.22, 0.8, 0.2, 1);
+}
+
+.scene.is-on .still-wrap {
+  clip-path: inset(0 0 0 0);
 }
 
 .still-wrap img {
@@ -150,8 +171,8 @@ body.is-film {
   position: relative;
   z-index: 2;
   max-width: 34rem;
-  padding: 1.1rem 1.2rem 1.2rem;
-  background: linear-gradient(180deg, rgba(8, 6, 5, 0.08), rgba(8, 6, 5, 0.55));
+  padding: 0.2rem 0.2rem 0.4rem;
+  text-shadow: 0 1px 16px rgba(0, 0, 0, 0.72);
 }
 
 .on-still p {
