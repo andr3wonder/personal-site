@@ -67,12 +67,12 @@ export const notebooks: Link[] = [
 /** The Blaze results, expressed as table cells for the timetable version.
  *  Derived only from the bullet wording; no new claims. */
 export const blazeMetrics: { metric: string; value: string; window: string }[] = [
-  { metric: 'First month installs', value: '110k', window: 'Month 1' },
+  { metric: 'First month installs', value: '110k', window: 'First month' },
   { metric: 'Daily active users', value: '10k', window: 'At launch' },
-  { metric: 'Usability tests run', value: '25', window: '0 to 1' },
-  { metric: 'Mockups designed', value: '100+', window: '0 to 1' },
-  { metric: 'Feature backlog managed', value: '70+', window: '0 to 1' },
-  { metric: 'Retention lift, A/B tested', value: '12%', window: '30 day' },
+  { metric: 'Usability tests run', value: '25', window: 'Zero to one' },
+  { metric: 'Mockups designed', value: '100+', window: 'Zero to one' },
+  { metric: 'Feature backlog managed', value: '70+', window: 'Zero to one' },
+  { metric: 'Retention lift, A/B tested', value: '12%', window: 'Thirty days' },
 ];
 
 export type Product = {

@@ -70,7 +70,7 @@ export function ReelLens() {
               alt=""
               fetchPriority="high"
               decoding="async"
-              className="h-[114%] w-full object-cover object-[68%_34%] sm:object-[58%_36%] lg:object-[50%_36%]"
+              className="h-[114%] w-full object-cover object-[72%_40%] sm:object-[58%_36%] lg:object-[50%_36%]"
             />
             <div className="absolute inset-x-0 bottom-0 h-[78%] bg-[linear-gradient(to_top,hsl(160_34%_6%)_0%,hsl(160_34%_6%/0.92)_18%,hsl(160_34%_6%/0.72)_36%,hsl(160_34%_6%/0.42)_58%,hsl(160_34%_6%/0.16)_78%,transparent_100%)]" />
           </motion.div>
@@ -158,7 +158,7 @@ export function ReelLens() {
           <p className="mt-4 text-[0.95rem] leading-relaxed text-jade-100/70">
             {aboutFacts.map((f) => f.text).join('. ')}.
           </p>
-          <p className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2">
+          <p className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
             {notebooks.map((n) => (
               <a
                 key={n.href}
@@ -236,12 +236,12 @@ export function ReelLens() {
           <p className="text-[clamp(1.05rem,2vw,1.4rem)] leading-snug text-jade-50/85">
             Before the products, this. Getting students across Taiwan into the same room.
           </p>
-          <ul className="mx-auto mt-5 max-w-xl list-none space-y-2 pl-0 text-[0.95rem] leading-relaxed text-jade-100/80">
+          <ul className="mt-5 list-none space-y-2 pl-0 text-[0.95rem] leading-relaxed text-jade-100/80">
             {genz.bullets!.map((b) => (
               <li key={b.text}>{b.href ? <Out href={b.href}>{b.text}</Out> : b.text}</li>
             ))}
           </ul>
-          <p className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2">
+          <p className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
             {genz.links!.map((l) => (
               <a
                 key={l.href}
@@ -264,9 +264,9 @@ export function ReelLens() {
           focal="50% 45%"
           title="And three more rooms"
         >
-          <ul className="mx-auto flex max-w-3xl list-none flex-wrap justify-center gap-x-10 gap-y-5 pl-0">
+          <ul className="flex list-none flex-wrap gap-x-10 gap-y-5 pl-0">
             {clubs.map((c) => (
-              <li key={c.id} className="text-center">
+              <li key={c.id}>
                 <span className="block font-display text-[clamp(1.2rem,2.2vw,1.6rem)] uppercase leading-[1.05] text-jade-50">
                   {c.href ? <Out href={c.href}>{c.name}</Out> : c.name}
                 </span>
@@ -287,7 +287,7 @@ export function ReelLens() {
           title="Curiosity, unpaid"
         >
           <p className="text-[0.95rem] leading-relaxed text-jade-50/80">{travel.note}</p>
-          <ul className="mx-auto mt-4 max-w-xl list-none space-y-1.5 pl-0 text-[0.95rem] leading-relaxed text-jade-100/80">
+          <ul className="mt-4 list-none space-y-1.5 pl-0 text-[0.95rem] leading-relaxed text-jade-100/80">
             {travel.bullets!.map((b) => (
               <li key={b.text}>{b.href ? <Out href={b.href}>{b.text}</Out> : b.text}</li>
             ))}

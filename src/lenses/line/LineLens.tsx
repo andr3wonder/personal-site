@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import { motion, useInView, useScroll, useSpring } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { EditionFooter } from '../../components/EditionFooter';
-import { useActiveSection } from '../../hooks/useActiveSection';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { ItemList } from '../../components/ItemList';
 import { useLensTheme } from '../../hooks/useLensTheme';
@@ -56,8 +55,6 @@ const stations = [
   { id: 'content', code: 'ST 10', name: 'Published', place: 'Ongoing' },
 ];
 
-const stationIds = stations.map((s) => s.id);
-
 /** Split-flap heading. Characters settle in sequence, as on a departure board. */
 /**
  * Station names settle once, as a whole word, on a single flap. Staggering the
@@ -85,62 +82,6 @@ function Flap({ text, className = '' }: { text: string; className?: string }) {
 }
 
 /** The route line. One dot size, one exact interval, one drawn progress fill. */
-/**
- * The rail is a real position map: each node sits at the station's actual
- * offset in the document, so the line reports where you are rather than
- * decorating the edge with evenly spaced ticks.
- */
-function RouteLine({ active }: { active: string }) {
-  const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll();
-  const draw = useSpring(scrollYProgress, { stiffness: 90, damping: 26, mass: 0.4 });
-  const [offsets, setOffsets] = useState<number[]>([]);
-
-  useEffect(() => {
-    const measure = () => {
-      const total = document.documentElement.scrollHeight || 1;
-      setOffsets(
-        stationIds.map((id) => {
-          const el = document.getElementById(id);
-          return el ? ((el.offsetTop + el.offsetHeight / 2) / total) * 100 : 0;
-        }),
-      );
-    };
-    measure();
-    window.addEventListener('resize', measure);
-    const t = window.setTimeout(measure, 800);
-    return () => {
-      window.removeEventListener('resize', measure);
-      window.clearTimeout(t);
-    };
-  }, []);
-
-  const idx = Math.max(0, stationIds.indexOf(active));
-
-  return (
-    <div aria-hidden className="pointer-events-none fixed inset-y-0 left-7 z-30 hidden w-px lg:block">
-      <span className="absolute inset-0 bg-slate-800" />
-      {!reduced && (
-        <motion.span
-          className="absolute inset-x-0 top-0 h-full origin-top bg-cyanEdge/80"
-          style={{ scaleY: draw }}
-        />
-      )}
-      {offsets.map((top, i) => (
-        <span
-          key={stationIds[i]}
-          className={[
-            'absolute h-1.5 w-1.5 rounded-full transition-colors duration-300',
-            i === idx ? '-left-[3.5px] h-2.5 w-2.5 bg-cyanEdge' : '-left-[2.5px]',
-            i < idx ? 'bg-cyanEdge/70' : i > idx ? 'bg-slate-800' : '',
-          ].join(' ')}
-          style={{ top: `${top}%` }}
-        />
-      ))}
-    </div>
-  );
-}
-
 function Shot({
   src,
   alt,
@@ -205,7 +146,7 @@ function Station({
       ref={ref}
       id={id}
       aria-labelledby={`${id}-name`}
-      className="mx-auto w-full max-w-6xl px-5 py-rhythm3 sm:px-8 sm:py-rhythm4 lg:pl-16"
+      className="mx-auto w-full max-w-6xl px-5 py-rhythm3 sm:px-8 sm:py-rhythm4 "
     >
       <motion.div
         initial={reduced ? false : { opacity: 0, y: 18 }}
@@ -253,7 +194,6 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
 
 export function LineLens() {
   useLensTheme('hsl(207 30% 7%)', 'dark');
-  const active = useActiveSection(stationIds);
   const heroRef = useRef<HTMLElement>(null);
 
   const blaze = products[0];
@@ -269,7 +209,6 @@ export function LineLens() {
       <a href="#main" className="skip-link">
         Skip to content
       </a>
-      <RouteLine active={active} />
 
       <main id="main">
         {/* ------------------------------------------------------- departures */}
@@ -279,7 +218,7 @@ export function LineLens() {
           id="open"
           ref={heroRef}
           aria-labelledby="hero-name"
-          className="relative flex min-h-[100svh] items-center border-b border-slate-800 lg:pl-16"
+          className="relative flex min-h-[100svh] items-center border-b border-slate-800 "
         >
           <div className="mx-auto w-full max-w-6xl px-5 py-rhythm3 sm:px-8">
             <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-b border-slate-800 pb-3">
@@ -293,7 +232,7 @@ export function LineLens() {
 
             <h1
               id="hero-name"
-              className="mt-10 font-mono text-[clamp(2.2rem,7.5vw,5.4rem)] font-medium uppercase leading-[0.95] tracking-[-0.02em] text-jade-50"
+              className="mt-10 font-transit text-[clamp(2.6rem,9vw,6.4rem)] font-semibold uppercase leading-[0.92] tracking-[0.01em] text-jade-50"
             >
               Andrew Chuang
             </h1>
@@ -520,7 +459,7 @@ export function LineLens() {
           </p>
         </Station>
 
-        <div className="mx-auto -mt-rhythm3 w-full max-w-6xl px-5 pb-rhythm4 sm:px-8 lg:pl-16">
+        <div className="mx-auto -mt-rhythm3 w-full max-w-6xl px-5 pb-rhythm4 sm:px-8 ">
           <table className="w-full border-collapse text-left font-mono text-sm">
             <caption className="sr-only">Info diet by subject</caption>
             <thead>
@@ -641,7 +580,7 @@ export function LineLens() {
         <section
           id="close"
           aria-labelledby="close-title"
-          className="mx-auto w-full max-w-6xl px-5 py-rhythm4 sm:px-8 lg:pl-16"
+          className="mx-auto w-full max-w-6xl px-5 py-rhythm4 sm:px-8 "
         >
           <p className="font-mono text-xs uppercase tracking-[0.34em] text-cyanEdge">Terminus</p>
 

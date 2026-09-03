@@ -21,7 +21,9 @@ const EASE = [0.16, 0.84, 0.24, 1] as const;
 /** Subtitle under a title. Carries the category without an eyebrow rule. */
 export function Sub({ children }: { children: React.ReactNode }) {
   return (
-    <p className="mt-6 text-[clamp(1.05rem,2vw,1.5rem)] leading-snug text-jade-100/70">{children}</p>
+    <p className="mx-auto mt-7 max-w-2xl text-center text-[clamp(1.05rem,1.9vw,1.4rem)] leading-snug text-jade-100/70">
+      {children}
+    </p>
   );
 }
 
@@ -79,14 +81,14 @@ export function Frame({
         transition={{ duration: 0.5, ease: EASE }}
         className="relative z-10 w-full border-t border-jade-50/15 bg-jade-950/95 backdrop-blur-[6px]"
       >
-        <div className="mx-auto w-full max-w-4xl px-5 py-9 text-center sm:px-8 sm:py-11">
+        <div className="mx-auto w-full max-w-4xl px-5 py-9 sm:px-8 sm:py-11">
           <h2
             id={`${id}-title`}
-            className="font-display text-[clamp(2.6rem,7vw,5.5rem)] uppercase leading-[0.86] tracking-[-0.025em] text-jade-50"
+            className="text-center font-display text-[clamp(2.6rem,7vw,5.5rem)] uppercase leading-[0.86] tracking-[-0.025em] text-jade-50"
           >
             {title}
           </h2>
-          {children && <div className="mx-auto mt-6 max-w-2xl">{children}</div>}
+          {children && <div className="mx-auto mt-7 max-w-2xl text-left">{children}</div>}
         </div>
       </motion.div>
 
@@ -123,11 +125,11 @@ export function Card({
         whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.5, ease: EASE }}
-        className="mx-auto w-full max-w-5xl px-5 py-rhythm3 text-center sm:px-8"
+        className="mx-auto w-full max-w-5xl px-5 py-rhythm3 sm:px-8"
       >
         <h2
           id={`${id}-title`}
-          className="font-display text-[clamp(3rem,10vw,8.5rem)] uppercase leading-[0.82] tracking-[-0.03em] text-jade-50"
+          className="text-center font-display text-[clamp(3rem,10vw,8.5rem)] uppercase leading-[0.82] tracking-[-0.03em] text-jade-50"
         >
           {title}
         </h2>
@@ -164,7 +166,7 @@ export function Plate({
               alt={img.alt}
               loading="lazy"
               decoding="async"
-              className="w-full object-cover"
+              className="w-full object-contain"
             />
           ))}
         </div>

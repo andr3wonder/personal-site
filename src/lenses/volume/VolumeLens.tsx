@@ -237,7 +237,7 @@ export function VolumeLens() {
               >
                 Andrew Chuang
               </h1>
-              <p className="mt-3 font-hanSerif text-[clamp(1.9rem,4.6vw,3.2rem)] font-semibold leading-none tracking-[0.03em] text-paper-900" lang="zh-Hant">
+              <p className="mt-5 font-hanSerif text-[clamp(1.9rem,4.6vw,3.2rem)] font-semibold leading-none tracking-[0.03em] text-paper-900" lang="zh-Hant">
                 {identity.nameZh}
               </p>
 
