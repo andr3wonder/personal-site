@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useInView, useScroll, useSpring } from 'framer-motion';
 import { EditionFooter } from '../../components/EditionFooter';
 import { useActiveSection } from '../../hooks/useActiveSection';
@@ -83,14 +83,37 @@ function Flap({ text, className = '' }: { text: string; className?: string }) {
 }
 
 /** The route line. One dot size, one exact interval, one drawn progress fill. */
+/**
+ * The rail is a real position map: each node sits at the station's actual
+ * offset in the document, so the line reports where you are rather than
+ * decorating the edge with evenly spaced ticks.
+ */
 function RouteLine({ active }: { active: string }) {
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll();
   const draw = useSpring(scrollYProgress, { stiffness: 90, damping: 26, mass: 0.4 });
+  const [offsets, setOffsets] = useState<number[]>([]);
+
+  useEffect(() => {
+    const measure = () => {
+      const total = document.documentElement.scrollHeight || 1;
+      setOffsets(
+        stationIds.map((id) => {
+          const el = document.getElementById(id);
+          return el ? ((el.offsetTop + el.offsetHeight / 2) / total) * 100 : 0;
+        }),
+      );
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    const t = window.setTimeout(measure, 600);
+    return () => {
+      window.removeEventListener('resize', measure);
+      window.clearTimeout(t);
+    };
+  }, []);
+
   const idx = Math.max(0, stationIds.indexOf(active));
-  const top = 6;
-  const span = 88;
-  const step = span / (stations.length - 1);
 
   return (
     <div aria-hidden className="pointer-events-none fixed inset-y-0 left-8 z-30 hidden w-px lg:block">
@@ -101,14 +124,15 @@ function RouteLine({ active }: { active: string }) {
           style={{ scaleY: draw }}
         />
       )}
-      {stations.map((s, i) => (
+      {offsets.map((top, i) => (
         <span
-          key={s.id}
+          key={stationIds[i]}
           className={[
-            'absolute -left-[2.5px] h-1.5 w-1.5 rounded-full transition-colors duration-300',
-            i <= idx ? 'bg-cyanEdge' : 'bg-jade-800',
+            'absolute h-1.5 w-1.5 rounded-full transition-colors duration-300',
+            i === idx ? '-left-[3.5px] h-2.5 w-2.5 bg-cyanEdge' : '-left-[2.5px]',
+            i < idx ? 'bg-cyanEdge/70' : i > idx ? 'bg-jade-800' : '',
           ].join(' ')}
-          style={{ top: `${top + i * step}%` }}
+          style={{ top: `${top}%` }}
         />
       ))}
     </div>
@@ -120,12 +144,15 @@ function Shot({
   alt,
   caption,
   fit = 'cover',
+  grade = false,
 }: {
   src: string;
   alt: string;
   caption: string;
   /** Photographs bleed to the plate edge; screen captures sit inside it. */
   fit?: 'cover' | 'contain';
+  /** Pulls an off-palette photograph toward the page's colour world. */
+  grade?: boolean;
 }) {
   return (
     <figure className="m-0">
@@ -136,7 +163,8 @@ function Shot({
         decoding="async"
         className={[
           'aspect-[4/3] w-full border border-jade-800',
-          fit === 'cover' ? 'object-cover object-top' : 'bg-jade-900 object-contain p-4',
+          fit === 'cover' ? 'object-cover object-top' : 'bg-[#f7f7f7] object-cover object-center',
+          grade ? 'saturate-[0.55] contrast-[1.05] sepia-[0.18]' : '',
         ].join(' ')}
       />
       <figcaption className="mt-2.5 font-mono text-xs uppercase tracking-[0.14em] text-jade-100/65">
@@ -199,10 +227,8 @@ function Station({
           </h2>
         </div>
 
-        <div className="grid gap-x-12 gap-y-9 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-          <div className="min-w-0">{children}</div>
-          {media && <div className="min-w-0">{media}</div>}
-        </div>
+        <div className="min-w-0">{children}</div>
+        {media && <div className="mt-rhythm2 grid gap-6 sm:grid-cols-2">{media}</div>}
       </motion.div>
     </section>
   );
@@ -382,9 +408,9 @@ export function LineLens() {
             {blaze.bullets.map((b) => (
               <Line key={b}>{b}</Line>
             ))}
-            <Row label="Detail">
+            <Line>
               <Out href={blaze.href!}>Case notes</Out>
-            </Row>
+            </Line>
           </div>
         </Station>
 
@@ -402,17 +428,17 @@ export function LineLens() {
             A mood journaling companion. A journal partner that remembers and grows with you.
           </p>
           <div className="mt-7">
-            <Row label="Also">Vibecode Playground, for everything still half-built</Row>
-            <Row label="Live">
+            <Line>Vibecode Playground, for everything still half-built</Line>
+            <Line>
               <Out href={feelable.href!}>feelable.ai</Out>
-            </Row>
+            </Line>
           </div>
         </Station>
 
         {/* ---------------------------------------------------------- ST 06 */}
         <Station
           {...st.priorities}
-          media={<Shot src={photos.tunnel.src} alt={photos.tunnel.alt} caption="En route" />}
+          media={<Shot src={photos.tunnel.src} alt={photos.tunnel.alt} caption="En route" grade />}
         >
           <p className="max-w-measure text-jade-100/85">
             Five, in order. <Out href={priorities.articleHref}>Written on a train to Strasbourg</Out>.

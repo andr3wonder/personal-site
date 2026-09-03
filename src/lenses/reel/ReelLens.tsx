@@ -80,7 +80,7 @@ function Strip({ images }: { images: { src: string; alt: string }[] }) {
               alt={img.alt}
               loading="lazy"
               decoding="async"
-              className="aspect-[16/10] w-full border border-jade-800 bg-jade-900 object-contain p-3"
+              className="aspect-[16/10] w-full border border-jade-800 bg-[#f7f7f7] object-cover object-center"
             />
           </li>
         ))}
@@ -205,7 +205,7 @@ export function ReelLens() {
                   alt={photos.tunnel.alt}
                   loading="lazy"
                   decoding="async"
-                  className="aspect-[4/5] w-full border border-jade-800 object-cover object-[52%_30%]"
+                  className="aspect-[4/5] w-full border border-jade-800 object-cover object-[52%_30%] saturate-[0.55] contrast-[1.05] sepia-[0.18]"
                 />
               </figure>
             </>
@@ -275,7 +275,6 @@ export function ReelLens() {
           id="blaze"
           index={4}
           slate="Product"
-          tall
           layout="split"
           title={
             <>
@@ -291,7 +290,7 @@ export function ReelLens() {
                   alt={blaze.images[0].alt}
                   loading="lazy"
                   decoding="async"
-                  className="aspect-[16/10] w-full border border-jade-800 bg-jade-900 object-contain p-4"
+                  className="aspect-[16/10] w-full border border-jade-800 bg-[#f7f7f7] object-cover object-center"
                 />
               </figure>
             </>
@@ -311,7 +310,7 @@ export function ReelLens() {
               alt={blaze.images[0].alt}
               loading="lazy"
               decoding="async"
-              className="aspect-[16/10] w-full border border-jade-800 bg-jade-900 object-contain p-4"
+              className="aspect-[16/10] w-full border border-jade-800 bg-[#f7f7f7] object-cover object-center"
             />
           </figure>
         </Scene>
@@ -321,7 +320,6 @@ export function ReelLens() {
           id="feelable"
           index={5}
           slate="Product"
-          tall
           layout="split"
           title={
             <>
@@ -382,7 +380,6 @@ export function ReelLens() {
           id="genz"
           index={6}
           slate="Communities"
-          tall
           layout="split"
           title={
             <>

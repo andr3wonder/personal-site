@@ -92,7 +92,6 @@ export function Scene({
   title,
   image,
   align = 'left',
-  tall = false,
   layout = 'overlay',
   focal = 'center',
 }: {
@@ -103,7 +102,6 @@ export function Scene({
   title?: React.ReactNode;
   image?: { src: string; alt: string };
   align?: 'left' | 'right';
-  tall?: boolean;
   layout?: 'overlay' | 'split';
   focal?: string;
 }) {
@@ -137,7 +135,7 @@ export function Scene({
       aria-labelledby={`${id}-slate`}
       className={[
         'relative flex items-center overflow-hidden lg:pl-16',
-        layout === 'overlay' ? (tall ? 'min-h-[100vh]' : 'min-h-[88vh]') : '',
+        layout === 'overlay' ? 'min-h-[86vh]' : '',
       ].join(' ')}
     >
       {image && (
@@ -194,7 +192,7 @@ export function Scene({
 /** Section heading in the Reel voice: condensed, uppercase, tight. */
 export function SceneTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="font-display text-[clamp(2.4rem,6vw,4rem)] uppercase leading-[0.9] tracking-tight text-jade-50">
+    <h2 className="font-display text-[clamp(2.6rem,7vw,5rem)] uppercase leading-[0.88] tracking-[-0.02em] text-jade-50">
       {children}
     </h2>
   );

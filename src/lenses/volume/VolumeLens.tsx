@@ -74,7 +74,7 @@ function Plate({
   src,
   alt,
   caption,
-  ratio = 'aspect-[4/5]',
+  ratio = 'aspect-[3/2]',
   fit = 'cover',
 }: {
   src: string;
@@ -96,7 +96,7 @@ function Plate({
           'w-full ring-1 ring-paper-900/15',
           fit === 'cover'
             ? 'object-cover object-top'
-            : 'bg-paper-50 object-contain object-center p-4',
+            : 'bg-[#f7f7f7] object-cover object-center',
         ].join(' ')}
       />
       <figcaption className="mt-2.5 font-serif text-[0.76rem] italic leading-snug text-paper-700">
@@ -138,35 +138,34 @@ function Chapter({
 }) {
   const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
-  const inView = useInView(ref, { once: true, amount: 0.12 });
+  const inView = useInView(ref, { once: true, amount: 0.1 });
 
   return (
     <section
       ref={ref}
       id={id}
       aria-labelledby={`${id}-title`}
-      className="mx-auto w-full max-w-5xl px-6 pb-rhythm3 pt-rhythm3 sm:px-10 sm:pb-rhythm3 sm:pt-rhythm4"
+      className="mx-auto w-full max-w-3xl px-6 pb-rhythm3 pt-rhythm4 sm:px-8"
     >
       <RunningHead left={`Chapter ${ROMAN[n]}`} right={title} />
 
       <motion.div
-        initial={reduced ? false : { opacity: 0, rotateY: -6 }}
-        animate={inView && !reduced ? { opacity: 1, rotateY: 0 } : undefined}
-        transition={{ duration: 0.6, ease: [0.22, 0.8, 0.28, 1] }}
-        style={{ transformOrigin: 'left center', perspective: 1600 }}
-        className="grid gap-x-12 gap-y-10 md:grid-cols-2"
+        initial={reduced ? false : { opacity: 0, y: 10 }}
+        animate={inView && !reduced ? { opacity: 1, y: 0 } : undefined}
+        transition={{ duration: 0.4, ease: [0.22, 0.8, 0.28, 1] }}
       >
-        <div className="md:border-r md:border-paper-300 md:pr-12">
-          <h2
-            id={`${id}-title`}
-            className="font-serif text-[clamp(1.85rem,3.3vw,2.6rem)] font-normal leading-[1.08] tracking-[-0.014em] text-paper-900"
-          >
-            {title}
-          </h2>
-          <div className="mt-8">{verso}</div>
-        </div>
+        {/* chapter opening: a drop folio and the title, centred like a book */}
+        <h2
+          id={`${id}-title`}
+          className="mb-10 font-serif text-[clamp(2rem,4.4vw,3.2rem)] font-normal leading-[1.06] tracking-[-0.016em] text-paper-900"
+        >
+          {title}
+        </h2>
 
-        <div className="min-w-0 font-serif">{children}</div>
+        <div className="font-serif">{children}</div>
+
+        {/* the plate interrupts the text column rather than sitting beside it */}
+        <div className="mt-rhythm3">{verso}</div>
       </motion.div>
 
       <Folio page={page} />
@@ -225,9 +224,9 @@ export function VolumeLens() {
         {/* ------------------------------------------------------- title page */}
         <section
           aria-labelledby="hero-name"
-          className="mx-auto flex min-h-[94svh] w-full max-w-5xl flex-col justify-center px-6 py-rhythm4 sm:px-10"
+          className="mx-auto flex w-full max-w-3xl flex-col justify-center px-6 pb-rhythm3 pt-rhythm5 sm:px-8"
         >
-          <div className="grid gap-x-12 gap-y-12 md:grid-cols-2 md:items-center">
+          <div className="mx-auto w-full max-w-3xl">
             <div>
               <Label>{identity.bornIn}</Label>
               <h1
@@ -257,18 +256,21 @@ export function VolumeLens() {
               </p>
             </div>
 
-            <Plate
-              src={photos.hero.src}
-              alt={photos.hero.alt}
-              caption="Frontispiece. Open water, before the day started."
-            />
+            <div className="mt-rhythm3">
+              <Plate
+                src={photos.hero.src}
+                alt={photos.hero.alt}
+                ratio="aspect-[3/2]"
+                caption="Frontispiece. Open water, before the day started."
+              />
+            </div>
           </div>
         </section>
 
         {/* --------------------------------------------------------- contents */}
         <section
           aria-labelledby="toc-title"
-          className="mx-auto w-full max-w-5xl px-6 py-rhythm4 sm:px-10"
+          className="mx-auto w-full max-w-3xl px-6 py-rhythm3 sm:px-8"
         >
           <RunningHead left="Contents" right={`Andrew Chuang ${identity.nameZh}`} />
           <h2
@@ -631,7 +633,7 @@ export function VolumeLens() {
         <section
           id="close"
           aria-labelledby="close-title"
-          className="mx-auto w-full max-w-5xl px-6 py-rhythm4 sm:px-10"
+          className="mx-auto w-full max-w-3xl px-6 py-rhythm3 sm:px-8"
         >
           <RunningHead left="Colophon" right={`Andrew Chuang ${identity.nameZh}`} />
 
