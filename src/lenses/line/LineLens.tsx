@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useInView, useScroll, useSpring, useTransform } from 'framer-motion';
+import { motion, useInView, useScroll, useSpring } from 'framer-motion';
 import { EditionFooter } from '../../components/EditionFooter';
 import { useActiveSection } from '../../hooks/useActiveSection';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -57,30 +57,28 @@ const stations = [
 const stationIds = stations.map((s) => s.id);
 
 /** Split-flap heading. Characters settle in sequence, as on a departure board. */
+/**
+ * Station names settle once, as a whole word, on a single flap. Staggering the
+ * characters made the headline unreadable while it arrived.
+ */
 function Flap({ text, className = '' }: { text: string; className?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const reduced = useReducedMotion();
-  const inView = useInView(ref, { once: true, amount: 0.6 });
+  const inView = useInView(ref, { once: true, amount: 0.5 });
 
   if (reduced) return <span className={className}>{text}</span>;
 
   return (
-    <span ref={ref} className={className}>
-      <span aria-hidden>
-        {text.split('').map((ch, i) => (
-          <motion.span
-            key={`${ch}-${i}`}
-            initial={{ rotateX: -88, opacity: 0 }}
-            animate={inView ? { rotateX: 0, opacity: 1 } : undefined}
-            transition={{ delay: i * 0.02, duration: 0.32, ease: [0.2, 0.85, 0.3, 1] }}
-            style={{ display: 'inline-block', transformOrigin: 'center bottom' }}
-          >
-            {ch === ' ' ? '\u00A0' : ch}
-          </motion.span>
-        ))}
-      </span>
-      <span className="sr-only">{text}</span>
-    </span>
+    <motion.span
+      ref={ref}
+      className={className}
+      initial={{ rotateX: -34, opacity: 0 }}
+      animate={inView ? { rotateX: 0, opacity: 1 } : undefined}
+      transition={{ duration: 0.28, ease: [0.2, 0.85, 0.3, 1] }}
+      style={{ display: 'inline-block', transformOrigin: 'center bottom' }}
+    >
+      {text}
+    </motion.span>
   );
 }
 
@@ -117,7 +115,18 @@ function RouteLine({ active }: { active: string }) {
   );
 }
 
-function Shot({ src, alt, caption }: { src: string; alt: string; caption: string }) {
+function Shot({
+  src,
+  alt,
+  caption,
+  fit = 'cover',
+}: {
+  src: string;
+  alt: string;
+  caption: string;
+  /** Photographs bleed to the plate edge; screen captures sit inside it. */
+  fit?: 'cover' | 'contain';
+}) {
   return (
     <figure className="m-0">
       <img
@@ -125,7 +134,10 @@ function Shot({ src, alt, caption }: { src: string; alt: string; caption: string
         alt={alt}
         loading="lazy"
         decoding="async"
-        className="aspect-[4/3] w-full border border-jade-800 object-cover object-top"
+        className={[
+          'aspect-[4/3] w-full border border-jade-800',
+          fit === 'cover' ? 'object-cover object-top' : 'bg-jade-900 object-contain p-4',
+        ].join(' ')}
       />
       <figcaption className="mt-2.5 font-mono text-xs uppercase tracking-[0.14em] text-jade-100/65">
         {caption}
@@ -172,7 +184,7 @@ function Station({
       >
         <div className="mb-9 border-b border-jade-800 pb-4">
           <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-            <span className="font-mono text-xs uppercase tracking-[0.2em] tabular-nums text-cyanEdge">
+            <span className="font-mono text-xs uppercase tracking-[0.16em] tabular-nums text-jade-100/60">
               {code}
             </span>
             <span className="font-mono text-xs uppercase tracking-[0.18em] text-jade-100/60">
@@ -214,13 +226,7 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
 export function LineLens() {
   useLensTheme('hsl(160 34% 6%)', 'dark');
   const active = useActiveSection(stationIds);
-  const reduced = useReducedMotion();
   const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress: heroP } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  });
-  const heroY = useTransform(heroP, [0, 1], ['0%', '20%']);
 
   const blaze = products[0];
   const feelable = products[1];
@@ -239,64 +245,67 @@ export function LineLens() {
 
       <main id="main">
         {/* ------------------------------------------------------- departures */}
+        {/* No photograph here. A departure board is type, rule and figure only;
+            this is what separates this version from the cinematic one. */}
         <section
           id="open"
           ref={heroRef}
           aria-labelledby="hero-name"
-          className="relative flex min-h-[100svh] items-center overflow-hidden lg:pl-24"
+          className="relative flex min-h-[100svh] items-center border-b border-jade-800 lg:pl-24"
         >
-          <motion.div aria-hidden className="absolute inset-0" style={reduced ? undefined : { y: heroY }}>
-            <img
-              src={photos.hero.src}
-              alt=""
-              fetchPriority="high"
-              decoding="async"
-              className="h-[122%] w-full object-cover object-[86%_40%] sm:object-[68%_44%] lg:object-[52%_42%]"
-            />
-            {/* Cyan never sits over the photograph. A flat scrim keeps every
-                line of hero type above 7:1 against near-white. */}
-            <div className="absolute inset-0 bg-jade-950/82" />
-            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-jade-950 to-transparent" />
-          </motion.div>
-
-          <div className="relative z-10 mx-auto w-full max-w-6xl px-5 sm:px-8">
-            <p className="font-mono text-xs uppercase tracking-[0.34em] text-jade-50/80">
-              Departures
-            </p>
+          <div className="mx-auto w-full max-w-6xl px-5 py-rhythm3 sm:px-8">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-b border-jade-800 pb-3">
+              <p className="font-mono text-xs uppercase tracking-[0.24em] text-cyanEdge">
+                Departures
+              </p>
+              <p className="font-mono text-xs uppercase tracking-[0.14em] text-jade-100/60">
+                Taipei to San Francisco
+              </p>
+            </div>
 
             <h1
               id="hero-name"
-              className="mt-6 font-transit text-[clamp(2.8rem,10vw,7rem)] font-semibold uppercase leading-[0.92] tracking-[0.01em] text-jade-50"
+              className="mt-10 font-transit text-[clamp(3rem,11vw,8rem)] font-semibold uppercase leading-[0.9] tracking-[0.005em] text-jade-50"
             >
-              <Flap text="Andrew Chuang" />
+              Andrew Chuang
             </h1>
-            <p className="mt-2 font-sans text-[clamp(1.1rem,3vw,1.9rem)] font-light tracking-[0.28em] text-jade-50/85">
+            <p className="mt-3 font-sans text-[clamp(1.8rem,5vw,3.4rem)] font-light leading-none tracking-[0.04em] text-jade-100/80">
               {identity.nameZh}
             </p>
 
-            <table className="mt-11 w-full max-w-xl border-collapse text-left font-mono text-xs uppercase tracking-[0.1em] tabular-nums sm:text-sm">
+            <table className="mt-12 w-full border-collapse text-left font-mono text-sm uppercase tracking-[0.08em] tabular-nums">
               <caption className="sr-only">Where Andrew has lived and studied</caption>
+              <thead>
+                <tr className="border-b border-jade-800 text-jade-100/50">
+                  <th scope="col" className="w-24 py-2 pr-4 font-normal text-[0.7rem] tracking-[0.2em]">
+                    Stop
+                  </th>
+                  <th scope="col" className="py-2 pr-4 font-normal text-[0.7rem] tracking-[0.2em]">
+                    Place
+                  </th>
+                  <th scope="col" className="w-28 py-2 text-right font-normal text-[0.7rem] tracking-[0.2em]">
+                    Status
+                  </th>
+                </tr>
+              </thead>
               <tbody>
                 {[
-                  ['TPE', 'Taipei, Taiwan', 'Born'],
-                  ['UCB', 'Berkeley, Computer Science', 'Studied'],
-                  ['SFO', 'San Francisco', 'Now'],
-                ].map(([code, place, note]) => (
-                  <tr key={code} className="border-t border-jade-100/25 last:border-b">
-                    <th scope="row" className="w-20 py-3 pr-4 font-medium text-jade-50">
-                      {code}
+                  ['00', 'Taipei, Taiwan', 'Born'],
+                  ['01', 'Berkeley, Computer Science', 'Studied'],
+                  ['02', 'San Francisco', 'Now'],
+                ].map(([stop, place, note]) => (
+                  <tr key={stop} className="border-b border-jade-800">
+                    <th scope="row" className="py-4 pr-4 font-medium text-cyanEdge">
+                      {stop}
                     </th>
-                    <td className="py-3 pr-4 text-jade-50/90">
-                      {place}
-                      <span className="ml-2 text-jade-50/60 sm:hidden">{note}</span>
-                    </td>
-                    <td className="hidden w-24 py-3 text-right text-jade-50/70 sm:table-cell">{note}</td>
+                    <td className="py-4 pr-4 text-jade-50">{place}</td>
+                    <td className="py-4 text-right text-jade-100/60">{note}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
 
-            <p className="mt-10 max-w-xl text-lg leading-relaxed text-jade-50/90">
+            <p className="mt-12 max-w-xl text-lg leading-relaxed text-jade-100/85">
               {mission.headline}
             </p>
           </div>
@@ -359,7 +368,7 @@ export function LineLens() {
         <Station
           {...st.blaze}
           media={
-            <Shot src={blaze.images[0].src} alt={blaze.images[0].alt} caption="Blaze on the wrist" />
+            <Shot src={blaze.images[0].src} alt={blaze.images[0].alt} caption="Blaze on the wrist" fit="contain" />
           }
         >
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-jade-100/55">
@@ -384,8 +393,8 @@ export function LineLens() {
           {...st.feelable}
           media={
             <div className="space-y-6">
-              <Shot src={feelable.images[1].src} alt={feelable.images[1].alt} caption="Mood picker" />
-              <Shot src={feelable.images[2].src} alt={feelable.images[2].alt} caption="Dashboard" />
+              <Shot src={feelable.images[1].src} alt={feelable.images[1].alt} caption="Mood picker" fit="contain" />
+              <Shot src={feelable.images[2].src} alt={feelable.images[2].alt} caption="Dashboard" fit="contain" />
             </div>
           }
         >

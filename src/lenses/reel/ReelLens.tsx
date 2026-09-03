@@ -80,7 +80,7 @@ function Strip({ images }: { images: { src: string; alt: string }[] }) {
               alt={img.alt}
               loading="lazy"
               decoding="async"
-              className="aspect-[16/10] w-full border border-jade-800 object-cover object-top"
+              className="aspect-[16/10] w-full border border-jade-800 bg-jade-900 object-contain p-3"
             />
           </li>
         ))}
@@ -161,7 +161,7 @@ export function ReelLens() {
               initial={reduced ? false : { opacity: 0, y: 24 }}
               animate={reduced ? undefined : { opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6, ease: [0.16, 0.84, 0.24, 1] }}
-              className="font-display text-[clamp(3.6rem,12.5vw,10.5rem)] uppercase leading-[0.8] tracking-[-0.028em] text-jade-50"
+              className="font-display text-[clamp(3rem,13.5vw,10.5rem)] uppercase leading-[0.8] tracking-[-0.028em] text-jade-50"
             >
               Andrew Chuang
             </motion.h1>
@@ -291,7 +291,7 @@ export function ReelLens() {
                   alt={blaze.images[0].alt}
                   loading="lazy"
                   decoding="async"
-                  className="w-full border border-jade-800 object-cover brightness-[0.88] contrast-[1.04]"
+                  className="aspect-[16/10] w-full border border-jade-800 bg-jade-900 object-contain p-4"
                 />
               </figure>
             </>
@@ -311,7 +311,7 @@ export function ReelLens() {
               alt={blaze.images[0].alt}
               loading="lazy"
               decoding="async"
-              className="w-full border border-jade-800 object-cover brightness-[0.88] contrast-[1.04]"
+              className="aspect-[16/10] w-full border border-jade-800 bg-jade-900 object-contain p-4"
             />
           </figure>
         </Scene>

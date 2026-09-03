@@ -308,7 +308,7 @@ export const hobbies: Hobby[] = [
     id: 'travel',
     icon: '🏔️',
     label: 'Travel',
-    note: '🇹🇼🇯🇵🇺🇸🇩🇪🇦🇹🇨🇿🇭🇰🇫🇷🇭🇺🇨🇭🇳🇱🇧🇪🇵🇦🇲🇽🇵🇫🇵🇷',
+    note: 'Taiwan, Japan, United States, Germany, Austria, Czechia, Hong Kong, France, Hungary, Switzerland, Netherlands, Belgium, Panama, Mexico, French Polynesia, Puerto Rico.',
     bullets: [
       { text: 'Hitchhiked in Taiwan (USD 15)', href: 'https://andrewcchuang.substack.com/p/2021-2-17-20-76318a567869' },
       { text: 'Solo backpacked in Europe' },
@@ -323,7 +323,7 @@ export const hobbies: Hobby[] = [
     },
   },
   { id: 'dance', icon: '💃', label: 'Salsa / Bachata', note: 'a rookie but lovin’ it' },
-  { id: 'sports', icon: '🏓', label: 'Sports', note: 'Loving 🏀🏓🏋️🏊‍♂️🏃🚴. I play 🏐🏸⚾️🎳🥒 too~' },
+  { id: 'sports', icon: '🏓', label: 'Sports', note: 'Loving basketball, table tennis, lifting, swimming, running and cycling. I play volleyball, badminton, baseball, bowling and pickleball too~' },
   { id: 'acting', icon: '🎭', label: 'Acting', note: 'I tried acting too!' },
   {
     id: 'cooking',

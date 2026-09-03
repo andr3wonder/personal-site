@@ -55,7 +55,7 @@ const ROMAN = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
 
 function RunningHead({ left, right }: { left: string; right: string }) {
   return (
-    <div className="mb-rhythm3 flex items-baseline justify-between gap-6 border-b border-paper-300 pb-2 font-serif text-[0.68rem] uppercase tracking-[0.24em] text-paper-700">
+    <div className="mb-rhythm3 flex items-baseline justify-between gap-6 border-b border-paper-300 pb-2 font-serif text-[0.82rem] tracking-[0.12em] text-paper-700 [font-variant-caps:small-caps]">
       <span>{left}</span>
       <span className="text-right">{right}</span>
     </div>
@@ -64,7 +64,7 @@ function RunningHead({ left, right }: { left: string; right: string }) {
 
 function Folio({ page }: { page: number }) {
   return (
-    <p className="mt-rhythm3 text-center font-serif text-[0.78rem] tabular-nums text-paper-700">
+    <p className="mt-rhythm2 text-center font-serif text-[0.78rem] tabular-nums text-paper-700">
       {page}
     </p>
   );
@@ -75,11 +75,14 @@ function Plate({
   alt,
   caption,
   ratio = 'aspect-[4/5]',
+  fit = 'cover',
 }: {
   src: string;
   alt: string;
   caption: string;
   ratio?: string;
+  /** Photographs bleed to the plate edge; screen captures sit inside it. */
+  fit?: 'cover' | 'contain';
 }) {
   return (
     <figure className="m-0">
@@ -88,7 +91,13 @@ function Plate({
         alt={alt}
         loading="lazy"
         decoding="async"
-        className={`${ratio} w-full object-cover object-top ring-1 ring-paper-900/15`}
+        className={[
+          ratio,
+          'w-full ring-1 ring-paper-900/15',
+          fit === 'cover'
+            ? 'object-cover object-top'
+            : 'bg-paper-50 object-contain object-center p-4',
+        ].join(' ')}
       />
       <figcaption className="mt-2.5 font-serif text-[0.76rem] italic leading-snug text-paper-700">
         {caption}
@@ -136,7 +145,7 @@ function Chapter({
       ref={ref}
       id={id}
       aria-labelledby={`${id}-title`}
-      className="mx-auto w-full max-w-5xl px-6 py-rhythm3 sm:px-10 sm:py-rhythm4"
+      className="mx-auto w-full max-w-5xl px-6 pb-rhythm3 pt-rhythm3 sm:px-10 sm:pb-rhythm3 sm:pt-rhythm4"
     >
       <RunningHead left={`Chapter ${ROMAN[n]}`} right={title} />
 
@@ -170,7 +179,9 @@ const Rows = ({ children }: { children: React.ReactNode }) => (
 );
 
 const Label = ({ children }: { children: React.ReactNode }) => (
-  <p className="m-0 text-[0.7rem] uppercase tracking-[0.24em] text-paper-700">{children}</p>
+  <p className="m-0 font-serif text-[0.86rem] tracking-[0.1em] text-paper-700 [font-variant-caps:small-caps]">
+    {children}
+  </p>
 );
 
 export function VolumeLens() {
@@ -352,7 +363,8 @@ export function VolumeLens() {
             <Plate
               src={blaze.images[0].src}
               alt={blaze.images[0].alt}
-              ratio="aspect-[4/3]"
+              ratio="aspect-[16/10]"
+              fit="contain"
               caption="Plate II. Blaze on the wrist."
             />
           }
@@ -381,6 +393,7 @@ export function VolumeLens() {
               src={feelable.images[1].src}
               alt={feelable.images[1].alt}
               ratio="aspect-[4/3]"
+              fit="contain"
               caption="Plate III. The mood picker, energy against pleasantness."
             />
           }
@@ -404,6 +417,7 @@ export function VolumeLens() {
               src={feelable.images[2].src}
               alt={feelable.images[2].alt}
               ratio="aspect-[4/3]"
+              fit="contain"
               caption="Plate IV. feelable.ai, the mood dashboard."
             />
           }
@@ -415,7 +429,7 @@ export function VolumeLens() {
                   <Out href={w.href}>{w.name}</Out>
                 </p>
                 <p className="m-0 mt-1 text-[0.98rem] text-paper-700">{w.note}</p>
-                <p className="m-0 mt-1.5 text-[0.7rem] uppercase tracking-[0.24em] text-paper-700">
+                <p className="m-0 mt-1.5 font-serif text-[0.86rem] tracking-[0.1em] text-paper-700 [font-variant-caps:small-caps]">
                   {w.role}
                 </p>
               </li>
@@ -483,7 +497,7 @@ export function VolumeLens() {
                 <p className="m-0 text-[1.05rem] text-paper-900">
                   {c.href ? <Out href={c.href}>{c.name}</Out> : c.name}
                 </p>
-                <p className="m-0 mt-1.5 text-[0.7rem] uppercase tracking-[0.24em] text-paper-700">
+                <p className="m-0 mt-1.5 font-serif text-[0.86rem] tracking-[0.1em] text-paper-700 [font-variant-caps:small-caps]">
                   {c.role}
                 </p>
               </li>
@@ -506,7 +520,7 @@ export function VolumeLens() {
           <dl className="space-y-6">
             {reads.map((r) => (
               <div key={r.label}>
-                <dt className="text-[0.7rem] uppercase tracking-[0.24em] text-paper-700">
+                <dt className="font-serif text-[0.86rem] tracking-[0.1em] text-paper-700 [font-variant-caps:small-caps]">
                   {r.label}
                 </dt>
                 <dd className="m-0 mt-1.5 text-[1.02rem] leading-[1.6] text-paper-900">
@@ -649,7 +663,7 @@ export function VolumeLens() {
               ))}
             </p>
 
-            <p className="mt-20 font-serif text-[0.72rem] uppercase tracking-[0.26em] text-paper-700">
+            <p className="mt-20 font-serif font-serif text-[0.86rem] tracking-[0.1em] text-paper-700 [font-variant-caps:small-caps]">
               <Out href={notionHome}>The original, still on Notion</Out>
             </p>
           </div>
