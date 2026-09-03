@@ -25,6 +25,12 @@ export default {
           950: 'hsl(160 34% 6%)',
         },
         cyanEdge: 'hsl(179 55% 46%)',
+        // Line sits on its own colder ground so it is not Reel with a hue swap
+        slate: {
+          900: 'hsl(205 28% 11%)',
+          950: 'hsl(207 30% 7%)',
+          800: 'hsl(203 22% 20%)',
+        },
         limeEdge: 'hsl(107 42% 55%)',
         // warm counterpoint sampled from Andrew's own photographs
         amber: {

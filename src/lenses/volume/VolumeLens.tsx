@@ -31,7 +31,7 @@ const Out = ({ href, children }: { href: string; children: React.ReactNode }) =>
     href={href}
     target="_blank"
     rel="noreferrer"
-    className="text-paper-900 underline decoration-paper-300 decoration-1 underline-offset-[5px] transition-colors hover:decoration-paper-900"
+    className="text-paper-900 underline decoration-paper-300 decoration-1 underline-offset-[6px] transition-colors hover:decoration-paper-900"
   >
     {children}
   </a>
@@ -236,7 +236,7 @@ export function VolumeLens() {
               >
                 Andrew Chuang
               </h1>
-              <p className="mt-3 font-hanSerif text-[clamp(1.9rem,4.6vw,3.2rem)] font-semibold leading-none tracking-[0.03em] text-paper-900">
+              <p className="mt-3 font-hanSerif text-[clamp(1.9rem,4.6vw,3.2rem)] font-semibold leading-none tracking-[0.03em] text-paper-900" lang="zh-Hant">
                 {identity.nameZh}
               </p>
 
@@ -372,9 +372,9 @@ export function VolumeLens() {
             />
           }
         >
-          <Label>
-            {blaze.kicker} · {blaze.headline}
-          </Label>
+          <p className="m-0 font-serif text-[0.95rem] italic text-paper-700">
+            {blaze.kicker}, {blaze.headline}
+          </p>
           <ol className="mt-6 list-none space-y-5 pl-0">
             {blaze.bullets.map((b, i) => (
               <li key={b} className="grid grid-cols-[1.5rem_1fr] gap-3">

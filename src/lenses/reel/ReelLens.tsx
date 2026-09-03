@@ -93,11 +93,11 @@ function Strip({ images }: { images: { src: string; alt: string }[] }) {
 /** A credits row: role on the left, names on the right, as on a title card. */
 function Credit({ role, children }: { role: string; children: React.ReactNode }) {
   return (
-    <div className="grid grid-cols-1 items-baseline gap-x-10 gap-y-1 py-4 sm:grid-cols-[13rem_1fr]">
-      <dt className="font-mono text-[10px] uppercase leading-[1.7] tracking-[0.14em] text-amber-400/85">
+    <div className="grid grid-cols-1 gap-x-8 gap-y-0.5 py-2.5 sm:grid-cols-[1fr_1.6fr]">
+      <dt className="font-mono text-[10px] uppercase leading-[1.55] tracking-[0.1em] text-jade-100/45 sm:text-right">
         {role}
       </dt>
-      <dd className="m-0 text-[0.95rem] leading-[1.7] text-jade-100/85">{children}</dd>
+      <dd className="m-0 text-[0.95rem] leading-[1.55] text-jade-50">{children}</dd>
     </div>
   );
 }
@@ -141,7 +141,7 @@ export function ReelLens() {
               alt=""
               fetchPriority="high"
               decoding="async"
-              className="h-[118%] w-full object-cover object-[86%_34%] sm:object-[68%_36%] lg:object-[50%_36%]"
+              className="h-[118%] w-full object-cover object-[68%_34%] sm:object-[58%_36%] lg:object-[50%_36%]"
             />
             <div className="absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-jade-950 via-jade-950/92 to-transparent" />
             <div className="absolute inset-0 bg-jade-950/15" />
@@ -172,6 +172,7 @@ export function ReelLens() {
               animate={reduced ? undefined : { opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.5 }}
               className="mt-3 font-han text-[clamp(1.9rem,5.4vw,3.9rem)] font-black leading-none tracking-[0.02em] text-jade-50"
+              lang="zh-Hant"
             >
               {identity.nameZh}
             </motion.p>
@@ -465,7 +466,7 @@ export function ReelLens() {
               </h2>
               <p className="mt-5 max-w-measure text-jade-100/70">{readsIntro}</p>
 
-              <dl className="mt-14 divide-y divide-jade-800">
+              <dl className="mt-14">
                 {reads.map((r) => (
                   <Credit key={r.label} role={r.label}>
                     <ItemList items={r.items} separatorClassName="text-jade-100/30" />
@@ -479,7 +480,7 @@ export function ReelLens() {
               <p className="mt-16 font-mono text-[10px] uppercase tracking-[0.16em] text-amber-400/85">
                 Off the clock
               </p>
-              <dl className="mt-3 divide-y divide-jade-800">
+              <dl className="mt-3">
                 {hobbies.map((h) => (
                   <Credit key={h.id} role={h.label}>
                     {h.stat && <span className="text-jade-50">{h.stat}</span>}
@@ -514,7 +515,7 @@ export function ReelLens() {
                 </div>
               </div>
 
-              <dl className="mt-6 divide-y divide-jade-800">
+              <dl className="mt-6">
                 {guides.map((g) => (
                   <Credit key={g.href} role="Guide">
                     <Out href={g.href}>{g.label}</Out>

@@ -100,7 +100,7 @@ function RouteLine({ active }: { active: string }) {
 
   return (
     <div aria-hidden className="pointer-events-none fixed inset-y-0 left-8 z-30 hidden w-px lg:block">
-      <span className="absolute inset-0 bg-jade-800" />
+      <span className="absolute inset-0 bg-slate-800" />
       {!reduced && (
         <motion.span
           className="absolute inset-x-0 top-0 h-full origin-top bg-cyanEdge/80"
@@ -113,7 +113,7 @@ function RouteLine({ active }: { active: string }) {
           className={[
             'absolute h-1.5 w-1.5 rounded-full transition-colors duration-300',
             i === idx ? '-left-[3.5px] h-2.5 w-2.5 bg-cyanEdge' : '-left-[2.5px]',
-            i < idx ? 'bg-cyanEdge/70' : i > idx ? 'bg-jade-800' : '',
+            i < idx ? 'bg-cyanEdge/70' : i > idx ? 'bg-slate-800' : '',
           ].join(' ')}
           style={{ top: `${top}%` }}
         />
@@ -145,7 +145,7 @@ function Shot({
         loading="lazy"
         decoding="async"
         className={[
-          'aspect-[4/3] w-full border border-jade-800',
+          'aspect-[4/3] w-full border border-slate-800',
           fit === 'cover' ? 'object-cover object-top' : 'bg-[#f7f7f7] object-cover object-center',
           grade ? 'saturate-[0.55] contrast-[1.05] sepia-[0.18]' : '',
         ].join(' ')}
@@ -193,7 +193,7 @@ function Station({
         animate={inView && !reduced ? { opacity: 1, y: 0 } : undefined}
         transition={{ duration: 0.48, ease: [0.18, 0.82, 0.26, 1] }}
       >
-        <div className="mb-9 border-b border-jade-800 pb-4">
+        <div className="mb-9 border-b border-slate-800 pb-4">
           <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
             <span className="font-mono text-xs uppercase tracking-[0.16em] tabular-nums text-jade-100/60">
               {code}
@@ -204,7 +204,7 @@ function Station({
           </div>
           <h2
             id={`${id}-name`}
-            className="mt-2 font-transit text-[clamp(1.7rem,4.2vw,2.8rem)] font-medium uppercase leading-[1.02] tracking-[0.015em] text-jade-50"
+            className="mt-2 font-mono text-[clamp(1.4rem,3.4vw,2.2rem)] font-medium uppercase leading-[1.05] tracking-[-0.01em] text-jade-50"
           >
             <Flap text={name} />
           </h2>
@@ -219,13 +219,13 @@ function Station({
 
 /** Full-measure row, used when there is no genuine label data to show. */
 function Line({ children }: { children: React.ReactNode }) {
-  return <div className="border-t border-jade-800 py-3.5 text-jade-100/90 last:border-b">{children}</div>;
+  return <div className="border-t border-slate-800 py-3.5 text-jade-100/90 last:border-b">{children}</div>;
 }
 
 /** Rigid two-column data row, the unit this whole lens is built from. */
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="grid grid-cols-1 gap-1 border-t border-jade-800 py-3.5 sm:grid-cols-[9rem_1fr] sm:gap-6">
+    <div className="grid grid-cols-1 gap-1 border-t border-slate-800 py-3.5 sm:grid-cols-[9rem_1fr] sm:gap-6">
       <span className="font-mono text-xs uppercase tracking-[0.18em] text-jade-100/55">{label}</span>
       <span className="text-jade-100/90">{children}</span>
     </div>
@@ -233,7 +233,7 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
 }
 
 export function LineLens() {
-  useLensTheme('hsl(160 34% 6%)', 'dark');
+  useLensTheme('hsl(207 30% 7%)', 'dark');
   const active = useActiveSection(stationIds);
   const heroRef = useRef<HTMLElement>(null);
 
@@ -246,7 +246,7 @@ export function LineLens() {
   const st = Object.fromEntries(stations.map((s) => [s.id, s]));
 
   return (
-    <div className="min-h-screen bg-jade-950">
+    <div className="min-h-screen bg-slate-950">
       <a href="#main" className="skip-link">
         Skip to content
       </a>
@@ -260,10 +260,10 @@ export function LineLens() {
           id="open"
           ref={heroRef}
           aria-labelledby="hero-name"
-          className="relative flex min-h-[100svh] items-center border-b border-jade-800 lg:pl-24"
+          className="relative flex min-h-[100svh] items-center border-b border-slate-800 lg:pl-24"
         >
           <div className="mx-auto w-full max-w-6xl px-5 py-rhythm3 sm:px-8">
-            <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-b border-jade-800 pb-3">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-b border-slate-800 pb-3">
               <p className="font-mono text-xs uppercase tracking-[0.24em] text-cyanEdge">
                 Departures
               </p>
@@ -274,18 +274,18 @@ export function LineLens() {
 
             <h1
               id="hero-name"
-              className="mt-10 font-transit text-[clamp(3rem,11vw,8rem)] font-semibold uppercase leading-[0.9] tracking-[0.005em] text-jade-50"
+              className="mt-10 font-mono text-[clamp(2.2rem,7.5vw,5.4rem)] font-medium uppercase leading-[0.95] tracking-[-0.02em] text-jade-50"
             >
               Andrew Chuang
             </h1>
-            <p className="mt-3 font-han text-[clamp(1.8rem,4.8vw,3.2rem)] font-bold leading-none tracking-[0.02em] text-jade-50">
+            <p className="mt-3 font-han text-[clamp(1.8rem,4.8vw,3.2rem)] font-bold leading-none tracking-[0.02em] text-jade-50" lang="zh-Hant">
               {identity.nameZh}
             </p>
 
             <table className="mt-12 w-full border-collapse text-left font-mono text-sm uppercase tracking-[0.08em] tabular-nums">
               <caption className="sr-only">Where Andrew has lived and studied</caption>
               <thead>
-                <tr className="border-b border-jade-800 text-jade-100/50">
+                <tr className="border-b border-slate-800 text-jade-100/50">
                   <th scope="col" className="w-24 py-2 pr-4 font-normal text-[0.7rem] tracking-[0.2em]">
                     Stop
                   </th>
@@ -303,7 +303,7 @@ export function LineLens() {
                   ['01', 'Berkeley, Computer Science', 'Studied'],
                   ['02', 'San Francisco', 'Now'],
                 ].map(([stop, place, note]) => (
-                  <tr key={stop} className="border-b border-jade-800">
+                  <tr key={stop} className="border-b border-slate-800">
                     <th scope="row" className="py-4 pr-4 font-medium text-cyanEdge">
                       {stop}
                     </th>
@@ -383,14 +383,14 @@ export function LineLens() {
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-jade-100/55">
             {blaze.kicker}
           </p>
-          <p className="mt-2 font-transit text-[clamp(2.4rem,6vw,3.8rem)] font-semibold uppercase leading-[0.9] text-jade-50">
+          <p className="mt-2 font-mono text-[clamp(2rem,5vw,3.2rem)] font-medium uppercase leading-[0.95] text-jade-50">
             <span className="block">200k</span>
             <span className="block text-jade-100/40">users</span>
           </p>
           <table className="mt-8 w-full border-collapse text-left font-mono text-sm tabular-nums">
             <caption className="sr-only">Blaze Messenger results</caption>
             <thead>
-              <tr className="border-b border-jade-800 text-[0.7rem] uppercase tracking-[0.18em] text-jade-100/50">
+              <tr className="border-b border-slate-800 text-[0.7rem] uppercase tracking-[0.18em] text-jade-100/50">
                 <th scope="col" className="py-2 pr-4 font-normal">
                   Metric
                 </th>
@@ -404,7 +404,7 @@ export function LineLens() {
             </thead>
             <tbody>
               {blazeMetrics.map((m) => (
-                <tr key={m.metric} className="border-b border-jade-800">
+                <tr key={m.metric} className="border-b border-slate-800">
                   <th scope="row" className="py-3.5 pr-4 font-normal text-jade-100/90">
                     {m.metric}
                   </th>
@@ -499,18 +499,35 @@ export function LineLens() {
         </Station>
 
         <div className="mx-auto -mt-rhythm3 w-full max-w-6xl px-5 pb-rhythm4 sm:px-8 lg:pl-24">
-          <dl className="grid gap-x-12 md:grid-cols-2">
-            {reads.map((r) => (
-              <div key={r.label} className="border-t border-jade-800 py-3.5">
-                <dt className="font-mono text-xs uppercase tracking-[0.18em] text-cyanEdge">
-                  {r.label}
-                </dt>
-                <dd className="m-0 mt-1.5 text-[0.94rem] leading-[1.7] text-jade-100/75">
-                  <ItemList items={r.items} separatorClassName="text-jade-100/30" />
-                </dd>
-              </div>
-            ))}
-          </dl>
+          <table className="w-full border-collapse text-left font-mono text-sm">
+            <caption className="sr-only">Info diet by subject</caption>
+            <thead>
+              <tr className="border-b border-slate-800 text-[0.7rem] uppercase tracking-[0.18em] text-jade-100/60">
+                <th scope="col" className="w-52 py-2 pr-6 font-normal">
+                  Subject
+                </th>
+                <th scope="col" className="py-2 pr-6 font-normal">
+                  Sources
+                </th>
+                <th scope="col" className="w-16 py-2 text-right font-normal tabular-nums">
+                  No.
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {reads.map((r) => (
+                <tr key={r.label} className="border-b border-slate-800 align-baseline">
+                  <th scope="row" className="py-3.5 pr-6 font-normal uppercase tracking-[0.1em] text-cyanEdge">
+                    {r.label}
+                  </th>
+                  <td className="py-3.5 pr-6 font-sans text-[0.94rem] leading-[1.65] text-jade-100/85">
+                    <ItemList items={r.items} separatorClassName="text-jade-100/30" />
+                  </td>
+                  <td className="py-3.5 text-right tabular-nums text-jade-100/50">{r.items.length}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
 
         {/* ---------------------------------------------------------- ST 09 */}
@@ -556,7 +573,7 @@ export function LineLens() {
               </p>
               <ul className="mt-4 list-none space-y-0 pl-0">
                 {hobbies[0].essays!.map((e) => (
-                  <li key={e.href} className="border-t border-jade-800 py-4 last:border-b">
+                  <li key={e.href} className="border-t border-slate-800 py-4 last:border-b">
                     <Out href={e.href}>{e.title}</Out>
                   </li>
                 ))}
@@ -564,7 +581,7 @@ export function LineLens() {
             </div>
           }
         >
-          <p className="font-transit text-[clamp(2.4rem,6vw,3.8rem)] font-semibold uppercase leading-[0.9] text-jade-50">
+          <p className="font-mono text-[clamp(2rem,5vw,3.2rem)] font-medium uppercase leading-[0.95] text-jade-50">
             <span className="block">1M+</span>
             <span className="block text-jade-100/40">views</span>
           </p>
@@ -596,7 +613,7 @@ export function LineLens() {
           <p className="font-mono text-xs uppercase tracking-[0.34em] text-cyanEdge">Terminus</p>
 
           <blockquote className="m-0 mt-9 max-w-3xl">
-            <p className="m-0 font-transit text-[clamp(1.9rem,5.4vw,3.4rem)] font-medium uppercase leading-[1.04] text-jade-50">
+            <p className="m-0 font-mono text-[clamp(1.5rem,4.2vw,2.6rem)] font-medium uppercase leading-[1.1] text-jade-50">
               Don’t follow your dreams, follow your curiosity!
             </p>
             <footer className="mt-4 text-sm text-jade-100/60">
@@ -607,7 +624,7 @@ export function LineLens() {
 
           <h2
             id="close-title"
-            className="mt-16 font-transit text-3xl font-semibold uppercase tracking-[0.02em] text-jade-50"
+            className="mt-16 font-mono text-2xl font-medium uppercase tracking-[-0.01em] text-jade-50"
           >
             {closing.title}
           </h2>
