@@ -97,7 +97,7 @@ function Plate({
           'w-full ring-1 ring-paper-900/15',
           fit === 'cover'
             ? 'object-cover object-top'
-            : 'bg-[#f7f7f7] object-cover object-center',
+            : 'bg-paper-50 object-cover object-center',
         ].join(' ')}
       />
       <figcaption className="mt-2.5 font-serif text-[0.76rem] italic leading-snug text-paper-700">

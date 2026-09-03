@@ -18,10 +18,22 @@ import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 const EASE = [0.16, 0.84, 0.24, 1] as const;
 
+/** Display-scale figure. The middle register that promotes a number. */
+export function Figure({ value, unit }: { value: string; unit: string }) {
+  return (
+    <p className="mt-10 font-display text-[clamp(3rem,7vw,5.5rem)] uppercase leading-[0.85] tracking-[-0.03em] text-jade-50">
+      {value}
+      <span className="ml-3 align-baseline font-reel text-[0.2em] font-medium uppercase tracking-[0.2em] text-amber-400">
+        {unit}
+      </span>
+    </p>
+  );
+}
+
 /** Subtitle under a title. Carries the category without an eyebrow rule. */
 export function Sub({ children }: { children: React.ReactNode }) {
   return (
-    <p className="mx-auto mt-7 max-w-2xl text-center text-[clamp(1.05rem,1.9vw,1.4rem)] leading-snug text-jade-100/70">
+    <p className="mt-7 max-w-2xl text-[clamp(1.05rem,1.9vw,1.4rem)] leading-snug text-jade-100/70">
       {children}
     </p>
   );
@@ -84,11 +96,11 @@ export function Frame({
         <div className="mx-auto w-full max-w-4xl px-5 py-9 sm:px-8 sm:py-11">
           <h2
             id={`${id}-title`}
-            className="text-center font-display text-[clamp(2.6rem,7vw,5.5rem)] uppercase leading-[0.86] tracking-[-0.025em] text-jade-50"
+            className="font-display text-[clamp(2.6rem,7vw,5.5rem)] uppercase leading-[0.86] tracking-[-0.025em] text-jade-50"
           >
             {title}
           </h2>
-          {children && <div className="mx-auto mt-7 max-w-2xl text-left">{children}</div>}
+          {children && <div className="mt-7 max-w-2xl">{children}</div>}
         </div>
       </motion.div>
 
@@ -129,12 +141,12 @@ export function Card({
       >
         <h2
           id={`${id}-title`}
-          className="text-center font-display text-[clamp(3rem,10vw,8.5rem)] uppercase leading-[0.82] tracking-[-0.03em] text-jade-50"
+          className="font-display text-[clamp(3rem,10vw,8.5rem)] uppercase leading-[0.82] tracking-[-0.03em] text-jade-50"
         >
           {title}
         </h2>
         {sub && <Sub>{sub}</Sub>}
-        {children && <div className="mt-16 text-left">{children}</div>}
+        {children && <div className="mt-16">{children}</div>}
       </motion.div>
     </section>
   );
@@ -170,7 +182,7 @@ export function Plate({
             />
           ))}
         </div>
-        <p className="mt-5 text-center font-mono text-[10px] uppercase tracking-[0.14em] text-jade-950/55">
+        <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.14em] text-jade-950/55">
           {caption}
         </p>
       </motion.div>

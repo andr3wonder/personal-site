@@ -4,7 +4,7 @@ import { EditionFooter } from '../../components/EditionFooter';
 import { ItemList } from '../../components/ItemList';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useLensTheme } from '../../hooks/useLensTheme';
-import { Card, Frame, Plate, Roll, Sub } from './parts';
+import { Card, Figure, Frame, Plate, Roll, Sub } from './parts';
 import {
   aboutFacts,
   channels,
@@ -125,7 +125,7 @@ export function ReelLens() {
           title="Five things, in order"
           sub={<Out href={priorities.articleHref}>Written on a train to Strasbourg.</Out>}
         >
-          <ol className="mx-auto max-w-3xl list-none space-y-9 pl-0">
+          <ol className="max-w-3xl list-none space-y-9 pl-0">
             {priorities.items.map((p, i) => (
               <li key={p.label} className="grid grid-cols-[2.6rem_1fr] gap-5">
                 <span className="pt-2.5 font-mono text-[11px] tabular-nums text-amber-400/85">
@@ -178,9 +178,12 @@ export function ReelLens() {
           id="blaze"
          
           title={<Out href={blaze.href!}>Blaze Messenger</Out>}
-          sub={<>An AI voice messenger. 200k users, 110k of them in the first month.</>}
+          sub={<>An AI voice messenger.</>}
         >
-          <ul className="mx-auto grid max-w-4xl list-none gap-x-14 gap-y-8 pl-0 sm:grid-cols-2">
+          <Figure value="200k" unit="users" />
+          <p className="mt-3 text-[1.05rem] text-jade-100/70">110k of them in the first month.</p>
+
+          <ul className="mt-12 grid max-w-4xl list-none gap-x-14 gap-y-8 pl-0 sm:grid-cols-2">
             {blaze.bullets.map((b) => (
               <li key={b} className="text-[1.05rem] leading-[1.55] text-jade-100/85">
                 {b}
@@ -204,7 +207,7 @@ export function ReelLens() {
             </>
           }
         >
-          <ul className="mx-auto grid max-w-3xl list-none gap-x-14 gap-y-8 pl-0 sm:grid-cols-2">
+          <ul className="grid max-w-3xl list-none gap-x-14 gap-y-8 pl-0 sm:grid-cols-2">
             {work.map((w) => (
               <li key={w.name}>
                 <span className="block font-display text-[clamp(1.3rem,2.4vw,1.9rem)] uppercase leading-[1.05] text-jade-50">
@@ -308,7 +311,7 @@ export function ReelLens() {
             whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.08 }}
             transition={{ duration: 0.5, ease: [0.16, 0.84, 0.24, 1] }}
-            className="mx-auto w-full max-w-3xl px-5 text-center sm:px-8"
+            className="mx-auto w-full max-w-3xl px-5 sm:px-8"
           >
             <h2
               id="credits-title"
@@ -375,7 +378,7 @@ export function ReelLens() {
           aria-labelledby="close-title"
           className="relative flex min-h-[100svh] items-center bg-jade-950"
         >
-          <div className="mx-auto w-full max-w-5xl px-5 py-rhythm3 text-center sm:px-8">
+          <div className="mx-auto w-full max-w-5xl px-5 py-rhythm3 sm:px-8">
             <blockquote className="m-0">
               <p className="m-0 font-display text-[clamp(2.8rem,9.5vw,8rem)] uppercase leading-[0.84] tracking-[-0.035em] text-jade-50">
                 Don’t follow
@@ -391,7 +394,7 @@ export function ReelLens() {
               </footer>
             </blockquote>
 
-            <div className="mx-auto mt-20 max-w-xl border-t border-jade-800 pt-10">
+            <div className="mt-20 max-w-xl border-t border-jade-800 pt-10">
               <h2
                 id="close-title"
                 className="font-display text-[clamp(1.6rem,3.4vw,2.4rem)] uppercase tracking-[-0.02em] text-jade-50"
@@ -399,7 +402,7 @@ export function ReelLens() {
                 {closing.title}
               </h2>
               <p className="mt-3 text-jade-100/75">{closing.body}</p>
-              <p className="mt-6 flex flex-wrap justify-center gap-x-7 gap-y-3 font-mono text-xs uppercase tracking-[0.12em]">
+              <p className="mt-6 flex flex-wrap gap-x-7 gap-y-3 font-mono text-xs uppercase tracking-[0.12em]">
                 {closing.links.map((l) => (
                   <a
                     key={l.href}
@@ -415,7 +418,7 @@ export function ReelLens() {
                   href={notionHome}
                   target="_blank"
                   rel="noreferrer"
-                  className="rule-link text-jade-100/60 hover:text-jade-50"
+                  className="rule-link text-amber-300 hover:text-amber-200"
                 >
                   The original, on Notion
                 </a>

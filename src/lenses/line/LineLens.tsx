@@ -106,7 +106,7 @@ function Shot({
         decoding="async"
         className={[
           'aspect-[4/3] w-full border border-slate-800',
-          fit === 'cover' ? 'object-cover object-top' : 'bg-[#f7f7f7] object-cover object-center',
+          fit === 'cover' ? 'object-cover object-top' : 'bg-slate-900 object-contain p-3',
           grade ? 'saturate-[0.55] contrast-[1.05] sepia-[0.18]' : '',
         ].join(' ')}
       />
@@ -232,7 +232,7 @@ export function LineLens() {
 
             <h1
               id="hero-name"
-              className="mt-10 font-transit text-[clamp(2.6rem,9vw,6.4rem)] font-semibold uppercase leading-[0.92] tracking-[0.01em] text-jade-50"
+              className="mt-10 font-mono text-[clamp(2rem,6.4vw,4.6rem)] font-medium uppercase leading-[1] tracking-[-0.045em] text-jade-50"
             >
               Andrew Chuang
             </h1>
@@ -243,23 +243,26 @@ export function LineLens() {
             <table className="mt-12 w-full border-collapse text-left font-mono text-sm uppercase tracking-[0.08em] tabular-nums">
               <caption className="sr-only">Where Andrew has lived and studied</caption>
               <thead>
-                <tr className="border-b border-slate-800 text-jade-100/50">
+                <tr className="border-b border-slate-800 text-jade-100/70">
                   <th scope="col" className="w-24 py-2 pr-4 font-normal text-[0.7rem] tracking-[0.2em]">
                     Stop
                   </th>
                   <th scope="col" className="py-2 pr-4 font-normal text-[0.7rem] tracking-[0.2em]">
                     Place
                   </th>
-                  <th scope="col" className="w-28 py-2 text-right font-normal text-[0.7rem] tracking-[0.2em]">
+                  <th scope="col" className="w-24 py-2 pr-4 text-right font-normal text-[0.7rem] tracking-[0.2em]">
+                    Since
+                  </th>
+                  <th scope="col" className="w-32 py-2 text-right font-normal text-[0.7rem] tracking-[0.2em]">
                     Status
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {[
-                  ['00', 'Taipei, Taiwan', 'Departed'],
-                  ['01', 'Berkeley, Computer Science', 'Departed'],
-                  ['02', 'San Francisco', 'At platform'],
+                  ['00', 'Taipei, Taiwan', 'Born', 'Departed'],
+                  ['01', 'Berkeley, Computer Science', 'Studied', 'Departed'],
+                  ['02', 'San Francisco', 'Now', 'At platform'],
                 ].map(([stop, place, note]) => (
                   <tr key={stop} className="border-b border-slate-800">
                     <th scope="row" className="py-4 pr-4 font-medium text-cyanEdge">
@@ -344,7 +347,7 @@ export function LineLens() {
           <table className="mt-8 w-full border-collapse text-left font-mono text-sm tabular-nums">
             <caption className="sr-only">Blaze Messenger results</caption>
             <thead>
-              <tr className="border-b border-slate-800 text-[0.7rem] uppercase tracking-[0.18em] text-jade-100/50">
+              <tr className="border-b border-slate-800 text-[0.7rem] uppercase tracking-[0.18em] text-jade-100/70">
                 <th scope="col" className="py-2 pr-4 font-normal">
                   Metric
                 </th>
