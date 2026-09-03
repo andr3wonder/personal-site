@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { motion, useInView, useScroll, useSpring } from 'framer-motion';
 import { EditionFooter } from '../../components/EditionFooter';
 import { useActiveSection } from '../../hooks/useActiveSection';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { ItemList } from '../../components/ItemList';
 import { useLensTheme } from '../../hooks/useLensTheme';
 import {
   aboutFacts,
@@ -24,6 +25,7 @@ import {
   reads,
   readsIntro,
   work,
+  blazeMetrics,
 } from '../../data/content';
 
 const Out = ({ href, children }: { href: string; children: React.ReactNode }) => (
@@ -92,27 +94,8 @@ function RouteLine({ active }: { active: string }) {
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll();
   const draw = useSpring(scrollYProgress, { stiffness: 90, damping: 26, mass: 0.4 });
-  const [offsets, setOffsets] = useState<number[]>([]);
-
-  useEffect(() => {
-    const measure = () => {
-      const total = document.documentElement.scrollHeight || 1;
-      setOffsets(
-        stationIds.map((id) => {
-          const el = document.getElementById(id);
-          return el ? ((el.offsetTop + el.offsetHeight / 2) / total) * 100 : 0;
-        }),
-      );
-    };
-    measure();
-    window.addEventListener('resize', measure);
-    const t = window.setTimeout(measure, 600);
-    return () => {
-      window.removeEventListener('resize', measure);
-      window.clearTimeout(t);
-    };
-  }, []);
-
+  // Equal stop intervals: the founding rule of a schematic line diagram.
+  const offsets = stationIds.map((_, i) => 8 + (i * 84) / (stationIds.length - 1));
   const idx = Math.max(0, stationIds.indexOf(active));
 
   return (
@@ -295,7 +278,7 @@ export function LineLens() {
             >
               Andrew Chuang
             </h1>
-            <p className="mt-3 font-sans text-[clamp(1.8rem,5vw,3.4rem)] font-light leading-none tracking-[0.04em] text-jade-100/80">
+            <p className="mt-3 font-han text-[clamp(1.8rem,4.8vw,3.2rem)] font-bold leading-none tracking-[0.02em] text-jade-50">
               {identity.nameZh}
             </p>
 
@@ -404,14 +387,39 @@ export function LineLens() {
             <span className="block">200k</span>
             <span className="block text-jade-100/40">users</span>
           </p>
-          <div className="mt-7">
-            {blaze.bullets.map((b) => (
-              <Line key={b}>{b}</Line>
-            ))}
-            <Line>
-              <Out href={blaze.href!}>Case notes</Out>
-            </Line>
-          </div>
+          <table className="mt-8 w-full border-collapse text-left font-mono text-sm tabular-nums">
+            <caption className="sr-only">Blaze Messenger results</caption>
+            <thead>
+              <tr className="border-b border-jade-800 text-[0.7rem] uppercase tracking-[0.18em] text-jade-100/50">
+                <th scope="col" className="py-2 pr-4 font-normal">
+                  Metric
+                </th>
+                <th scope="col" className="w-24 py-2 pr-4 text-right font-normal">
+                  Value
+                </th>
+                <th scope="col" className="w-28 py-2 text-right font-normal">
+                  Window
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {blazeMetrics.map((m) => (
+                <tr key={m.metric} className="border-b border-jade-800">
+                  <th scope="row" className="py-3.5 pr-4 font-normal text-jade-100/90">
+                    {m.metric}
+                  </th>
+                  <td className="py-3.5 pr-4 text-right text-jade-50">{m.value}</td>
+                  <td className="py-3.5 text-right text-jade-100/55">{m.window}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p className="mt-6 font-mono text-sm">
+            <Out href={blaze.href!}>Case notes</Out>
+          </p>
+          <p className="sr-only">
+            {blaze.bullets.join('. ')}
+          </p>
         </Station>
 
         {/* ---------------------------------------------------------- ST 05 */}
@@ -498,7 +506,7 @@ export function LineLens() {
                   {r.label}
                 </dt>
                 <dd className="m-0 mt-1.5 text-[0.94rem] leading-[1.7] text-jade-100/75">
-                  {r.items.join(' · ')}
+                  <ItemList items={r.items} separatorClassName="text-jade-100/30" />
                 </dd>
               </div>
             ))}

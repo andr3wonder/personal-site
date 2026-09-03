@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { EditionFooter } from '../../components/EditionFooter';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { ItemList } from '../../components/ItemList';
 import { useLensTheme } from '../../hooks/useLensTheme';
 import {
   aboutFacts,
@@ -235,7 +236,7 @@ export function VolumeLens() {
               >
                 Andrew Chuang
               </h1>
-              <p className="mt-3 font-serif text-[clamp(2rem,5vw,3.5rem)] leading-none tracking-[0.1em] text-paper-900">
+              <p className="mt-3 font-hanSerif text-[clamp(1.9rem,4.6vw,3.2rem)] font-semibold leading-none tracking-[0.03em] text-paper-900">
                 {identity.nameZh}
               </p>
 
@@ -332,7 +333,7 @@ export function VolumeLens() {
             <Plate
               src={photos.portrait.src}
               alt={photos.portrait.alt}
-              caption="Plate I. At the rim, Grand Canyon."
+              caption="Fig. 1. At the rim, Grand Canyon."
             />
           }
         >
@@ -367,7 +368,7 @@ export function VolumeLens() {
               alt={blaze.images[0].alt}
               ratio="aspect-[16/10]"
               fit="contain"
-              caption="Plate II. Blaze on the wrist."
+              caption="Fig. 2. Blaze Messenger, watch prototype."
             />
           }
         >
@@ -396,7 +397,7 @@ export function VolumeLens() {
               alt={feelable.images[1].alt}
               ratio="aspect-[4/3]"
               fit="contain"
-              caption="Plate III. The mood picker, energy against pleasantness."
+              caption="Fig. 3. feelable.ai, the mood picker: energy against pleasantness."
             />
           }
         >
@@ -420,7 +421,7 @@ export function VolumeLens() {
               alt={feelable.images[2].alt}
               ratio="aspect-[4/3]"
               fit="contain"
-              caption="Plate IV. feelable.ai, the mood dashboard."
+              caption="Fig. 4. feelable.ai, the mood dashboard."
             />
           }
         >
@@ -448,13 +449,13 @@ export function VolumeLens() {
                 src={genz.images![0].src}
                 alt={genz.images![0].alt}
                 ratio="aspect-[4/3]"
-                caption="Plate V. Everyone who turned up."
+                caption="Fig. 5. GenZ Taiwan, everyone who turned up."
               />
               <Plate
                 src={genz.images![1].src}
                 alt={genz.images![1].alt}
                 ratio="aspect-[4/3]"
-                caption="Plate VI. The stage, before doors."
+                caption="Fig. 6. TEDx, the stage before doors."
               />
             </div>
           }
@@ -489,7 +490,7 @@ export function VolumeLens() {
               src={genz.images![3].src}
               alt={genz.images![3].alt}
               ratio="aspect-[4/3]"
-              caption="Plate VII. Mid-session, microphone in hand."
+              caption="Fig. 7. Mid-session, microphone in hand."
             />
           }
         >
@@ -526,7 +527,7 @@ export function VolumeLens() {
                   {r.label}
                 </dt>
                 <dd className="m-0 mt-1.5 text-[1.02rem] leading-[1.6] text-paper-900">
-                  {r.items.join(' · ')}
+                  <ItemList items={r.items} separatorClassName="text-paper-300" />
                 </dd>
               </div>
             ))}
@@ -541,13 +542,13 @@ export function VolumeLens() {
               <Plate
                 src={travel.image!.src}
                 alt={travel.image!.alt}
-                caption="Plate VIII. The start line, San Francisco."
+                caption="Fig. 8. The start line, San Francisco."
               />
               <Plate
                 src={cooking.image!.src}
                 alt={cooking.image!.alt}
                 ratio="aspect-[4/3]"
-                caption="Plate IX. Meal prep, allegedly."
+                caption="Fig. 9. Meal prep, allegedly."
               />
             </div>
           }

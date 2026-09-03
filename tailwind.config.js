@@ -49,6 +49,9 @@ export default {
         serif: ['"Spectral"', '"Iowan Old Style"', 'Georgia', 'serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
         transit: ['"Barlow Condensed"', '"Inter"', 'sans-serif'],
+        // weight-matched CJK, so the Chinese name is a peer of the Latin
+        han: ['"Noto Sans TC"', '"PingFang TC"', 'sans-serif'],
+        hanSerif: ['"Noto Serif TC"', '"Songti TC"', 'serif'],
       },
       fontSize: {
         // 18px body x 3.174 (letters:digits in the seed) = 57px display

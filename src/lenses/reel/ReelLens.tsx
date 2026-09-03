@@ -5,6 +5,7 @@ import { useActiveSection } from '../../hooks/useActiveSection';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useLensTheme } from '../../hooks/useLensTheme';
 import { Lede, Scene, SceneTitle, SprocketSpine } from './parts';
+import { ItemList } from '../../components/ItemList';
 import {
   aboutFacts,
   channels,
@@ -170,7 +171,7 @@ export function ReelLens() {
               initial={reduced ? false : { opacity: 0 }}
               animate={reduced ? undefined : { opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="mt-2 font-sans text-[clamp(2rem,6vw,4.2rem)] font-light leading-none tracking-[0.04em] text-jade-50/95"
+              className="mt-3 font-han text-[clamp(1.9rem,5.4vw,3.9rem)] font-black leading-none tracking-[0.02em] text-jade-50"
             >
               {identity.nameZh}
             </motion.p>
@@ -274,16 +275,13 @@ export function ReelLens() {
         <Scene
           id="blaze"
           index={4}
-          slate="Product"
+          slate="Product · AI voice messenger"
           layout="split"
           title={
             <>
               <SceneTitle>
                 <Out href={blaze.href!}>Blaze Messenger</Out>
               </SceneTitle>
-              <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-jade-100/60">
-                {blaze.kicker}
-              </p>
               <figure className="mt-10 hidden lg:block">
                 <img
                   src={blaze.images[0].src}
@@ -319,16 +317,13 @@ export function ReelLens() {
         <Scene
           id="feelable"
           index={5}
-          slate="Product"
+          slate="Product · mood journaling companion"
           layout="split"
           title={
             <>
               <SceneTitle>
                 <Out href={feelable.href!}>feelable.ai</Out>
               </SceneTitle>
-              <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-jade-100/60">
-                {feelable.kicker}
-              </p>
             </>
           }
         >
@@ -379,14 +374,11 @@ export function ReelLens() {
         <Scene
           id="genz"
           index={6}
-          slate="Communities"
+          slate="Communities · founder"
           layout="split"
           title={
             <>
               <SceneTitle>GenZ Taiwan</SceneTitle>
-              <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-jade-100/60">
-                Founder
-              </p>
               <figure className="mt-9 hidden lg:block">
                 <img
                   src={genz.images![0].src}
@@ -476,7 +468,7 @@ export function ReelLens() {
               <dl className="mt-14 divide-y divide-jade-800">
                 {reads.map((r) => (
                   <Credit key={r.label} role={r.label}>
-                    {r.items.join(' · ')}
+                    <ItemList items={r.items} separatorClassName="text-jade-100/30" />
                   </Credit>
                 ))}
                 <Credit role="Full list">
@@ -558,24 +550,24 @@ export function ReelLens() {
           aria-labelledby="close-title"
           className="relative flex min-h-[92vh] items-center overflow-hidden lg:pl-16"
         >
-          <div className="relative z-10 mx-auto w-full max-w-3xl px-5 py-rhythm4 text-center sm:px-8">
+          <div className="relative z-10 mx-auto w-full max-w-6xl px-5 py-rhythm4 sm:px-8">
             <blockquote className="m-0">
               <p className="m-0 font-display text-[clamp(2.6rem,8vw,6rem)] uppercase leading-[0.95] tracking-[-0.015em] text-jade-50">
                 Don’t follow your dreams, follow your curiosity!
               </p>
               <footer className="mt-5 text-sm text-jade-100/60">
-                <Out href="https://substack.com/home/post/p-148637074">And find your style</Out>
+                <Out href="https://substack.com/home/post/p-148637074">And find your style.</Out>
               </footer>
             </blockquote>
 
-            <span aria-hidden className="mx-auto mt-14 block h-px w-14 bg-amber-400/50" />
+            <span aria-hidden className="mt-14 block h-px w-14 bg-amber-400/50" />
 
 
             <h2 id="close-title" className="mt-16 font-display text-4xl uppercase text-jade-50">
               {closing.title}
             </h2>
-            <p className="mx-auto mt-3 max-w-xl text-jade-100/75">{closing.body}</p>
-            <p className="mt-7 flex flex-wrap justify-center gap-x-7 gap-y-3 font-mono text-xs uppercase tracking-[0.14em]">
+            <p className="mt-3 max-w-xl text-jade-100/75">{closing.body}</p>
+            <p className="mt-7 flex flex-wrap gap-x-7 gap-y-3 font-mono text-xs uppercase tracking-[0.14em]">
               {closing.links.map((l) => (
                 <a
                   key={l.href}
