@@ -263,13 +263,21 @@ export function LineLens() {
                   ['00', 'Taipei, Taiwan', 'Born', 'Departed'],
                   ['01', 'Berkeley, Computer Science', 'Studied', 'Departed'],
                   ['02', 'San Francisco', 'Now', 'At platform'],
-                ].map(([stop, place, note]) => (
+                ].map(([stop, place, since, status]) => (
                   <tr key={stop} className="border-b border-slate-800">
-                    <th scope="row" className="py-4 pr-4 font-medium text-cyanEdge">
+                    <th scope="row" className="py-4 pr-4 font-medium text-jade-100/60">
                       {stop}
                     </th>
                     <td className="py-4 pr-4 text-jade-50">{place}</td>
-                    <td className="py-4 text-right text-jade-100/60">{note}</td>
+                    <td className="py-4 pr-4 text-right text-jade-100/60">{since}</td>
+                    <td
+                      className={[
+                        'py-4 text-right',
+                        status === 'At platform' ? 'text-cyanEdge' : 'text-jade-100/50',
+                      ].join(' ')}
+                    >
+                      {status}
+                    </td>
                   </tr>
                 ))}
               </tbody>
