@@ -1,11 +1,10 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { EditionFooter } from '../../components/EditionFooter';
-import { useActiveSection } from '../../hooks/useActiveSection';
+import { ItemList } from '../../components/ItemList';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useLensTheme } from '../../hooks/useLensTheme';
-import { Lede, Scene, SceneTitle, SprocketSpine } from './parts';
-import { ItemList } from '../../components/ItemList';
+import { Card, Frame, Plate, Roll, Sub } from './parts';
 import {
   aboutFacts,
   channels,
@@ -28,112 +27,42 @@ import {
   work,
 } from '../../data/content';
 
-/**
- * Eight scenes. Deliberately fewer and larger than the other two lenses: a cut
- * holds longer than a chapter does. The reading list, hobbies and channels are
- * collected into a single end-credits roll rather than given scenes of their own.
- */
-const scenes = [
-  { id: 'open', label: 'Opening' },
-  { id: 'priorities', label: 'Priorities' },
-  { id: 'about', label: 'About' },
-  { id: 'blaze', label: 'Blaze' },
-  { id: 'feelable', label: 'feelable' },
-  { id: 'genz', label: 'GenZ Taiwan' },
-  { id: 'credits', label: 'Credits' },
-  { id: 'close', label: 'Contact' },
-];
-
-const sceneIds = scenes.map((s) => s.id);
-
 const Out = ({ href, children }: { href: string; children: React.ReactNode }) => (
   <a href={href} target="_blank" rel="noreferrer" className="rule-link text-jade-50 hover:text-amber-300">
     {children}
   </a>
 );
 
-/** Splits a stat like "200k Users" into a numeral and a small unit label. */
-function BigStat({ value }: { value: string }) {
-  const [figure, ...rest] = value.split(' ');
-  return (
-    <p className="font-display text-[clamp(3.4rem,9vw,6.5rem)] uppercase leading-[0.84] text-jade-50">
-      <span className="block">{figure}</span>
-      {rest.length > 0 && (
-        <span className="block text-jade-100/35">{rest.join(' ')}</span>
-      )}
-    </p>
-  );
-}
-
-function Strip({ images }: { images: { src: string; alt: string }[] }) {
-  const reduced = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-8%']);
-
-  return (
-    <div ref={ref} className="mt-12 -mr-5 overflow-hidden sm:-mr-8">
-      <motion.ul style={reduced ? undefined : { x }} className="flex list-none gap-4 pl-0">
-        {images.map((img) => (
-          <li key={img.src} className="w-[74vw] shrink-0 sm:w-[24rem]">
-            <img
-              src={img.src}
-              alt={img.alt}
-              loading="lazy"
-              decoding="async"
-              className="aspect-[16/10] w-full border border-jade-800 bg-[#f7f7f7] object-cover object-center"
-            />
-          </li>
-        ))}
-      </motion.ul>
-    </div>
-  );
-}
-
-/** A credits row: role on the left, names on the right, as on a title card. */
-function Credit({ role, children }: { role: string; children: React.ReactNode }) {
-  return (
-    <div className="grid grid-cols-1 gap-x-8 gap-y-0.5 py-2.5 sm:grid-cols-[1fr_1.6fr]">
-      <dt className="font-mono text-[10px] uppercase leading-[1.55] tracking-[0.1em] text-jade-100/45 sm:text-right">
-        {role}
-      </dt>
-      <dd className="m-0 text-[0.95rem] leading-[1.55] text-jade-50">{children}</dd>
-    </div>
-  );
-}
-
 export function ReelLens() {
   useLensTheme('hsl(160 34% 6%)', 'dark');
   const reduced = useReducedMotion();
-  const active = useActiveSection(sceneIds);
-  const { scrollYProgress } = useScroll();
-  const heroRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress: heroP } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
   });
-  const heroY = useTransform(heroP, [0, 1], ['0%', '18%']);
+  const heroY = useTransform(heroP, [0, 1], ['0%', '14%']);
 
   const blaze = products[0];
   const feelable = products[1];
   const genz = communities.find((c) => c.id === 'genz')!;
   const clubs = communities.filter((c) => c.id !== 'genz');
   const travel = hobbies.find((h) => h.id === 'travel')!;
+  const cooking = hobbies.find((h) => h.id === 'cooking')!;
 
   return (
     <div className="grain relative bg-jade-950">
       <a href="#main" className="skip-link">
         Skip to content
       </a>
-      <SprocketSpine chapters={scenes} active={active} progress={scrollYProgress} />
 
       <main id="main">
-        {/* ------------------------------------------------------------- 01 */}
+        {/* 01 ---------------------------------------------------- opening */}
         <section
           id="open"
           ref={heroRef}
           aria-labelledby="hero-name"
-          className="relative flex min-h-[100svh] items-end overflow-hidden lg:pl-16"
+          className="relative flex h-[100svh] flex-col justify-end overflow-hidden"
         >
           <motion.div aria-hidden className="absolute inset-0" style={reduced ? undefined : { y: heroY }}>
             <img
@@ -141,452 +70,357 @@ export function ReelLens() {
               alt=""
               fetchPriority="high"
               decoding="async"
-              className="h-[118%] w-full object-cover object-[68%_34%] sm:object-[58%_36%] lg:object-[50%_36%]"
+              className="h-[114%] w-full object-cover object-[68%_34%] sm:object-[58%_36%] lg:object-[50%_36%]"
             />
-            <div className="absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-jade-950 via-jade-950/92 to-transparent" />
-            <div className="absolute inset-0 bg-jade-950/15" />
+            <div className="absolute inset-x-0 bottom-0 h-[64%] bg-gradient-to-t from-jade-950 via-jade-950/70 to-transparent" />
           </motion.div>
 
-          <div className="relative z-10 mx-auto w-full max-w-6xl px-5 pb-20 sm:px-8 sm:pb-28">
-            <motion.p
-              initial={reduced ? false : { opacity: 0 }}
-              animate={reduced ? undefined : { opacity: 1 }}
-              transition={{ delay: 0.15, duration: 0.5 }}
-              className="mb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-amber-400"
-            >
-              Taipei · Berkeley · San Francisco
-            </motion.p>
-
+          <div className="relative z-10 mx-auto w-full max-w-5xl px-5 pb-16 text-center sm:px-8 sm:pb-20">
             <motion.h1
               id="hero-name"
-              initial={reduced ? false : { opacity: 0, y: 24 }}
+              initial={reduced ? false : { opacity: 0, y: 20 }}
               animate={reduced ? undefined : { opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6, ease: [0.16, 0.84, 0.24, 1] }}
-              className="font-display text-[clamp(3rem,13.5vw,10.5rem)] uppercase leading-[0.8] tracking-[-0.028em] text-jade-50"
+              transition={{ delay: 0.15, duration: 0.6, ease: [0.16, 0.84, 0.24, 1] }}
+              className="font-display text-[clamp(3.4rem,15vw,13rem)] uppercase leading-[0.8] tracking-[-0.035em] text-jade-50"
             >
               Andrew Chuang
             </motion.h1>
 
             <motion.p
+              lang="zh-Hant"
               initial={reduced ? false : { opacity: 0 }}
               animate={reduced ? undefined : { opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="mt-3 font-han text-[clamp(1.9rem,5.4vw,3.9rem)] font-black leading-none tracking-[0.02em] text-jade-50"
-              lang="zh-Hant"
+              transition={{ delay: 0.28, duration: 0.5 }}
+              className="mt-3 font-han text-[clamp(1.8rem,5vw,3.6rem)] font-black leading-none tracking-[0.03em] text-jade-50"
             >
               {identity.nameZh}
             </motion.p>
 
             <motion.p
-              initial={reduced ? false : { opacity: 0, y: 16 }}
+              initial={reduced ? false : { opacity: 0, y: 12 }}
               animate={reduced ? undefined : { opacity: 1, y: 0 }}
-              transition={{ delay: 0.38, duration: 0.55 }}
-              className="mt-8 max-w-xl text-lg leading-relaxed text-jade-50/85 sm:text-xl"
+              transition={{ delay: 0.36, duration: 0.55 }}
+              className="mx-auto mt-8 max-w-2xl text-[clamp(1.1rem,2.2vw,1.6rem)] leading-snug text-jade-50/85"
             >
               {mission.headline}
             </motion.p>
+
+            <motion.p
+              initial={reduced ? false : { opacity: 0 }}
+              animate={reduced ? undefined : { opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="mt-7 font-mono text-[11px] uppercase tracking-[0.16em] text-amber-400"
+            >
+              Taipei · Berkeley · San Francisco
+            </motion.p>
           </div>
+
+          <img src={photos.hero.src} alt={photos.hero.alt} className="sr-only" />
         </section>
 
-        {/* ------------------------------------------------------------- 02 */}
-        <Scene
+        {/* 02 ------------------------------------------------- title card */}
+        <Card
           id="priorities"
-          index={2}
-          slate="What matters"
-          layout="split"
-          title={
-            <>
-              <SceneTitle>My life priorities</SceneTitle>
-              <Lede>
-                Five, in order.{' '}
-                <Out href={priorities.articleHref}>Written on a train to Strasbourg</Out>.
-              </Lede>
-              <figure className="mt-10 hidden lg:block">
-                <img
-                  src={photos.tunnel.src}
-                  alt={photos.tunnel.alt}
-                  loading="lazy"
-                  decoding="async"
-                  className="aspect-[4/5] w-full border border-jade-800 object-cover object-[52%_30%] saturate-[0.55] contrast-[1.05] sepia-[0.18]"
-                />
-              </figure>
-            </>
-          }
+          n={2}
+          title="Five things, in order"
+          sub={<Out href={priorities.articleHref}>Written on a train to Strasbourg.</Out>}
         >
-          <ol className="list-none space-y-0 pl-0">
+          <ol className="mx-auto max-w-3xl list-none space-y-9 pl-0">
             {priorities.items.map((p, i) => (
-              <li key={p.label} className="flex gap-5 border-t border-jade-800 py-5 last:border-b">
-                <span className="mt-1.5 font-mono text-[11px] tabular-nums text-amber-400/85">
+              <li key={p.label} className="grid grid-cols-[2.6rem_1fr] gap-5">
+                <span className="pt-2.5 font-mono text-[11px] tabular-nums text-amber-400/85">
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <span className="text-lg">
-                  <span className="text-jade-50">{p.label}</span>{' '}
-                  <span className="text-jade-100/70">{p.body}</span>
+                <span>
+                  <span className="block font-display text-[clamp(1.5rem,3vw,2.4rem)] uppercase leading-[1.02] tracking-[-0.015em] text-jade-50">
+                    {p.label}
+                  </span>
+                  <span className="mt-2 block text-[1.05rem] leading-relaxed text-jade-100/65">
+                    {p.body}
+                  </span>
                 </span>
               </li>
             ))}
           </ol>
-        </Scene>
+        </Card>
 
-        {/* ------------------------------------------------------------- 03 */}
-        <Scene
+        {/* 03 ------------------------------------------------------ frame */}
+        <Frame
           id="about"
-          index={3}
-          slate="About"
-          layout="split"
-          title={
-            <>
-              <SceneTitle>The dance of tech, art &amp; people</SceneTitle>
-              <Lede>{identity.taglineTail}</Lede>
-            </>
-          }
+          n={3}
+          image={photos.portrait}
+          focal="50% 20%"
+          title="The dance of tech, art & people"
         >
-          <figure className="m-0">
-            <img
-              src={photos.portrait.src}
-              alt={photos.portrait.alt}
-              loading="lazy"
-              decoding="async"
-              className="aspect-[3/2] w-full border border-jade-800 object-cover object-[50%_28%]"
-            />
-          </figure>
-          <ul className="mt-9 list-none space-y-0 pl-0">
-            {aboutFacts.map((f) => (
-              <li key={f.text} className="border-t border-jade-800 py-3.5 text-jade-100/85 last:border-b">
-                {f.text}
-              </li>
-            ))}
-          </ul>
-          <p className="mt-8 flex flex-wrap gap-x-5 gap-y-2">
+          <p className="text-[clamp(1.05rem,2vw,1.4rem)] leading-snug text-jade-50/85">
+            {identity.taglineTail}
+          </p>
+          <p className="mt-4 text-[0.95rem] leading-relaxed text-jade-100/70">
+            {aboutFacts.map((f) => f.text).join('. ')}.
+          </p>
+          <p className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2">
             {notebooks.map((n) => (
               <a
                 key={n.href}
                 href={n.href}
                 target="_blank"
                 rel="noreferrer"
-                className="rule-link font-mono text-[11px] uppercase tracking-[0.2em] text-jade-100/75 hover:text-amber-300"
+                className="rule-link font-mono text-[11px] uppercase tracking-[0.12em] text-jade-50/75 hover:text-amber-300"
               >
                 {n.label}
               </a>
             ))}
           </p>
-        </Scene>
+        </Frame>
 
-        {/* ------------------------------------------------------------- 04 */}
-        <Scene
+        {/* 04 ------------------------------------------------- title card */}
+        <Card
           id="blaze"
-          index={4}
-          slate="Product · AI voice messenger"
-          layout="split"
-          title={
-            <>
-              <SceneTitle>
-                <Out href={blaze.href!}>Blaze Messenger</Out>
-              </SceneTitle>
-              <figure className="mt-10 hidden lg:block">
-                <img
-                  src={blaze.images[0].src}
-                  alt={blaze.images[0].alt}
-                  loading="lazy"
-                  decoding="async"
-                  className="aspect-[16/10] w-full border border-jade-800 bg-[#f7f7f7] object-cover object-center"
-                />
-              </figure>
-            </>
-          }
+          n={4}
+          title={<Out href={blaze.href!}>Blaze Messenger</Out>}
+          sub={<>An AI voice messenger. 200k users, 110k of them in the first month.</>}
         >
-          <BigStat value={blaze.headline!} />
-          <ul className="mt-10 list-none space-y-0 pl-0">
+          <ul className="mx-auto grid max-w-4xl list-none gap-x-14 gap-y-8 pl-0 sm:grid-cols-2">
             {blaze.bullets.map((b) => (
-              <li key={b} className="border-t border-jade-800 py-4 text-jade-100/85 last:border-b">
+              <li key={b} className="text-[1.05rem] leading-[1.55] text-jade-100/85">
                 {b}
               </li>
             ))}
           </ul>
-          <figure className="mt-10 lg:hidden">
-            <img
-              src={blaze.images[0].src}
-              alt={blaze.images[0].alt}
-              loading="lazy"
-              decoding="async"
-              className="aspect-[16/10] w-full border border-jade-800 bg-[#f7f7f7] object-cover object-center"
-            />
-          </figure>
-        </Scene>
+        </Card>
 
-        {/* ------------------------------------------------------------- 05 */}
-        <Scene
+        {/* cut to white ------------------------------------------------- */}
+        <Plate images={blaze.images} caption="Blaze Messenger, voice message playback on watch" />
+
+        {/* 05 ------------------------------------------------- title card */}
+        <Card
           id="feelable"
-          index={5}
-          slate="Product · mood journaling companion"
-          layout="split"
-          title={
+          n={5}
+          title={<Out href={feelable.href!}>feelable.ai</Out>}
+          sub={
             <>
-              <SceneTitle>
-                <Out href={feelable.href!}>feelable.ai</Out>
-              </SceneTitle>
+              A journal partner that remembers and grows with you. Alongside it, a Vibecode
+              Playground, the shelf where the half-built things sit.
             </>
           }
         >
-          <Lede>
-            A journal partner that remembers and grows with you. Alongside it, a Vibecode Playground,
-            the shelf where the half-built things sit.
-          </Lede>
-
-          <p className="mt-12 font-mono text-[10px] uppercase tracking-[0.16em] text-amber-400/85">
-            Before that
-          </p>
-          <ul className="mt-3 list-none space-y-0 pl-0">
+          <ul className="mx-auto grid max-w-3xl list-none gap-x-14 gap-y-8 pl-0 sm:grid-cols-2">
             {work.map((w) => (
-              <li
-                key={w.name}
-                className="grid gap-1 border-t border-jade-800 py-4 last:border-b sm:grid-cols-[1fr_auto] sm:items-baseline"
-              >
-                <span>
+              <li key={w.name}>
+                <span className="block font-display text-[clamp(1.3rem,2.4vw,1.9rem)] uppercase leading-[1.05] text-jade-50">
                   <Out href={w.href}>{w.name}</Out>
-                  <span className="ml-2 text-jade-100/55">{w.note}</span>
                 </span>
-                <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-jade-100/60">
+                <span className="mt-1.5 block text-[0.95rem] text-jade-100/65">{w.note}</span>
+                <span className="mt-1 block font-mono text-[10px] uppercase tracking-[0.14em] text-amber-400/85">
                   {w.role}
                 </span>
               </li>
             ))}
           </ul>
+        </Card>
 
-          <Strip images={feelable.images} />
-        </Scene>
+        {/* cut to white ------------------------------------------------- */}
+        <Plate
+          images={[feelable.images[1], feelable.images[2]]}
+          caption="feelable.ai, the mood picker and the dashboard"
+        />
 
-        {/* ------------------------------------------------- interstitial */}
-        <section aria-hidden className="relative h-[62vh] overflow-hidden lg:pl-16">
-          <img
-            src={communities.find((c) => c.id === 'genz')!.images![1].src}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover object-[50%_45%]"
-          />
-          <div className="absolute inset-0 bg-jade-950/55" />
-          <p className="absolute inset-x-0 bottom-10 mx-auto max-w-6xl px-5 font-display text-[clamp(1.6rem,4vw,3rem)] uppercase leading-[1.05] text-jade-50 sm:px-8">
-            Before the products, the rooms.
-          </p>
-        </section>
-
-        {/* ------------------------------------------------------------- 06 */}
-        <Scene
+        {/* 06 ------------------------------------------------------ frame */}
+        <Frame
           id="genz"
-          index={6}
-          slate="Communities · founder"
-          layout="split"
-          title={
-            <>
-              <SceneTitle>GenZ Taiwan</SceneTitle>
-              <figure className="mt-9 hidden lg:block">
-                <img
-                  src={genz.images![0].src}
-                  alt={genz.images![0].alt}
-                  loading="lazy"
-                  decoding="async"
-                  className="aspect-[4/3] w-full border border-jade-800 object-cover"
-                />
-              </figure>
-            </>
-          }
+          n={6}
+          image={genz.images![0]}
+          focal="50% 38%"
+          title="GenZ Taiwan"
         >
-          <Lede>
+          <p className="text-[clamp(1.05rem,2vw,1.4rem)] leading-snug text-jade-50/85">
             Before the products, this. Getting students across Taiwan into the same room.
-          </Lede>
-          <ul className="mt-9 list-none space-y-0 pl-0">
+          </p>
+          <ul className="mx-auto mt-5 max-w-xl list-none space-y-2 pl-0 text-[0.95rem] leading-relaxed text-jade-100/80">
             {genz.bullets!.map((b) => (
-              <li key={b.text} className="border-t border-jade-800 py-4 text-jade-100/85 last:border-b">
-                {b.href ? <Out href={b.href}>{b.text}</Out> : b.text}
-              </li>
+              <li key={b.text}>{b.href ? <Out href={b.href}>{b.text}</Out> : b.text}</li>
             ))}
           </ul>
-          <p className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
+          <p className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2">
             {genz.links!.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
                 target="_blank"
                 rel="noreferrer"
-                className="rule-link font-mono text-[11px] uppercase tracking-[0.2em] text-jade-100/75 hover:text-amber-300"
+                className="rule-link font-mono text-[11px] uppercase tracking-[0.12em] text-jade-50/75 hover:text-amber-300"
               >
                 {l.label}
               </a>
             ))}
           </p>
+        </Frame>
 
-          <p className="mt-12 font-mono text-[10px] uppercase tracking-[0.16em] text-amber-400/85">
-            And three more rooms
-          </p>
-          <ul className="mt-3 list-none space-y-0 pl-0">
+        {/* 07 ------------------------------------------------------ frame */}
+        <Frame
+          id="clubs"
+          n={7}
+          image={genz.images![1]}
+          focal="50% 45%"
+          title="And three more rooms"
+        >
+          <ul className="mx-auto flex max-w-3xl list-none flex-wrap justify-center gap-x-10 gap-y-5 pl-0">
             {clubs.map((c) => (
-              <li
-                key={c.id}
-                className="grid gap-1 border-t border-jade-800 py-4 last:border-b sm:grid-cols-[1fr_auto] sm:items-baseline"
-              >
-                <span className="text-jade-50">
+              <li key={c.id} className="text-center">
+                <span className="block font-display text-[clamp(1.2rem,2.2vw,1.6rem)] uppercase leading-[1.05] text-jade-50">
                   {c.href ? <Out href={c.href}>{c.name}</Out> : c.name}
                 </span>
-                <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-jade-100/60">
+                <span className="mt-1 block font-mono text-[10px] uppercase tracking-[0.14em] text-amber-400/85">
                   {c.role}
                 </span>
               </li>
             ))}
           </ul>
-          <Strip images={[genz.images![1], genz.images![2], genz.images![3]]} />
-        </Scene>
+        </Frame>
 
-        {/* ------------------------------------------------- 07  end credits */}
+        {/* 08 ------------------------------------------------------ frame */}
+        <Frame
+          id="hobbies"
+          n={8}
+          image={travel.image!}
+          focal="50% 28%"
+          title="Curiosity, unpaid"
+        >
+          <p className="text-[0.95rem] leading-relaxed text-jade-50/80">{travel.note}</p>
+          <ul className="mx-auto mt-4 max-w-xl list-none space-y-1.5 pl-0 text-[0.95rem] leading-relaxed text-jade-100/80">
+            {travel.bullets!.map((b) => (
+              <li key={b.text}>{b.href ? <Out href={b.href}>{b.text}</Out> : b.text}</li>
+            ))}
+          </ul>
+        </Frame>
+
+        {/* cut to white ------------------------------------------------- */}
+        <Plate images={[cooking.image!]} caption="Cooking, or as Andrew puts it, meal prep" />
+
+        {/* 09 ------------------------------------------------ end credits */}
         <section
           id="credits"
           aria-labelledby="credits-title"
-          className="relative overflow-hidden lg:pl-16"
+          className="relative bg-jade-950 py-rhythm4"
         >
-          <div className="mx-auto w-full max-w-6xl px-5 py-rhythm4 sm:px-8">
-            <motion.div
-              initial={reduced ? false : { opacity: 0, y: 24 }}
-              whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.55, ease: [0.16, 0.84, 0.24, 1] }}
+          <motion.div
+            initial={reduced ? false : { opacity: 0, y: 18 }}
+            whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.08 }}
+            transition={{ duration: 0.5, ease: [0.16, 0.84, 0.24, 1] }}
+            className="mx-auto w-full max-w-3xl px-5 text-center sm:px-8"
+          >
+            <h2
+              id="credits-title"
+              className="font-display text-[clamp(2rem,5vw,3.4rem)] uppercase leading-[0.9] tracking-[-0.02em] text-jade-50"
             >
-              <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.18em] text-amber-400">
-                End credits
-              </p>
-              <p className="mb-10 max-w-3xl font-display text-[clamp(1.5rem,3.4vw,2.4rem)] uppercase leading-[1.1] text-jade-100/80">
-                “Have the courage to become a novice again and again and be in a constant state of
-                growing, changing, and reinventing yourself.”
-              </p>
+              Everything else
+            </h2>
+            <Sub>{readsIntro}</Sub>
 
-              <h2
-                id="credits-title"
-                className="font-display text-[clamp(2.4rem,6vw,4rem)] uppercase leading-[0.9] text-jade-50"
-              >
-                Everything else
-              </h2>
-              <p className="mt-5 max-w-measure text-jade-100/70">{readsIntro}</p>
+            <dl className="mt-16 text-left">
+              {reads.map((r) => (
+                <Roll key={r.label} role={r.label}>
+                  <ItemList items={r.items} separatorClassName="text-jade-100/30" />
+                </Roll>
+              ))}
+              <Roll role="Full list">
+                <Out href={infoDietHref}>The Info Diet, in Notion</Out>
+              </Roll>
+            </dl>
 
-              <dl className="mt-14">
-                {reads.map((r) => (
-                  <Credit key={r.label} role={r.label}>
-                    <ItemList items={r.items} separatorClassName="text-jade-100/30" />
-                  </Credit>
-                ))}
-                <Credit role="Full list">
-                  <Out href={infoDietHref}>The Info Diet, in Notion</Out>
-                </Credit>
-              </dl>
-
-              <p className="mt-16 font-mono text-[10px] uppercase tracking-[0.16em] text-amber-400/85">
-                Off the clock
-              </p>
-              <dl className="mt-3">
-                {hobbies.map((h) => (
-                  <Credit key={h.id} role={h.label}>
-                    {h.stat && <span className="text-jade-50">{h.stat}</span>}
+            <dl className="mt-12 border-t border-jade-800 pt-8 text-left">
+              {hobbies
+                .filter((h) => h.id !== 'travel')
+                .map((h) => (
+                  <Roll key={h.id} role={h.label}>
+                    {h.stat && <span className="text-amber-300">{h.stat}</span>}
                     {h.stat && (h.note || h.links) && <span className="text-jade-100/30"> · </span>}
-                    {h.note && <span>{h.note}</span>}
+                    {h.note && <span className="text-jade-100/80">{h.note}</span>}
                     {h.links?.map((l) => (
                       <span key={l.href}>
                         <span className="text-jade-100/30"> · </span>
                         <Out href={l.href}>{l.label}</Out>
                       </span>
                     ))}
-                    {h.bullets && (
-                      <span className="mt-1.5 block text-jade-100/70">
-                        {h.bullets.map((b, i) => (
-                          <span key={b.text}>
-                            {i > 0 && <span className="text-jade-100/30"> · </span>}
-                            {b.href ? <Out href={b.href}>{b.text}</Out> : b.text}
-                          </span>
-                        ))}
-                      </span>
-                    )}
-                  </Credit>
+                  </Roll>
                 ))}
-              </dl>
+            </dl>
 
-              <div className="mt-16 grid gap-x-8 gap-y-1 sm:grid-cols-[11rem_1fr]">
-                <p className="m-0 font-mono text-[10px] uppercase tracking-[0.14em] text-amber-400/85 sm:text-right">
-                  Published
-                </p>
-                <div>
-                  <BigStat value={contentStat} />
-                </div>
-              </div>
-
-              <dl className="mt-6">
-                {guides.map((g) => (
-                  <Credit key={g.href} role="Guide">
-                    <Out href={g.href}>{g.label}</Out>
-                    {guideNotes[g.label] && (
-                      <span className="ml-2 text-jade-100/55">{guideNotes[g.label]}</span>
-                    )}
-                  </Credit>
-                ))}
-                {channels.map((c) => (
-                  <Credit key={c.href} role={c.label}>
-                    <Out href={c.href}>{c.handle}</Out>
-                    {c.meta && <span className="ml-2 text-jade-100/45">{c.meta}</span>}
-                  </Credit>
-                ))}
-              </dl>
-
-              <figure className="mt-16 m-0">
-                <img
-                  src={travel.image!.src}
-                  alt={travel.image!.alt}
-                  loading="lazy"
-                  decoding="async"
-                  className="aspect-[16/9] w-full border border-jade-800 object-cover object-top"
-                />
-              </figure>
-            </motion.div>
-          </div>
+            <dl className="mt-12 border-t border-jade-800 pt-8 text-left">
+              <Roll role="Published">
+                <span className="text-amber-300">{contentStat}</span>
+              </Roll>
+              {guides.map((g) => (
+                <Roll key={g.href} role="Guide">
+                  <Out href={g.href}>{g.label}</Out>
+                  {guideNotes[g.label] && (
+                    <span className="ml-2 text-jade-100/55">{guideNotes[g.label]}</span>
+                  )}
+                </Roll>
+              ))}
+              {channels.map((c) => (
+                <Roll key={c.href} role={c.label}>
+                  <Out href={c.href}>{c.handle}</Out>
+                  {c.meta && <span className="ml-2 text-jade-100/45">{c.meta}</span>}
+                </Roll>
+              ))}
+            </dl>
+          </motion.div>
         </section>
 
-        {/* ------------------------------------------------------------- 08 */}
+        {/* 10 -------------------------------------------------- end card */}
         <section
           id="close"
           aria-labelledby="close-title"
-          className="relative flex min-h-[92vh] items-center overflow-hidden lg:pl-16"
+          className="relative flex min-h-[100svh] items-center bg-jade-950"
         >
-          <div className="relative z-10 mx-auto w-full max-w-6xl px-5 py-rhythm4 sm:px-8">
+          <div className="mx-auto w-full max-w-5xl px-5 py-rhythm3 text-center sm:px-8">
             <blockquote className="m-0">
-              <p className="m-0 font-display text-[clamp(2.6rem,8vw,6rem)] uppercase leading-[0.95] tracking-[-0.015em] text-jade-50">
-                Don’t follow your dreams, follow your curiosity!
+              <p className="m-0 font-display text-[clamp(2.8rem,9.5vw,8rem)] uppercase leading-[0.84] tracking-[-0.035em] text-jade-50">
+                Don’t follow
+                <br />
+                your dreams,
+                <br />
+                follow your
+                <br />
+                curiosity!
               </p>
-              <footer className="mt-5 text-sm text-jade-100/60">
+              <footer className="mt-8 text-[clamp(1rem,1.8vw,1.3rem)] text-jade-100/65">
                 <Out href="https://substack.com/home/post/p-148637074">And find your style.</Out>
               </footer>
             </blockquote>
 
-            <span aria-hidden className="mt-14 block h-px w-14 bg-amber-400/50" />
-
-
-            <h2 id="close-title" className="mt-16 font-display text-4xl uppercase text-jade-50">
-              {closing.title}
-            </h2>
-            <p className="mt-3 max-w-xl text-jade-100/75">{closing.body}</p>
-            <p className="mt-7 flex flex-wrap gap-x-7 gap-y-3 font-mono text-xs uppercase tracking-[0.14em]">
-              {closing.links.map((l) => (
+            <div className="mx-auto mt-20 max-w-xl border-t border-jade-800 pt-10">
+              <h2
+                id="close-title"
+                className="font-display text-[clamp(1.6rem,3.4vw,2.4rem)] uppercase tracking-[-0.02em] text-jade-50"
+              >
+                {closing.title}
+              </h2>
+              <p className="mt-3 text-jade-100/75">{closing.body}</p>
+              <p className="mt-6 flex flex-wrap justify-center gap-x-7 gap-y-3 font-mono text-xs uppercase tracking-[0.12em]">
+                {closing.links.map((l) => (
+                  <a
+                    key={l.href}
+                    href={l.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rule-link text-amber-300 hover:text-amber-200"
+                  >
+                    {l.label}
+                  </a>
+                ))}
                 <a
-                  key={l.href}
-                  href={l.href}
+                  href={notionHome}
                   target="_blank"
                   rel="noreferrer"
-                  className="rule-link text-amber-300 hover:text-amber-200"
+                  className="rule-link text-jade-100/60 hover:text-jade-50"
                 >
-                  {l.label}
+                  The original, on Notion
                 </a>
-              ))}
-            </p>
-
-            <p className="mt-16 font-mono text-[11px] uppercase tracking-[0.14em] text-jade-100/70">
-              <a href={notionHome} target="_blank" rel="noreferrer" className="rule-link">
-                The original, still on Notion
-              </a>
-            </p>
+              </p>
+            </div>
           </div>
         </section>
       </main>

@@ -240,7 +240,6 @@ export function VolumeLens() {
                 {identity.nameZh}
               </p>
 
-              <span aria-hidden className="mt-9 block h-px w-20 bg-paper-900/35" />
 
               <p className="mt-9 max-w-measure font-serif text-body text-paper-900">
                 My mission is to foster joy for humanity. I’m a creator at heart, I started by
@@ -316,7 +315,7 @@ export function VolumeLens() {
           <ol className="list-none space-y-5 pl-0">
             {priorities.items.map((p, i) => (
               <li key={p.label} className="grid grid-cols-[1.5rem_1fr] gap-3">
-                <span className="pt-1 text-[0.76rem] tabular-nums text-paper-700">{i + 1}</span>
+                <span className="pt-[0.35rem] text-[0.72rem] tabular-nums text-paper-700/80">{i + 1}</span>
                 <span className="text-[1.05rem] leading-[1.62]">
                   <span className="text-paper-900">{p.label}.</span>{' '}
                   <span className="text-paper-700">{p.body}</span>
@@ -378,7 +377,7 @@ export function VolumeLens() {
           <ol className="mt-6 list-none space-y-5 pl-0">
             {blaze.bullets.map((b, i) => (
               <li key={b} className="grid grid-cols-[1.5rem_1fr] gap-3">
-                <span className="pt-1 text-[0.8rem] tabular-nums text-paper-700">{i + 1}</span>
+                <span className="pt-[0.35rem] text-[0.72rem] tabular-nums text-paper-700/80">{i + 1}</span>
                 <span className="text-[1.05rem] leading-[1.62] text-paper-900">{b}</span>
               </li>
             ))}

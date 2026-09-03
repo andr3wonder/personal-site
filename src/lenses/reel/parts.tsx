@@ -1,203 +1,213 @@
 import { useRef } from 'react';
-import { motion, useScroll, useSpring, useTransform, type MotionValue } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
-/**
- * The 4-1-4 spine, read as a strip of film perforations. Doubles as a scrubber:
- * each perforation is a real link that seeks to that scene. The active state is
- * distinguished by length as well as colour, so it never reads as a scrollbar.
+/*
+ * Reel is built from three scene types, not one configurable module, and its
+ * page geometry is centred and frame-locked, which is what separates it from
+ * Volume (a left single measure with a live outer margin) and Line (a
+ * full-width board hung off a rail).
+ *
+ *   Frame  full-bleed photograph, copy centred on a solid film lower-third
+ *   Card   type only on black at display scale; this is the cut between frames
+ *   Plate  full-bleed cut to white carrying product UI at full width
+ *
+ * Wayfinding is a film-leader frame counter set into the corner of the frame.
+ * There is deliberately no "NN — CATEGORY" eyebrow anywhere.
  */
-export function SprocketSpine({
-  chapters,
-  active,
-  progress,
-}: {
-  chapters: readonly { id: string; label: string }[];
-  active: string;
-  progress: MotionValue<number>;
-}) {
-  const reduced = useReducedMotion();
-  const fill = useSpring(progress, { stiffness: 120, damping: 30, mass: 0.4 });
-  const height = useTransform(fill, (v) => `${Math.min(Math.max(v, 0), 1) * 100}%`);
 
+const EASE = [0.16, 0.84, 0.24, 1] as const;
+
+/** Film-leader counter, set into the corner of the frame. */
+function Counter({ n }: { n: number }) {
   return (
-    <nav
-      aria-label="Scenes"
-      className="pointer-events-none fixed left-0 top-0 z-40 hidden h-full w-16 lg:block"
+    <span
+      aria-hidden
+      className="pointer-events-none absolute right-5 top-6 z-20 font-display text-[clamp(2rem,4vw,3.4rem)] leading-none tracking-[-0.02em] text-jade-50/20 sm:right-8 sm:top-8"
     >
-      <div className="flex h-full items-center">
-        <div className="relative flex w-16 flex-col gap-3">
-          {/* the strip runs exactly the height of the ticks, so the fill always
-              lines up with the scene it is reporting */}
-          <span aria-hidden className="absolute left-7 top-0 h-full w-px bg-jade-800" />
-          {!reduced && (
-            <motion.span
-              aria-hidden
-              style={{ height }}
-              className="absolute left-7 top-0 w-px bg-amber-400"
-            />
-          )}
+      {String(n).padStart(2, '0')}
+    </span>
+  );
+}
 
-          {chapters.map((c, i) => {
-            const isActive = c.id === active;
-            return (
-              <a
-                key={c.id}
-                href={`#${c.id}`}
-                className="pointer-events-auto group relative flex h-5 w-16 items-center justify-start pl-[1.4rem]"
-              >
-                <span className="sr-only">
-                  Scene {i + 1}, {c.label}
-                </span>
-                <span
-                  aria-hidden
-                  className={[
-                    'block h-[2px] transition-all duration-300',
-                    isActive
-                      ? 'w-6 bg-amber-400'
-                      : 'w-2.5 bg-jade-600 group-hover:w-4 group-hover:bg-jade-300',
-                  ].join(' ')}
-                />
-                <span
-                  aria-hidden
-                  className={[
-                    'absolute left-14 whitespace-nowrap font-mono text-[10px] uppercase tracking-widest transition-opacity',
-                    isActive
-                      ? 'text-amber-300 opacity-100'
-                      : 'text-jade-100/70 opacity-0 group-hover:opacity-100',
-                  ].join(' ')}
-                >
-                  {c.label}
-                </span>
-              </a>
-            );
-          })}
-        </div>
-      </div>
-    </nav>
+/** Subtitle under a title. Carries the category without an eyebrow rule. */
+export function Sub({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="mt-6 text-[clamp(1.05rem,2vw,1.5rem)] leading-snug text-jade-100/70">{children}</p>
   );
 }
 
 /**
- * A scene. Two layouts:
- *  - `overlay`  a full-bleed still behind a single column of copy (cinematic)
- *  - `split`    no still; title occupies one field of the 4-1-4 spine and the
- *               body occupies the other, so the full width is actually used
+ * A held frame: one photograph filling the screen, copy centred on a solid
+ * lower-third so it is legible over any picture.
  */
-export function Scene({
+export function Frame({
   id,
-  index,
-  slate,
-  children,
-  title,
+  n,
   image,
-  align = 'left',
-  layout = 'overlay',
-  focal = 'center',
+  focal = '50% 50%',
+  title,
+  children,
+  grade = false,
 }: {
   id: string;
-  index: number;
-  slate: string;
-  children: React.ReactNode;
-  title?: React.ReactNode;
-  image?: { src: string; alt: string };
-  align?: 'left' | 'right';
-  layout?: 'overlay' | 'split';
+  n: number;
+  image: { src: string; alt: string };
   focal?: string;
+  title: React.ReactNode;
+  children?: React.ReactNode;
+  grade?: boolean;
 }) {
   const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const y = useTransform(scrollYProgress, [0, 1], ['-7%', '7%']);
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.06, 1, 1.06]);
-
-  const slateEl = (
-    <p
-      id={`${id}-slate`}
-      className="mb-6 font-mono text-[10px] uppercase tracking-[0.34em] text-amber-400"
-    >
-      {slate}
-      <span className="sr-only">, scene {index}</span>
-    </p>
-  );
-
-  const reveal = {
-    initial: reduced ? false : { opacity: 0, y: 26 },
-    whileInView: reduced ? undefined : { opacity: 1, y: 0 },
-    viewport: { once: true, amount: 0.25 } as const,
-    transition: { duration: 0.5, ease: [0.16, 0.84, 0.24, 1] as const },
-  };
+  const y = useTransform(scrollYProgress, [0, 1], ['-5%', '5%']);
 
   return (
     <section
       ref={ref}
       id={id}
-      aria-labelledby={`${id}-slate`}
-      className={[
-        'relative flex items-center overflow-hidden lg:pl-16',
-        layout === 'overlay' ? 'min-h-[86vh]' : '',
-      ].join(' ')}
+      aria-labelledby={`${id}-title`}
+      className="relative flex h-[100svh] flex-col justify-end overflow-hidden"
     >
-      {image && (
-        <div aria-hidden className="absolute inset-0">
-          <motion.img
-            src={image.src}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            style={reduced ? { objectPosition: focal } : { y, scale, objectPosition: focal }}
-            className="h-full w-full object-cover"
-          />
-          <div
-            className={[
-              'absolute inset-0',
-              align === 'left'
-                ? 'bg-gradient-to-r from-jade-950 via-jade-950/85 to-jade-950/20'
-                : 'bg-gradient-to-l from-jade-950 via-jade-950/85 to-jade-950/20',
-            ].join(' ')}
-          />
-          {/* keep copy legible on small screens where the gradient runs out */}
-          <div className="absolute inset-0 bg-jade-950/45 sm:bg-transparent" />
-        </div>
-      )}
-
-      {layout === 'split' ? (
-        <div className="relative z-10 mx-auto w-full max-w-6xl px-5 py-rhythm4 sm:px-8">
-          <motion.div {...reveal} className="grid gap-x-14 gap-y-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,5fr)]">
-            <div className="lg:sticky lg:top-24 lg:self-start">
-              {slateEl}
-              {title}
-            </div>
-            <div className="min-w-0">{children}</div>
-          </motion.div>
-        </div>
-      ) : (
-        <div
+      <div aria-hidden className="absolute inset-0">
+        <motion.img
+          src={image.src}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          style={reduced ? { objectPosition: focal } : { y, objectPosition: focal }}
           className={[
-            'relative z-10 mx-auto flex w-full max-w-6xl px-5 py-24 sm:px-8',
-            align === 'right' ? 'justify-end' : 'justify-start',
+            'h-[110%] w-full object-cover',
+            grade ? 'saturate-[0.6] contrast-[1.06] sepia-[0.14]' : '',
           ].join(' ')}
-        >
-          <motion.div {...reveal} className="w-full max-w-2xl">
-            {slateEl}
+        />
+        <div className="absolute inset-x-0 bottom-0 h-[62%] bg-gradient-to-t from-jade-950 to-transparent" />
+      </div>
+
+      <Counter n={n} />
+
+      <motion.div
+        initial={reduced ? false : { opacity: 0, y: 18 }}
+        whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.5, ease: EASE }}
+        className="relative z-10 w-full border-t border-jade-50/15 bg-jade-950/95 backdrop-blur-[6px]"
+      >
+        <div className="mx-auto w-full max-w-4xl px-5 py-9 text-center sm:px-8 sm:py-11">
+          <h2
+            id={`${id}-title`}
+            className="font-display text-[clamp(2.6rem,7vw,5.5rem)] uppercase leading-[0.86] tracking-[-0.025em] text-jade-50"
+          >
             {title}
-            {children}
-          </motion.div>
+          </h2>
+          {children && <div className="mx-auto mt-6 max-w-2xl">{children}</div>}
         </div>
-      )}
+      </motion.div>
+
+      {/* the photograph is content, so it keeps a described copy for assistive tech */}
+      <img src={image.src} alt={image.alt} className="sr-only" />
     </section>
   );
 }
 
-/** Section heading in the Reel voice: condensed, uppercase, tight. */
-export function SceneTitle({ children }: { children: React.ReactNode }) {
+/**
+ * A title card. Type only, on black, centred, at display scale. This is the cut
+ * between photographs, and where the dense material gets room to be read.
+ */
+export function Card({
+  id,
+  n,
+  title,
+  sub,
+  children,
+}: {
+  id: string;
+  n: number;
+  title: React.ReactNode;
+  sub?: React.ReactNode;
+  children?: React.ReactNode;
+}) {
+  const reduced = useReducedMotion();
   return (
-    <h2 className="font-display text-[clamp(2.6rem,7vw,5rem)] uppercase leading-[0.88] tracking-[-0.02em] text-jade-50">
-      {children}
-    </h2>
+    <section
+      id={id}
+      aria-labelledby={`${id}-title`}
+      className="relative flex min-h-[100svh] items-center overflow-hidden bg-jade-950"
+    >
+      <Counter n={n} />
+      <motion.div
+        initial={reduced ? false : { opacity: 0, y: 16 }}
+        whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.5, ease: EASE }}
+        className="mx-auto w-full max-w-5xl px-5 py-rhythm3 text-center sm:px-8"
+      >
+        <h2
+          id={`${id}-title`}
+          className="font-display text-[clamp(3rem,10vw,8.5rem)] uppercase leading-[0.82] tracking-[-0.03em] text-jade-50"
+        >
+          {title}
+        </h2>
+        {sub && <Sub>{sub}</Sub>}
+        {children && <div className="mt-16 text-left">{children}</div>}
+      </motion.div>
+    </section>
   );
 }
 
-export function Lede({ children }: { children: React.ReactNode }) {
-  return <p className="mt-5 max-w-measure text-lg leading-relaxed text-jade-100/85">{children}</p>;
+/** A cut to white. Product UI at full width on its own ground. */
+export function Plate({
+  images,
+  caption,
+}: {
+  images: { src: string; alt: string }[];
+  caption: string;
+}) {
+  const reduced = useReducedMotion();
+  return (
+    <section aria-label={caption} className="bg-[#f4f3f0] py-rhythm3">
+      <motion.div
+        initial={reduced ? false : { opacity: 0 }}
+        whileInView={reduced ? undefined : { opacity: 1 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.45, ease: EASE }}
+        className="mx-auto w-full max-w-6xl px-5 sm:px-8"
+      >
+        <div className={images.length > 1 ? 'grid gap-5 sm:grid-cols-2' : ''}>
+          {images.map((img) => (
+            <img
+              key={img.src}
+              src={img.src}
+              alt={img.alt}
+              loading="lazy"
+              decoding="async"
+              className="w-full object-cover"
+            />
+          ))}
+        </div>
+        <p className="mt-5 text-center font-mono text-[10px] uppercase tracking-[0.14em] text-jade-950/55">
+          {caption}
+        </p>
+      </motion.div>
+    </section>
+  );
+}
+
+/**
+ * A credits roll: a single centred column of role and name pairs joined by dot
+ * leaders, set small and tight, the way an end crawl actually sets.
+ */
+export function Roll({ role, children }: { role: string; children: React.ReactNode }) {
+  return (
+    <div className="grid grid-cols-1 items-baseline gap-x-4 gap-y-0.5 py-2 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1.5fr)]">
+      <dt className="font-mono text-[10px] uppercase leading-[1.6] tracking-[0.08em] text-jade-100/45 sm:text-right">
+        {role}
+      </dt>
+      <span aria-hidden className="hidden select-none text-jade-100/20 sm:block">
+        ·····
+      </span>
+      <dd className="m-0 text-[0.95rem] leading-[1.6] text-jade-50">{children}</dd>
+    </div>
+  );
 }
