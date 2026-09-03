@@ -58,7 +58,13 @@
   }
 }
 
-/* 35mm grain, generated rather than downloaded. Used only by the Reel lens. */
+/* 35mm grain, generated rather than downloaded. Used only by the Reel lens.
+   The overlay is inset past the edges, so the container must clip or it
+   expands the page's scroll width and creates a horizontal scrollbar. */
+.grain {
+  overflow-x: clip;
+}
+
 .grain::after {
   content: '';
   position: absolute;

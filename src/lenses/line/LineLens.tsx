@@ -1,7 +1,6 @@
 import { useRef } from 'react';
-import { motion, useInView, useScroll, useSpring } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { EditionFooter } from '../../components/EditionFooter';
-import { useActiveSection } from '../../hooks/useActiveSection';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { ItemList } from '../../components/ItemList';
 import { useLensTheme } from '../../hooks/useLensTheme';
@@ -56,8 +55,6 @@ const stations = [
   { id: 'content', code: 'ST 10', name: 'Published', place: 'Ongoing' },
 ];
 
-const stationIds = stations.map((s) => s.id);
-
 /** Split-flap heading. Characters settle in sequence, as on a departure board. */
 /**
  * Station names settle once, as a whole word, on a single flap. Staggering the
@@ -85,43 +82,6 @@ function Flap({ text, className = '' }: { text: string; className?: string }) {
 }
 
 /** The route line. One dot size, one exact interval, one drawn progress fill. */
-/**
- * The rail is a real position map: each node sits at the station's actual
- * offset in the document, so the line reports where you are rather than
- * decorating the edge with evenly spaced ticks.
- */
-function RouteLine({ active }: { active: string }) {
-  const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll();
-  const draw = useSpring(scrollYProgress, { stiffness: 90, damping: 26, mass: 0.4 });
-  // Equal stop intervals: the founding rule of a schematic line diagram.
-  const offsets = stationIds.map((_, i) => 8 + (i * 84) / (stationIds.length - 1));
-  const idx = Math.max(0, stationIds.indexOf(active));
-
-  return (
-    <div aria-hidden className="pointer-events-none fixed inset-y-0 left-8 z-30 hidden w-px lg:block">
-      <span className="absolute inset-0 bg-slate-800" />
-      {!reduced && (
-        <motion.span
-          className="absolute inset-x-0 top-0 h-full origin-top bg-cyanEdge/80"
-          style={{ scaleY: draw }}
-        />
-      )}
-      {offsets.map((top, i) => (
-        <span
-          key={stationIds[i]}
-          className={[
-            'absolute h-1.5 w-1.5 rounded-full transition-colors duration-300',
-            i === idx ? '-left-[3.5px] h-2.5 w-2.5 bg-cyanEdge' : '-left-[2.5px]',
-            i < idx ? 'bg-cyanEdge/70' : i > idx ? 'bg-slate-800' : '',
-          ].join(' ')}
-          style={{ top: `${top}%` }}
-        />
-      ))}
-    </div>
-  );
-}
-
 function Shot({
   src,
   alt,
@@ -146,7 +106,7 @@ function Shot({
         decoding="async"
         className={[
           'aspect-[4/3] w-full border border-slate-800',
-          fit === 'cover' ? 'object-cover object-top' : 'bg-[#f7f7f7] object-cover object-center',
+          fit === 'cover' ? 'object-cover object-top' : 'bg-slate-900 object-contain p-3',
           grade ? 'saturate-[0.55] contrast-[1.05] sepia-[0.18]' : '',
         ].join(' ')}
       />
@@ -186,7 +146,7 @@ function Station({
       ref={ref}
       id={id}
       aria-labelledby={`${id}-name`}
-      className="mx-auto w-full max-w-6xl px-5 py-rhythm3 sm:px-8 sm:py-rhythm4 lg:pl-24"
+      className="mx-auto w-full max-w-6xl px-5 py-rhythm3 sm:px-8 sm:py-rhythm4 "
     >
       <motion.div
         initial={reduced ? false : { opacity: 0, y: 18 }}
@@ -219,7 +179,7 @@ function Station({
 
 /** Full-measure row, used when there is no genuine label data to show. */
 function Line({ children }: { children: React.ReactNode }) {
-  return <div className="border-t border-slate-800 py-3.5 text-jade-100/90 last:border-b">{children}</div>;
+  return <div className="border-t border-slate-800 py-3.5 font-mono text-[0.9rem] leading-relaxed text-jade-100/90 last:border-b">{children}</div>;
 }
 
 /** Rigid two-column data row, the unit this whole lens is built from. */
@@ -234,7 +194,6 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
 
 export function LineLens() {
   useLensTheme('hsl(207 30% 7%)', 'dark');
-  const active = useActiveSection(stationIds);
   const heroRef = useRef<HTMLElement>(null);
 
   const blaze = products[0];
@@ -246,11 +205,10 @@ export function LineLens() {
   const st = Object.fromEntries(stations.map((s) => [s.id, s]));
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-slate-950 font-mono">
       <a href="#main" className="skip-link">
         Skip to content
       </a>
-      <RouteLine active={active} />
 
       <main id="main">
         {/* ------------------------------------------------------- departures */}
@@ -260,7 +218,7 @@ export function LineLens() {
           id="open"
           ref={heroRef}
           aria-labelledby="hero-name"
-          className="relative flex min-h-[100svh] items-center border-b border-slate-800 lg:pl-24"
+          className="relative flex min-h-[100svh] items-center border-b border-slate-800 "
         >
           <div className="mx-auto w-full max-w-6xl px-5 py-rhythm3 sm:px-8">
             <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-b border-slate-800 pb-3">
@@ -274,7 +232,7 @@ export function LineLens() {
 
             <h1
               id="hero-name"
-              className="mt-10 font-mono text-[clamp(2.2rem,7.5vw,5.4rem)] font-medium uppercase leading-[0.95] tracking-[-0.02em] text-jade-50"
+              className="mt-10 font-mono text-[clamp(2rem,6.4vw,4.6rem)] font-medium uppercase leading-[1] tracking-[-0.045em] text-jade-50"
             >
               Andrew Chuang
             </h1>
@@ -285,36 +243,47 @@ export function LineLens() {
             <table className="mt-12 w-full border-collapse text-left font-mono text-sm uppercase tracking-[0.08em] tabular-nums">
               <caption className="sr-only">Where Andrew has lived and studied</caption>
               <thead>
-                <tr className="border-b border-slate-800 text-jade-100/50">
+                <tr className="border-b border-slate-800 text-jade-100/70">
                   <th scope="col" className="w-24 py-2 pr-4 font-normal text-[0.7rem] tracking-[0.2em]">
                     Stop
                   </th>
                   <th scope="col" className="py-2 pr-4 font-normal text-[0.7rem] tracking-[0.2em]">
                     Place
                   </th>
-                  <th scope="col" className="w-28 py-2 text-right font-normal text-[0.7rem] tracking-[0.2em]">
+                  <th scope="col" className="w-24 py-2 pr-4 text-right font-normal text-[0.7rem] tracking-[0.2em]">
+                    Since
+                  </th>
+                  <th scope="col" className="w-32 py-2 text-right font-normal text-[0.7rem] tracking-[0.2em]">
                     Status
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {[
-                  ['00', 'Taipei, Taiwan', 'Born'],
-                  ['01', 'Berkeley, Computer Science', 'Studied'],
-                  ['02', 'San Francisco', 'Now'],
-                ].map(([stop, place, note]) => (
+                  ['00', 'Taipei, Taiwan', 'Born', 'Departed'],
+                  ['01', 'Berkeley, Computer Science', 'Studied', 'Departed'],
+                  ['02', 'San Francisco', 'Now', 'At platform'],
+                ].map(([stop, place, since, status]) => (
                   <tr key={stop} className="border-b border-slate-800">
-                    <th scope="row" className="py-4 pr-4 font-medium text-cyanEdge">
+                    <th scope="row" className="py-4 pr-4 font-medium text-jade-100/60">
                       {stop}
                     </th>
                     <td className="py-4 pr-4 text-jade-50">{place}</td>
-                    <td className="py-4 text-right text-jade-100/60">{note}</td>
+                    <td className="py-4 pr-4 text-right text-jade-100/60">{since}</td>
+                    <td
+                      className={[
+                        'py-4 text-right',
+                        status === 'At platform' ? 'text-cyanEdge' : 'text-jade-100/50',
+                      ].join(' ')}
+                    >
+                      {status}
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
 
-            <p className="mt-12 max-w-xl text-lg leading-relaxed text-jade-100/85">
+            <p className="mt-12 max-w-xl font-mono text-[0.95rem] leading-relaxed text-jade-100/85">
               {mission.headline}
             </p>
           </div>
@@ -330,7 +299,7 @@ export function LineLens() {
             </div>
           }
         >
-          <p className="max-w-measure text-jade-100/85">
+          <p className="max-w-measure font-mono text-[0.9rem] leading-relaxed text-jade-100/85">
             Founder. The first stop on this line: getting students across Taiwan into the same room.
           </p>
           <div className="mt-7">
@@ -380,17 +349,13 @@ export function LineLens() {
             <Shot src={blaze.images[0].src} alt={blaze.images[0].alt} caption="Blaze on the wrist" fit="contain" />
           }
         >
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-jade-100/55">
+          <p className="font-mono text-xs uppercase tracking-[0.16em] text-jade-100/60">
             {blaze.kicker}
-          </p>
-          <p className="mt-2 font-mono text-[clamp(2rem,5vw,3.2rem)] font-medium uppercase leading-[0.95] text-jade-50">
-            <span className="block">200k</span>
-            <span className="block text-jade-100/40">users</span>
           </p>
           <table className="mt-8 w-full border-collapse text-left font-mono text-sm tabular-nums">
             <caption className="sr-only">Blaze Messenger results</caption>
             <thead>
-              <tr className="border-b border-slate-800 text-[0.7rem] uppercase tracking-[0.18em] text-jade-100/50">
+              <tr className="border-b border-slate-800 text-[0.7rem] uppercase tracking-[0.18em] text-jade-100/70">
                 <th scope="col" className="py-2 pr-4 font-normal">
                   Metric
                 </th>
@@ -403,6 +368,13 @@ export function LineLens() {
               </tr>
             </thead>
             <tbody>
+              <tr className="border-b border-slate-800">
+                <th scope="row" className="py-3.5 pr-4 font-normal text-jade-50">
+                  Total users
+                </th>
+                <td className="py-3.5 pr-4 text-right text-jade-50">200k</td>
+                <td className="py-3.5 text-right text-jade-100/55">To date</td>
+              </tr>
               {blazeMetrics.map((m) => (
                 <tr key={m.metric} className="border-b border-slate-800">
                   <th scope="row" className="py-3.5 pr-4 font-normal text-jade-100/90">
@@ -432,7 +404,7 @@ export function LineLens() {
             </div>
           }
         >
-          <p className="max-w-measure text-jade-100/85">
+          <p className="max-w-measure font-mono text-[0.9rem] leading-relaxed text-jade-100/85">
             A mood journaling companion. A journal partner that remembers and grows with you.
           </p>
           <div className="mt-7">
@@ -448,7 +420,7 @@ export function LineLens() {
           {...st.priorities}
           media={<Shot src={photos.tunnel.src} alt={photos.tunnel.alt} caption="En route" grade />}
         >
-          <p className="max-w-measure text-jade-100/85">
+          <p className="max-w-measure font-mono text-[0.9rem] leading-relaxed text-jade-100/85">
             Five, in order. <Out href={priorities.articleHref}>Written on a train to Strasbourg</Out>.
           </p>
           <div className="mt-7">
@@ -466,10 +438,10 @@ export function LineLens() {
           {...st.about}
           media={<Shot src={photos.portrait.src} alt={photos.portrait.alt} caption="Grand Canyon" />}
         >
-          <p className="max-w-measure text-jade-100/85">
+          <p className="max-w-measure font-mono text-[0.9rem] leading-relaxed text-jade-100/85">
             {identity.tagline} {identity.taglineTail}
           </p>
-          <p className="mt-5 max-w-measure text-jade-100/60">
+          <p className="mt-5 max-w-measure font-mono text-[0.9rem] leading-relaxed text-jade-100/60">
             “Have the courage to become a novice again and again and be in a constant state of
             growing, changing, and reinventing yourself.”
           </p>
@@ -492,13 +464,13 @@ export function LineLens() {
 
         {/* ---------------------------------------------------------- ST 08 */}
         <Station {...st.reads}>
-          <p className="max-w-measure text-jade-100/80">{readsIntro}</p>
+          <p className="max-w-measure font-mono text-[0.9rem] leading-relaxed text-jade-100/80">{readsIntro}</p>
           <p className="mt-5">
             <Out href={infoDietHref}>The full Info Diet, in Notion</Out>
           </p>
         </Station>
 
-        <div className="mx-auto -mt-rhythm3 w-full max-w-6xl px-5 pb-rhythm4 sm:px-8 lg:pl-24">
+        <div className="mx-auto -mt-rhythm3 w-full max-w-6xl px-5 pb-rhythm4 sm:px-8 ">
           <table className="w-full border-collapse text-left font-mono text-sm">
             <caption className="sr-only">Info diet by subject</caption>
             <thead>
@@ -517,10 +489,10 @@ export function LineLens() {
             <tbody>
               {reads.map((r) => (
                 <tr key={r.label} className="border-b border-slate-800 align-baseline">
-                  <th scope="row" className="py-3.5 pr-6 font-normal uppercase tracking-[0.1em] text-cyanEdge">
+                  <th scope="row" className="py-3.5 pr-6 font-normal uppercase tracking-[0.1em] text-jade-100/75">
                     {r.label}
                   </th>
-                  <td className="py-3.5 pr-6 font-sans text-[0.94rem] leading-[1.65] text-jade-100/85">
+                  <td className="py-3.5 pr-6 text-[0.88rem] leading-[1.7] text-jade-100/85">
                     <ItemList items={r.items} separatorClassName="text-jade-100/30" />
                   </td>
                   <td className="py-3.5 text-right tabular-nums text-jade-100/50">{r.items.length}</td>
@@ -581,10 +553,21 @@ export function LineLens() {
             </div>
           }
         >
-          <p className="font-mono text-[clamp(2rem,5vw,3.2rem)] font-medium uppercase leading-[0.95] text-jade-50">
-            <span className="block">1M+</span>
-            <span className="block text-jade-100/40">views</span>
+          <p className="font-mono text-xs uppercase tracking-[0.16em] text-jade-100/60">
+            Reach to date
           </p>
+          <table className="mt-4 w-full border-collapse text-left font-mono text-sm tabular-nums">
+            <caption className="sr-only">Published reach</caption>
+            <tbody>
+              <tr className="border-y border-slate-800">
+                <th scope="row" className="py-3.5 pr-4 font-normal text-jade-100/90">
+                  Views across channels
+                </th>
+                <td className="w-24 py-3.5 text-right text-jade-50">1M+</td>
+                <td className="w-28 py-3.5 text-right text-jade-100/55">To date</td>
+              </tr>
+            </tbody>
+          </table>
           <div className="mt-7">
             {guides.map((g) => (
               <Row key={g.href} label="Guide">
@@ -608,7 +591,7 @@ export function LineLens() {
         <section
           id="close"
           aria-labelledby="close-title"
-          className="mx-auto w-full max-w-6xl px-5 py-rhythm4 sm:px-8 lg:pl-24"
+          className="mx-auto w-full max-w-6xl px-5 py-rhythm4 sm:px-8 "
         >
           <p className="font-mono text-xs uppercase tracking-[0.34em] text-cyanEdge">Terminus</p>
 
@@ -628,7 +611,7 @@ export function LineLens() {
           >
             {closing.title}
           </h2>
-          <p className="mt-3 max-w-xl text-jade-100/75">{closing.body}</p>
+          <p className="mt-3 max-w-xl font-mono text-[0.9rem] leading-relaxed text-jade-100/75">{closing.body}</p>
           <p className="mt-5 font-mono text-sm uppercase tracking-[0.16em]">
             {closing.links.map((l, i) => (
               <span key={l.href}>

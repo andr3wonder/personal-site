@@ -97,7 +97,7 @@ function Plate({
           'w-full ring-1 ring-paper-900/15',
           fit === 'cover'
             ? 'object-cover object-top'
-            : 'bg-[#f7f7f7] object-cover object-center',
+            : 'bg-paper-50 object-cover object-center',
         ].join(' ')}
       />
       <figcaption className="mt-2.5 font-serif text-[0.76rem] italic leading-snug text-paper-700">
@@ -165,8 +165,9 @@ function Chapter({
 
         <div className="font-serif">{children}</div>
 
-        {/* the plate interrupts the text column rather than sitting beside it */}
-        <div className="mt-rhythm3">{verso}</div>
+        {/* the plate breaks the measure so it genuinely interrupts the reading
+            column instead of stacking inside it at the same width */}
+        <div className="mt-rhythm3 lg:-mx-32 xl:-mx-48">{verso}</div>
       </motion.div>
 
       <Folio page={page} />
@@ -208,7 +209,7 @@ export function VolumeLens() {
   const cooking = hobbies.find((h) => h.id === 'cooking')!;
 
   return (
-    <div className="tooth min-h-screen bg-paper-100 text-paper-900">
+    <div className="min-h-screen bg-paper-100 text-paper-900">
       <a href="#main" className="skip-link">
         Skip to content
       </a>
@@ -236,11 +237,10 @@ export function VolumeLens() {
               >
                 Andrew Chuang
               </h1>
-              <p className="mt-3 font-hanSerif text-[clamp(1.9rem,4.6vw,3.2rem)] font-semibold leading-none tracking-[0.03em] text-paper-900" lang="zh-Hant">
+              <p className="mt-5 font-hanSerif text-[clamp(1.9rem,4.6vw,3.2rem)] font-semibold leading-none tracking-[0.03em] text-paper-900" lang="zh-Hant">
                 {identity.nameZh}
               </p>
 
-              <span aria-hidden className="mt-9 block h-px w-20 bg-paper-900/35" />
 
               <p className="mt-9 max-w-measure font-serif text-body text-paper-900">
                 My mission is to foster joy for humanity. I’m a creator at heart, I started by
@@ -316,7 +316,7 @@ export function VolumeLens() {
           <ol className="list-none space-y-5 pl-0">
             {priorities.items.map((p, i) => (
               <li key={p.label} className="grid grid-cols-[1.5rem_1fr] gap-3">
-                <span className="pt-1 text-[0.76rem] tabular-nums text-paper-700">{i + 1}</span>
+                <span className="pt-[0.35rem] text-[0.72rem] tabular-nums text-paper-700/80">{i + 1}</span>
                 <span className="text-[1.05rem] leading-[1.62]">
                   <span className="text-paper-900">{p.label}.</span>{' '}
                   <span className="text-paper-700">{p.body}</span>
@@ -378,7 +378,7 @@ export function VolumeLens() {
           <ol className="mt-6 list-none space-y-5 pl-0">
             {blaze.bullets.map((b, i) => (
               <li key={b} className="grid grid-cols-[1.5rem_1fr] gap-3">
-                <span className="pt-1 text-[0.8rem] tabular-nums text-paper-700">{i + 1}</span>
+                <span className="pt-[0.35rem] text-[0.72rem] tabular-nums text-paper-700/80">{i + 1}</span>
                 <span className="text-[1.05rem] leading-[1.62] text-paper-900">{b}</span>
               </li>
             ))}
