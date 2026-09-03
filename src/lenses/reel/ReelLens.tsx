@@ -51,7 +51,7 @@ export function ReelLens() {
   const cooking = hobbies.find((h) => h.id === 'cooking')!;
 
   return (
-    <div className="grain relative bg-jade-950">
+    <div className="grain relative bg-jade-950 font-reel">
       <a href="#main" className="skip-link">
         Skip to content
       </a>
@@ -72,7 +72,7 @@ export function ReelLens() {
               decoding="async"
               className="h-[114%] w-full object-cover object-[68%_34%] sm:object-[58%_36%] lg:object-[50%_36%]"
             />
-            <div className="absolute inset-x-0 bottom-0 h-[64%] bg-gradient-to-t from-jade-950 via-jade-950/70 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-[78%] bg-[linear-gradient(to_top,hsl(160_34%_6%)_0%,hsl(160_34%_6%/0.92)_18%,hsl(160_34%_6%/0.72)_36%,hsl(160_34%_6%/0.42)_58%,hsl(160_34%_6%/0.16)_78%,transparent_100%)]" />
           </motion.div>
 
           <div className="relative z-10 mx-auto w-full max-w-5xl px-5 pb-16 text-center sm:px-8 sm:pb-20">
@@ -81,7 +81,7 @@ export function ReelLens() {
               initial={reduced ? false : { opacity: 0, y: 20 }}
               animate={reduced ? undefined : { opacity: 1, y: 0 }}
               transition={{ delay: 0.15, duration: 0.6, ease: [0.16, 0.84, 0.24, 1] }}
-              className="font-display text-[clamp(3.4rem,15vw,13rem)] uppercase leading-[0.8] tracking-[-0.035em] text-jade-50"
+              className="font-display text-[clamp(4.4rem,17vw,13rem)] uppercase leading-[0.8] tracking-[-0.035em] text-jade-50"
             >
               Andrew Chuang
             </motion.h1>
@@ -109,7 +109,7 @@ export function ReelLens() {
               initial={reduced ? false : { opacity: 0 }}
               animate={reduced ? undefined : { opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.5 }}
-              className="mt-7 font-mono text-[11px] uppercase tracking-[0.16em] text-amber-400"
+              className="mt-8 text-[0.95rem] text-jade-50/60"
             >
               Taipei · Berkeley · San Francisco
             </motion.p>
@@ -121,7 +121,7 @@ export function ReelLens() {
         {/* 02 ------------------------------------------------- title card */}
         <Card
           id="priorities"
-          n={2}
+         
           title="Five things, in order"
           sub={<Out href={priorities.articleHref}>Written on a train to Strasbourg.</Out>}
         >
@@ -147,7 +147,7 @@ export function ReelLens() {
         {/* 03 ------------------------------------------------------ frame */}
         <Frame
           id="about"
-          n={3}
+         
           image={photos.portrait}
           focal="50% 20%"
           title="The dance of tech, art & people"
@@ -176,7 +176,7 @@ export function ReelLens() {
         {/* 04 ------------------------------------------------- title card */}
         <Card
           id="blaze"
-          n={4}
+         
           title={<Out href={blaze.href!}>Blaze Messenger</Out>}
           sub={<>An AI voice messenger. 200k users, 110k of them in the first month.</>}
         >
@@ -195,7 +195,7 @@ export function ReelLens() {
         {/* 05 ------------------------------------------------- title card */}
         <Card
           id="feelable"
-          n={5}
+         
           title={<Out href={feelable.href!}>feelable.ai</Out>}
           sub={
             <>
@@ -228,7 +228,7 @@ export function ReelLens() {
         {/* 06 ------------------------------------------------------ frame */}
         <Frame
           id="genz"
-          n={6}
+         
           image={genz.images![0]}
           focal="50% 38%"
           title="GenZ Taiwan"
@@ -259,7 +259,7 @@ export function ReelLens() {
         {/* 07 ------------------------------------------------------ frame */}
         <Frame
           id="clubs"
-          n={7}
+         
           image={genz.images![1]}
           focal="50% 45%"
           title="And three more rooms"
@@ -281,7 +281,7 @@ export function ReelLens() {
         {/* 08 ------------------------------------------------------ frame */}
         <Frame
           id="hobbies"
-          n={8}
+         
           image={travel.image!}
           focal="50% 28%"
           title="Curiosity, unpaid"

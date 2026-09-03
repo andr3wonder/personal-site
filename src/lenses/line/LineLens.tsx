@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useInView, useScroll, useSpring } from 'framer-motion';
 import { EditionFooter } from '../../components/EditionFooter';
 import { useActiveSection } from '../../hooks/useActiveSection';
@@ -94,8 +94,27 @@ function RouteLine({ active }: { active: string }) {
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll();
   const draw = useSpring(scrollYProgress, { stiffness: 90, damping: 26, mass: 0.4 });
-  // Equal stop intervals: the founding rule of a schematic line diagram.
-  const offsets = stationIds.map((_, i) => 8 + (i * 84) / (stationIds.length - 1));
+  const [offsets, setOffsets] = useState<number[]>([]);
+
+  useEffect(() => {
+    const measure = () => {
+      const total = document.documentElement.scrollHeight || 1;
+      setOffsets(
+        stationIds.map((id) => {
+          const el = document.getElementById(id);
+          return el ? ((el.offsetTop + el.offsetHeight / 2) / total) * 100 : 0;
+        }),
+      );
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    const t = window.setTimeout(measure, 800);
+    return () => {
+      window.removeEventListener('resize', measure);
+      window.clearTimeout(t);
+    };
+  }, []);
+
   const idx = Math.max(0, stationIds.indexOf(active));
 
   return (
@@ -219,7 +238,7 @@ function Station({
 
 /** Full-measure row, used when there is no genuine label data to show. */
 function Line({ children }: { children: React.ReactNode }) {
-  return <div className="border-t border-slate-800 py-3.5 text-jade-100/90 last:border-b">{children}</div>;
+  return <div className="border-t border-slate-800 py-3.5 font-mono text-[0.9rem] leading-relaxed text-jade-100/90 last:border-b">{children}</div>;
 }
 
 /** Rigid two-column data row, the unit this whole lens is built from. */
@@ -246,7 +265,7 @@ export function LineLens() {
   const st = Object.fromEntries(stations.map((s) => [s.id, s]));
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-slate-950 font-mono">
       <a href="#main" className="skip-link">
         Skip to content
       </a>
@@ -314,7 +333,7 @@ export function LineLens() {
               </tbody>
             </table>
 
-            <p className="mt-12 max-w-xl text-lg leading-relaxed text-jade-100/85">
+            <p className="mt-12 max-w-xl font-mono text-[0.95rem] leading-relaxed text-jade-100/85">
               {mission.headline}
             </p>
           </div>
@@ -330,7 +349,7 @@ export function LineLens() {
             </div>
           }
         >
-          <p className="max-w-measure text-jade-100/85">
+          <p className="max-w-measure font-mono text-[0.9rem] leading-relaxed text-jade-100/85">
             Founder. The first stop on this line: getting students across Taiwan into the same room.
           </p>
           <div className="mt-7">
@@ -435,7 +454,7 @@ export function LineLens() {
             </div>
           }
         >
-          <p className="max-w-measure text-jade-100/85">
+          <p className="max-w-measure font-mono text-[0.9rem] leading-relaxed text-jade-100/85">
             A mood journaling companion. A journal partner that remembers and grows with you.
           </p>
           <div className="mt-7">
@@ -451,7 +470,7 @@ export function LineLens() {
           {...st.priorities}
           media={<Shot src={photos.tunnel.src} alt={photos.tunnel.alt} caption="En route" grade />}
         >
-          <p className="max-w-measure text-jade-100/85">
+          <p className="max-w-measure font-mono text-[0.9rem] leading-relaxed text-jade-100/85">
             Five, in order. <Out href={priorities.articleHref}>Written on a train to Strasbourg</Out>.
           </p>
           <div className="mt-7">
@@ -469,10 +488,10 @@ export function LineLens() {
           {...st.about}
           media={<Shot src={photos.portrait.src} alt={photos.portrait.alt} caption="Grand Canyon" />}
         >
-          <p className="max-w-measure text-jade-100/85">
+          <p className="max-w-measure font-mono text-[0.9rem] leading-relaxed text-jade-100/85">
             {identity.tagline} {identity.taglineTail}
           </p>
-          <p className="mt-5 max-w-measure text-jade-100/60">
+          <p className="mt-5 max-w-measure font-mono text-[0.9rem] leading-relaxed text-jade-100/60">
             “Have the courage to become a novice again and again and be in a constant state of
             growing, changing, and reinventing yourself.”
           </p>
@@ -495,7 +514,7 @@ export function LineLens() {
 
         {/* ---------------------------------------------------------- ST 08 */}
         <Station {...st.reads}>
-          <p className="max-w-measure text-jade-100/80">{readsIntro}</p>
+          <p className="max-w-measure font-mono text-[0.9rem] leading-relaxed text-jade-100/80">{readsIntro}</p>
           <p className="mt-5">
             <Out href={infoDietHref}>The full Info Diet, in Notion</Out>
           </p>
@@ -523,7 +542,7 @@ export function LineLens() {
                   <th scope="row" className="py-3.5 pr-6 font-normal uppercase tracking-[0.1em] text-jade-100/75">
                     {r.label}
                   </th>
-                  <td className="py-3.5 pr-6 font-sans text-[0.94rem] leading-[1.65] text-jade-100/85">
+                  <td className="py-3.5 pr-6 text-[0.88rem] leading-[1.7] text-jade-100/85">
                     <ItemList items={r.items} separatorClassName="text-jade-100/30" />
                   </td>
                   <td className="py-3.5 text-right tabular-nums text-jade-100/50">{r.items.length}</td>
@@ -642,7 +661,7 @@ export function LineLens() {
           >
             {closing.title}
           </h2>
-          <p className="mt-3 max-w-xl text-jade-100/75">{closing.body}</p>
+          <p className="mt-3 max-w-xl font-mono text-[0.9rem] leading-relaxed text-jade-100/75">{closing.body}</p>
           <p className="mt-5 font-mono text-sm uppercase tracking-[0.16em]">
             {closing.links.map((l, i) => (
               <span key={l.href}>

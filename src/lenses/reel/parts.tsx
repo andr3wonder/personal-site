@@ -18,18 +18,6 @@ import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 const EASE = [0.16, 0.84, 0.24, 1] as const;
 
-/** Film-leader counter, set into the corner of the frame. */
-function Counter({ n }: { n: number }) {
-  return (
-    <span
-      aria-hidden
-      className="pointer-events-none absolute right-5 top-6 z-20 font-display text-[clamp(2rem,4vw,3.4rem)] leading-none tracking-[-0.02em] text-jade-50/20 sm:right-8 sm:top-8"
-    >
-      {String(n).padStart(2, '0')}
-    </span>
-  );
-}
-
 /** Subtitle under a title. Carries the category without an eyebrow rule. */
 export function Sub({ children }: { children: React.ReactNode }) {
   return (
@@ -43,7 +31,6 @@ export function Sub({ children }: { children: React.ReactNode }) {
  */
 export function Frame({
   id,
-  n,
   image,
   focal = '50% 50%',
   title,
@@ -51,7 +38,6 @@ export function Frame({
   grade = false,
 }: {
   id: string;
-  n: number;
   image: { src: string; alt: string };
   focal?: string;
   title: React.ReactNode;
@@ -85,7 +71,6 @@ export function Frame({
         <div className="absolute inset-x-0 bottom-0 h-[62%] bg-gradient-to-t from-jade-950 to-transparent" />
       </div>
 
-      <Counter n={n} />
 
       <motion.div
         initial={reduced ? false : { opacity: 0, y: 18 }}
@@ -117,13 +102,11 @@ export function Frame({
  */
 export function Card({
   id,
-  n,
   title,
   sub,
   children,
 }: {
   id: string;
-  n: number;
   title: React.ReactNode;
   sub?: React.ReactNode;
   children?: React.ReactNode;
@@ -135,7 +118,6 @@ export function Card({
       aria-labelledby={`${id}-title`}
       className="relative flex min-h-[100svh] items-center overflow-hidden bg-jade-950"
     >
-      <Counter n={n} />
       <motion.div
         initial={reduced ? false : { opacity: 0, y: 16 }}
         whileInView={reduced ? undefined : { opacity: 1, y: 0 }}

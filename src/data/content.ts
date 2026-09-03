@@ -72,7 +72,7 @@ export const blazeMetrics: { metric: string; value: string; window: string }[] =
   { metric: 'Usability tests run', value: '25', window: '0 to 1' },
   { metric: 'Mockups designed', value: '100+', window: '0 to 1' },
   { metric: 'Feature backlog managed', value: '70+', window: '0 to 1' },
-  { metric: 'Retention lift, A/B tested', value: '+12%', window: '30 day' },
+  { metric: 'Retention lift, A/B tested', value: '12%', window: '30 day' },
 ];
 
 export type Product = {

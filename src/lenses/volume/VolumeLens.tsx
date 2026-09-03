@@ -165,8 +165,9 @@ function Chapter({
 
         <div className="font-serif">{children}</div>
 
-        {/* the plate interrupts the text column rather than sitting beside it */}
-        <div className="mt-rhythm3">{verso}</div>
+        {/* the plate breaks the measure so it genuinely interrupts the reading
+            column instead of stacking inside it at the same width */}
+        <div className="mt-rhythm3 lg:-mx-32 xl:-mx-48">{verso}</div>
       </motion.div>
 
       <Folio page={page} />
@@ -208,7 +209,7 @@ export function VolumeLens() {
   const cooking = hobbies.find((h) => h.id === 'cooking')!;
 
   return (
-    <div className="tooth min-h-screen bg-paper-100 text-paper-900">
+    <div className="min-h-screen bg-paper-100 text-paper-900">
       <a href="#main" className="skip-link">
         Skip to content
       </a>
