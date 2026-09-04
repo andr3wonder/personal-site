@@ -36,7 +36,7 @@ export function EditionFooter({ variant }: { variant: Variant }) {
                     aria-current={isCurrent ? 'page' : undefined}
                     className="group block py-6 sm:px-6"
                   >
-                    <span className="font-reel text-[9px] font-medium tracking-[0.1em] text-[#7fa5b6]">
+                    <span className="font-reel text-[9px] font-medium tracking-[0.1em] text-[#ef5a40]">
                       0{index + 1}
                     </span>
                     <span className="mt-4 flex items-baseline justify-between gap-5">
@@ -45,7 +45,7 @@ export function EditionFooter({ variant }: { variant: Variant }) {
                         {isCurrent ? 'Current' : 'Open'}
                       </span>
                     </span>
-                    <span className="mt-3 block h-px origin-left scale-x-0 bg-[#7fa5b6] transition-transform duration-300 group-hover:scale-x-100 group-focus-visible:scale-x-100" />
+                    <span className="mt-3 block h-px origin-left scale-x-0 bg-[#ef5a40] transition-transform duration-300 group-hover:scale-x-100 group-focus-visible:scale-x-100" />
                   </Link>
                 </li>
               );

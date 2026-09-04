@@ -5,7 +5,6 @@ import { useLensTheme } from '../../hooks/useLensTheme';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import {
   aboutFacts,
-  blazeMetrics,
   channels,
   closing,
   communities,
@@ -144,7 +143,7 @@ function StoryHeader() {
         <a href="#open" className="pointer-events-auto transition-opacity hover:opacity-60">
           Andrew Chuang
         </a>
-        <div className="pointer-events-auto flex items-center gap-3 sm:gap-5 md:gap-7">
+        <div className="pointer-events-auto hidden items-center gap-7 md:flex">
           <a href="#taipei" className="transition-opacity hover:opacity-60">
             Story
           </a>
@@ -158,6 +157,12 @@ function StoryHeader() {
             Contact
           </a>
         </div>
+        <a
+          href="#archive"
+          className="pointer-events-auto transition-opacity hover:opacity-60 md:hidden"
+        >
+          Index
+        </a>
       </nav>
     </header>
   );
@@ -188,7 +193,7 @@ function Hero() {
           alt={photos.hero.alt}
           decoding="async"
           style={reduced ? undefined : { scale: imageScale, y: imageY }}
-          className="reel-present-photo absolute inset-0 h-full w-full object-cover object-[80%_42%] md:object-[50%_42%]"
+          className="absolute inset-0 h-full w-full object-cover object-[80%_42%] md:object-[50%_42%]"
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,13,10,0.7)_0%,rgba(4,13,10,0.2)_60%,rgba(4,13,10,0.04)_100%)] md:bg-[linear-gradient(90deg,rgba(4,13,10,0.76)_0%,rgba(4,13,10,0.28)_48%,rgba(4,13,10,0.02)_78%)]" />
         <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-[#07130f]/90 to-transparent" />
@@ -199,7 +204,7 @@ function Hero() {
         >
           <h1
             id="hero-title"
-            className="max-w-[7ch] font-display text-[clamp(3.25rem,13.5vw,13rem)] uppercase leading-[0.8] tracking-[-0.02em] text-[#f4f0e7] md:text-[clamp(5rem,14vw,13rem)]"
+            className="max-w-[7ch] font-display text-[clamp(4.8rem,20vw,6rem)] uppercase leading-[0.8] tracking-[-0.02em] text-[#f4f0e7] md:text-[clamp(5rem,14vw,13rem)]"
           >
             Andrew
             <br />
@@ -213,8 +218,7 @@ function Hero() {
           </h1>
           <div className="mt-7 max-w-4xl border-t border-white/35 pt-5 text-[#f4f0e7]">
             <p className="max-w-xl text-[clamp(1.15rem,2vw,1.55rem)] leading-snug">
-              {identity.role} at {identity.employer}. {identity.bornIn}, based in{' '}
-              {identity.basedIn}.
+              {mission.headline}
             </p>
           </div>
         </motion.div>
@@ -225,7 +229,7 @@ function Hero() {
 
 function MissionCut() {
   return (
-    <section className="relative overflow-hidden bg-[#7fa5b6] px-5 pt-24 text-[#0b1813] sm:px-8 md:min-h-[100svh] md:px-[5vw] md:py-[10vh]">
+    <section className="relative overflow-hidden bg-[#ef5a40] px-5 pt-24 text-[#0b1813] sm:px-8 md:min-h-[100svh] md:px-[5vw] md:py-[10vh]">
       <div className="relative z-10 mx-auto max-w-[1600px]">
         <Reveal>
           <h2 className="mt-10 max-w-[11ch] font-serif text-[clamp(3.4rem,6vw,6rem)] font-light leading-[0.92] tracking-[-0.05em]">
@@ -265,8 +269,8 @@ function TaipeiChapter() {
         <div className="absolute inset-0 bg-black/20" />
         <Reveal className="absolute inset-x-0 bottom-0">
           <div className="w-full bg-[#f0eadc] px-5 py-8 sm:w-[84%] sm:px-8 sm:py-10 md:w-[68%] md:px-[5vw] md:py-[7vh]">
-            <p className="font-reel text-[10px] font-medium uppercase tracking-[0.1em] text-[#101713]/60">
-              01 · Taipei
+            <p className="font-reel text-xs font-medium uppercase tracking-[0.08em] text-[#101713]/70">
+              01 · Gather · Taipei
             </p>
             <h2
               id="taipei-title"
@@ -286,20 +290,19 @@ function TaipeiChapter() {
       </div>
 
       <div className="mx-auto max-w-[1600px] px-5 pb-10 pt-16 sm:px-8 md:px-[5vw] md:pb-16 md:pt-20">
-        <div className="grid grid-cols-6 gap-3 sm:gap-5 md:grid-cols-12">
-
-          <figure className="col-span-3 md:col-span-4 md:mt-20">
+        <div className="grid grid-cols-6 gap-3 sm:gap-5 md:h-[760px] md:grid-cols-12 md:grid-rows-2">
+          <figure className="col-span-3 md:col-span-5 md:row-span-2">
             <ParallaxImage
               src={genz.images![3].src}
               alt={genz.images![3].alt}
-              className="aspect-[3/4]"
+              className="aspect-[3/4] md:h-full md:aspect-auto"
               objectPosition="63% 50%"
               amount={7}
             />
           </figure>
 
-          <figure className="col-span-3 md:col-span-3 md:-mt-16">
-            <div className="aspect-[3/4] overflow-hidden">
+          <figure className="col-span-3 md:col-span-3 md:col-start-6 md:row-start-1">
+            <div className="aspect-[3/4] overflow-hidden md:h-full md:aspect-auto">
               <img
                 src={genz.images![4].src}
                 alt={genz.images![4].alt}
@@ -310,26 +313,25 @@ function TaipeiChapter() {
             </div>
           </figure>
 
-          <div className="col-span-6 grid gap-3 sm:gap-5 md:col-span-5 md:mt-8">
-            <figure>
-              <ParallaxImage
-                src={genz.images![1].src}
-                alt={genz.images![1].alt}
-                className="aspect-[16/9]"
-                objectPosition="50% 52%"
-                amount={6}
-              />
-            </figure>
-            <figure>
-              <ParallaxImage
-                src={genz.images![2].src}
-                alt={genz.images![2].alt}
-                className="aspect-[16/9]"
-                objectPosition="50% 44%"
-                amount={3}
-              />
-            </figure>
-          </div>
+          <figure className="col-span-6 md:col-span-4 md:col-start-9 md:row-start-1">
+            <ParallaxImage
+              src={genz.images![1].src}
+              alt={genz.images![1].alt}
+              className="aspect-[16/9] md:h-full md:aspect-auto"
+              objectPosition="50% 52%"
+              amount={6}
+            />
+          </figure>
+
+          <figure className="col-span-6 md:col-span-7 md:col-start-6 md:row-start-2">
+            <ParallaxImage
+              src={genz.images![2].src}
+              alt={genz.images![2].alt}
+              className="aspect-[16/9] md:h-full md:aspect-auto"
+              objectPosition="50% 44%"
+              amount={3}
+            />
+          </figure>
         </div>
 
         <div className="mt-20 grid border-t border-[#101713]/30 py-10 md:mt-28 md:grid-cols-12 md:gap-10 md:py-14">
@@ -340,7 +342,7 @@ function TaipeiChapter() {
             {genz.bullets!.map((bullet) => (
               <li key={bullet.text} className="border-t border-[#101713]/20 pt-4 leading-relaxed">
                 {bullet.href ? (
-                  <Out href={bullet.href} className="hover:text-[#315f73]">
+                  <Out href={bullet.href} className="hover:text-[#bd341f]">
                     {bullet.text}
                   </Out>
                 ) : (
@@ -351,7 +353,7 @@ function TaipeiChapter() {
           </ul>
           <div className="mt-9 flex flex-wrap content-start gap-x-5 gap-y-3 font-reel text-[10px] font-medium uppercase tracking-[0.1em] md:col-span-3 md:mt-0">
             {genz.links!.map((link) => (
-              <Out key={link.href} href={link.href} className="hover:text-[#315f73]">
+              <Out key={link.href} href={link.href} className="hover:text-[#bd341f]">
                 {link.label}
               </Out>
             ))}
@@ -363,15 +365,17 @@ function TaipeiChapter() {
 }
 
 function BerkeleyBridge() {
+  const clubs = communities.filter((community) => community.id !== 'genz');
+
   return (
     <section
       id="berkeley"
       aria-labelledby="berkeley-title"
-      className="relative overflow-hidden bg-[#7fa5b6] px-5 py-20 text-[#0b1813] sm:px-8 md:px-[5vw] md:py-16"
+      className="relative overflow-hidden bg-[#ef5a40] px-5 py-20 text-[#0b1813] sm:px-8 md:px-[5vw] md:py-16"
     >
       <Reveal className="relative z-10 grid gap-10 md:grid-cols-12">
-        <p className="font-reel text-[10px] font-medium uppercase tracking-[0.1em] md:col-span-3">
-          02 · Berkeley
+        <p className="font-reel text-xs font-medium uppercase tracking-[0.08em] md:col-span-3">
+          02 · Build · Berkeley
         </p>
         <h2
           id="berkeley-title"
@@ -379,6 +383,33 @@ function BerkeleyBridge() {
         >
           At UC Berkeley, I found my passion in building products.
         </h2>
+      </Reveal>
+
+      <Reveal className="relative z-10 mt-16 grid gap-8 border-t border-[#0b1813]/35 pt-8 md:mt-24 md:grid-cols-12">
+        <p className="max-w-md text-[clamp(1.2rem,2vw,1.6rem)] leading-relaxed md:col-span-4">
+          AI Voice Messenger. Then more products, teams, and rooms to learn from.
+        </p>
+        <div className="md:col-span-8 md:grid md:grid-cols-3">
+          {clubs.map((club) => (
+            <div
+              key={club.id}
+              className="border-b border-[#0b1813]/35 py-6 md:border-b-0 md:border-l md:px-6 md:first:pl-6"
+            >
+              <p className="font-display text-[clamp(1.3rem,1.8vw,1.8rem)] uppercase leading-[1.02]">
+                {club.href ? (
+                  <Out href={club.href} className="hover:text-[#f0eadc]">
+                    {club.name}
+                  </Out>
+                ) : (
+                  club.name
+                )}
+              </p>
+              <p className="mt-3 font-reel text-[10px] font-medium uppercase tracking-[0.1em]">
+                {club.role}
+              </p>
+            </div>
+          ))}
+        </div>
       </Reveal>
     </section>
   );
@@ -396,7 +427,7 @@ function BlazeChapter() {
               id="blaze-title"
               className="max-w-[9ch] font-display text-[clamp(3.5rem,15vw,7.2rem)] uppercase leading-[0.82] tracking-[-0.025em] md:text-[clamp(4.5rem,7.2vw,7.2rem)]"
             >
-              <Out href={blaze.href!} className="hover:text-[#315f73]" showArrow={false}>
+              <Out href={blaze.href!} className="hover:text-[#bd341f]" showArrow={false}>
                 {blaze.name}
               </Out>
             </h2>
@@ -405,61 +436,46 @@ function BlazeChapter() {
               voice.
             </p>
           </Reveal>
-          <Reveal className="flex flex-col justify-end bg-[#7fa5b6] px-5 py-12 sm:px-8 md:col-span-4 md:px-[3vw] md:py-20 md:text-right">
+          <Reveal className="flex flex-col justify-end bg-[#ef5a40] px-5 py-12 sm:px-8 md:col-span-4 md:px-[3vw] md:py-20 md:text-right">
             <p className="font-display text-[clamp(5.5rem,9vw,9rem)] leading-[0.7] tracking-[-0.025em] text-[#101713]">
               200k
             </p>
             <p className="mt-5 font-reel text-[10px] font-medium uppercase tracking-[0.1em] text-[#101713]/70">
-              Users
+              Users · 110k in the first month
             </p>
           </Reveal>
         </div>
 
-        <div className="flex h-[52svh] items-stretch justify-center overflow-hidden border-y border-[#101713]/20 bg-[#f4f3f0] md:h-[58svh]">
+        <div className="flex h-[62svh] items-center justify-center overflow-hidden bg-[#07130f] md:h-[68svh]">
           <figure className="h-full overflow-hidden">
             <img
-              src="/img/blaze-watch-detail.jpg"
+              src="/img/blaze-watch-cutout.png"
               alt="Blaze Messenger on Apple Watch, showing a voice message with transcription and playback controls."
               loading="lazy"
               decoding="async"
-              className="h-full w-auto object-contain mix-blend-multiply"
+              className="h-full w-auto object-contain"
             />
           </figure>
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1600px] px-5 py-20 sm:px-8 md:px-[5vw] md:py-20">
-        <Reveal className="grid gap-12 md:grid-cols-12">
+      <div className="px-5 py-20 sm:px-8 md:px-[5vw] md:py-20">
+        <Reveal className="mx-auto grid max-w-[1600px] gap-12 md:grid-cols-12">
           <div className="md:col-span-4">
-            <h3 className="max-w-[10ch] font-serif text-[clamp(2.8rem,4.4vw,4.4rem)] font-light leading-[0.95] tracking-[-0.04em]">
+            <h3 className="max-w-[10ch] font-serif text-[clamp(2.3rem,4.4vw,4.4rem)] font-light leading-[0.98] tracking-[-0.04em]">
               What it took to launch.
             </h3>
           </div>
-          <div className="md:col-span-8">
-            <dl className="grid border-t border-[#101713]/25 sm:grid-cols-3">
-              {[blazeMetrics[0], blazeMetrics[1], blazeMetrics[5]].map((metric) => (
-                <div
-                  key={metric.metric}
-                  className="border-b border-[#101713]/25 py-6 sm:border-b-0 sm:border-r sm:px-6 sm:first:pl-0 sm:last:border-r-0"
-                >
-                  <dt className="text-sm text-[#101713]/60">{metric.metric}</dt>
-                  <dd className="m-0 mt-3 font-display text-[clamp(2.4rem,3vw,3rem)] leading-none text-[#315f73]">
-                    {metric.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-            <div className="mt-10 grid gap-8 text-[1.05rem] leading-relaxed sm:grid-cols-2">
-              <p>{blaze.bullets[2]}</p>
-              <p>{blaze.bullets[3]}</p>
-            </div>
-            <p className="mt-10 border-t border-[#101713]/25 pt-5 text-sm text-[#101713]/60">
-              {blazeMetrics
-                .slice(2, 5)
-                .map((metric) => `${metric.value} ${metric.metric.toLowerCase()}`)
-                .join(' · ')}
-            </p>
-          </div>
+          <ul className="grid list-none gap-x-12 gap-y-7 pl-0 md:col-span-8 md:grid-cols-2">
+            {blaze.bullets.map((bullet, index) => (
+              <li key={bullet} className="border-t border-[#101713]/25 pt-5">
+                <span className="font-reel text-[9px] font-medium tracking-[0.1em] text-[#bd341f]">
+                  0{index + 1}
+                </span>
+                <p className="mt-3 text-[1.05rem] leading-relaxed">{bullet}</p>
+              </li>
+            ))}
+          </ul>
         </Reveal>
 
       </div>
@@ -477,9 +493,9 @@ function FeelableChapter() {
         <Reveal className="grid gap-8 md:grid-cols-12 md:items-end">
           <h2
             id="feelable-title"
-            className="font-serif text-[clamp(4.2rem,7.5vw,7.5rem)] font-light lowercase leading-[0.78] tracking-[-0.055em] md:col-span-8"
+            className="font-serif text-[clamp(3.6rem,7.5vw,7.5rem)] font-light lowercase leading-[0.8] tracking-[-0.055em] md:col-span-8"
           >
-            <Out href={feelable.href!} className="hover:text-[#315f73]" showArrow={false}>
+            <Out href={feelable.href!} className="hover:text-[#bd341f]" showArrow={false}>
               {feelable.name}
             </Out>
           </h2>
@@ -543,15 +559,13 @@ function NowChapter() {
           className="absolute inset-0 h-full"
           objectPosition="50% 54%"
           amount={4}
-          grade={false}
-          imgClassName="reel-present-photo"
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,12,9,0.84)_0%,rgba(3,12,9,0.26)_58%,rgba(3,12,9,0.08)_100%)]" />
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#07130f] to-transparent" />
 
         <Reveal className="absolute inset-x-0 bottom-0 z-10 mx-auto w-full max-w-[1600px] px-5 pb-10 sm:px-8 md:px-[5vw] md:pb-14">
-          <p className="font-reel text-[10px] font-medium uppercase tracking-[0.1em] text-[#f0eadc]/65">
-            03 · San Francisco
+          <p className="font-reel text-xs font-medium uppercase tracking-[0.08em] text-[#f0eadc]/70">
+            03 · Live · San Francisco
           </p>
           <h2
             id="now-title"
@@ -562,7 +576,7 @@ function NowChapter() {
         </Reveal>
       </div>
 
-      <div className="bg-[#7fa5b6] px-5 py-10 text-[#0b1813] sm:px-8 md:px-[5vw] md:py-12">
+      <div className="bg-[#ef5a40] px-5 py-10 text-[#0b1813] sm:px-8 md:px-[5vw] md:py-12">
         <div className="mx-auto grid max-w-[1500px] gap-7 md:grid-cols-2 md:items-end">
           <p className="max-w-xl text-[clamp(1.2rem,2vw,1.6rem)] leading-relaxed">
             Now, I’m part of the{' '}
@@ -575,7 +589,7 @@ function NowChapter() {
             .
           </p>
           <p className="font-reel text-[10px] font-medium uppercase leading-relaxed tracking-[0.1em] text-[#0b1813]/65 md:text-right">
-            {aboutFacts.map((fact) => fact.text).join(' · ')}
+            {aboutFacts[2].text}
           </p>
         </div>
       </div>
@@ -589,19 +603,19 @@ function NowChapter() {
               </h3>
             </div>
             <p className="md:col-span-5 md:pb-2">
-              <Out href={priorities.articleHref} className="text-lg hover:text-[#315f73]">
+              <Out href={priorities.articleHref} className="text-lg hover:text-[#bd341f]">
                 Written on a train to Strasbourg
               </Out>
             </p>
           </div>
 
-          <ol className="mt-16 grid list-none gap-10 border-t border-[#101713]/30 pl-0 md:mt-24 md:grid-cols-5 md:gap-6">
+          <ol className="mt-16 grid list-none gap-10 border-t border-[#101713]/30 pl-0 md:grid-cols-5 md:gap-6">
             {priorities.items.map((priority, index) => (
               <li
                 key={priority.label}
-                className="reel-priority relative border-b border-[#101713]/25 pb-8 pt-14 md:min-h-[18rem] md:border-b-0 md:pt-20"
+                className="reel-priority relative border-b border-[#101713]/25 pb-8 pt-14 md:min-h-[13rem] md:border-b-0 md:pt-20"
               >
-                <span className="absolute left-0 top-7 font-reel text-xs font-medium tracking-[0.1em] text-[#315f73] md:top-12">
+                <span className="absolute left-0 top-7 font-reel text-xs font-medium tracking-[0.1em] text-[#bd341f] md:top-12">
                   0{index + 1}
                 </span>
                 <span className="block min-h-[3.5rem] font-display text-[clamp(1.55rem,1.9vw,2rem)] uppercase leading-[0.95]">
@@ -613,6 +627,9 @@ function NowChapter() {
               </li>
             ))}
           </ol>
+          <blockquote className="mt-16 max-w-5xl border-t border-[#101713]/30 pt-10 font-serif text-[clamp(1.8rem,3.5vw,3.4rem)] font-light italic leading-tight text-[#101713]/75 md:mt-8">
+            {quotes[1].text}
+          </blockquote>
         </Reveal>
       </div>
     </section>
@@ -633,7 +650,7 @@ function ArchiveSection({
   return (
     <details className="group border-t border-[#f0eadc]/25">
       <summary className="grid cursor-pointer list-none grid-cols-[2.5rem_1fr_auto] items-center gap-3 py-7 marker:content-none sm:grid-cols-[4rem_1fr_auto] sm:py-9">
-        <span className="font-reel text-[9px] font-medium tracking-[0.1em] text-[#7fa5b6]">{index}</span>
+        <span className="font-reel text-[9px] font-medium tracking-[0.1em] text-[#ef5a40]">{index}</span>
         <span>
           <span className="block font-display text-[clamp(2rem,4vw,4rem)] uppercase leading-none">
             {title}
@@ -677,7 +694,7 @@ function Archive() {
               {readsIntro}
             </p>
             <p className="mt-5 md:mt-0">
-              <Out href={infoDietHref} className="hover:text-[#7fa5b6]">
+              <Out href={infoDietHref} className="hover:text-[#ef5a40]">
                 Complete Info Diet
               </Out>
             </p>
@@ -693,7 +710,7 @@ function Archive() {
             <div className="grid gap-x-10 gap-y-10 md:grid-cols-3">
               {reads.map((category) => (
                 <div key={category.label}>
-                  <h3 className="font-reel text-[10px] font-medium uppercase tracking-[0.1em] text-[#7fa5b6]">
+                  <h3 className="font-reel text-[10px] font-medium uppercase tracking-[0.1em] text-[#ef5a40]">
                     {category.label}
                   </h3>
                   <p className="mt-4 leading-relaxed text-[#f0eadc]/72">
@@ -721,7 +738,7 @@ function Archive() {
                   <div className="flex items-baseline justify-between gap-4">
                     <h3 className="font-display text-2xl uppercase leading-none">{hobby.label}</h3>
                     {hobby.stat && (
-                      <span className="font-reel text-[9px] font-medium uppercase tracking-[0.1em] text-[#7fa5b6]">
+                      <span className="font-reel text-[9px] font-medium uppercase tracking-[0.1em] text-[#ef5a40]">
                         {hobby.stat}
                       </span>
                     )}
@@ -732,7 +749,7 @@ function Archive() {
                   {hobby.links && (
                     <p className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm">
                       {hobby.links.map((link) => (
-                        <Out key={link.href} href={link.href} className="hover:text-[#7fa5b6]">
+                        <Out key={link.href} href={link.href} className="hover:text-[#ef5a40]">
                           {link.label}
                         </Out>
                       ))}
@@ -743,7 +760,7 @@ function Archive() {
                       {hobby.bullets.map((bullet) => (
                         <li key={bullet.text}>
                           {bullet.href ? (
-                            <Out href={bullet.href} className="hover:text-[#7fa5b6]">
+                            <Out href={bullet.href} className="hover:text-[#ef5a40]">
                               {bullet.text}
                             </Out>
                           ) : (
@@ -765,7 +782,7 @@ function Archive() {
           >
             <div className="grid gap-12 md:grid-cols-3">
               <div>
-                <h3 className="font-reel text-[10px] font-medium uppercase tracking-[0.1em] text-[#7fa5b6]">
+                <h3 className="font-reel text-[10px] font-medium uppercase tracking-[0.1em] text-[#ef5a40]">
                   Notebooks
                 </h3>
                 <div className="mt-4 flex flex-col items-start gap-3">
@@ -773,7 +790,7 @@ function Archive() {
                     <Out
                       key={notebook.href}
                       href={notebook.href}
-                      className="hover:text-[#7fa5b6]"
+                      className="hover:text-[#ef5a40]"
                     >
                       {notebook.label}
                     </Out>
@@ -781,25 +798,25 @@ function Archive() {
                 </div>
               </div>
               <div>
-                <h3 className="font-reel text-[10px] font-medium uppercase tracking-[0.1em] text-[#7fa5b6]">
+                <h3 className="font-reel text-[10px] font-medium uppercase tracking-[0.1em] text-[#ef5a40]">
                   Essays
                 </h3>
                 <div className="mt-4 flex flex-col items-start gap-3">
                   {writing?.essays?.map((essay) => (
-                    <Out key={essay.href} href={essay.href} className="hover:text-[#7fa5b6]">
+                    <Out key={essay.href} href={essay.href} className="hover:text-[#ef5a40]">
                       {essay.title}
                     </Out>
                   ))}
                 </div>
               </div>
               <div>
-                <h3 className="font-reel text-[10px] font-medium uppercase tracking-[0.1em] text-[#7fa5b6]">
+                <h3 className="font-reel text-[10px] font-medium uppercase tracking-[0.1em] text-[#ef5a40]">
                   Guides
                 </h3>
                 <div className="mt-4 flex flex-col items-start gap-3">
                   {guides.map((guide) => (
                     <div key={guide.href}>
-                      <Out href={guide.href} className="hover:text-[#7fa5b6]">
+                      <Out href={guide.href} className="hover:text-[#ef5a40]">
                         {guide.label}
                       </Out>
                       {guideNotes[guide.label] && (
@@ -814,7 +831,7 @@ function Archive() {
             </div>
             <div className="mt-12 flex flex-wrap gap-x-7 gap-y-4 border-t border-[#f0eadc]/20 pt-7">
               {channels.map((channel) => (
-                <Out key={channel.href} href={channel.href} className="hover:text-[#7fa5b6]">
+                <Out key={channel.href} href={channel.href} className="hover:text-[#ef5a40]">
                   {channel.label} · {channel.handle}
                   {channel.meta ? ` · ${channel.meta}` : ''}
                 </Out>
@@ -832,7 +849,7 @@ function Archive() {
                 <div key={item.name} className="border-t border-[#f0eadc]/20 pt-5">
                   <h3 className="font-display text-2xl uppercase">
                     {'href' in item && item.href ? (
-                      <Out href={item.href} className="hover:text-[#7fa5b6]">
+                      <Out href={item.href} className="hover:text-[#ef5a40]">
                         {item.name}
                       </Out>
                     ) : (
@@ -877,7 +894,7 @@ function ClosingFrame() {
             <span className="block">curiosity.</span>
           </p>
           <footer className="mt-4 text-base text-[#f0eadc]/70">
-            <Out href={quotes[0].href} className="hover:text-[#7fa5b6]">
+            <Out href={quotes[0].href} className="hover:text-[#ef5a40]">
               And find your style
             </Out>
           </footer>
@@ -894,16 +911,16 @@ function ClosingFrame() {
               <p className="max-w-xl leading-relaxed text-[#101713]/70">{closing.body}</p>
               <p className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm">
                 {closing.links.map((link) => (
-                  <Out key={link.href} href={link.href} className="hover:text-[#315f73]">
+                  <Out key={link.href} href={link.href} className="hover:text-[#bd341f]">
                     {link.label}
                   </Out>
                 ))}
-                <Out href={notionHome} className="hover:text-[#315f73]">
+                <Out href={notionHome} className="hover:text-[#bd341f]">
                   Original Notion site
                 </Out>
               </p>
             </div>
-            <p className="max-w-xs text-sm text-[#315f73] sm:text-right">
+            <p className="max-w-xs text-sm text-[#bd341f] sm:text-right">
               {mission.paragraphs[2]}
             </p>
           </div>
