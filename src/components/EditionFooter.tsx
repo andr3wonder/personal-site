@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { lenses } from '../lenses/registry';
 
-type Variant = 'reel' | 'volume' | 'line';
+type Variant = 'reel' | 'atlas' | 'volume' | 'line';
 
 /**
  * Version switching lives in the document, not in a floating chip. It sits at
@@ -22,7 +22,7 @@ export function EditionFooter({ variant }: { variant: Variant }) {
           <p className="font-serif text-[clamp(2.2rem,4vw,4rem)] font-light leading-none tracking-[-0.04em]">
             Other editions
           </p>
-          <ul className="mt-10 grid list-none border-t border-jade-800 pl-0 sm:grid-cols-3">
+          <ul className="mt-10 grid list-none border-t border-jade-800 pl-0 sm:grid-cols-2 lg:grid-cols-4">
             {lenses.map((lens, index) => {
               const isCurrent =
                 lens.path === pathname || (pathname === '/' && lens.id === 'reel');
@@ -56,7 +56,7 @@ export function EditionFooter({ variant }: { variant: Variant }) {
     );
   }
 
-  const label = paper ? 'This life, set three ways' : 'This life, told three ways';
+  const label = paper ? 'This life, set four ways' : 'This life, told four ways';
 
   return (
     <nav
@@ -76,7 +76,7 @@ export function EditionFooter({ variant }: { variant: Variant }) {
           {label}
         </p>
 
-        <ul className="grid list-none gap-px overflow-hidden pl-0 sm:grid-cols-3">
+        <ul className="grid list-none gap-px overflow-hidden pl-0 sm:grid-cols-2 lg:grid-cols-4">
           {lenses.map((l) => {
             const isCurrent = l.path === pathname || (pathname === '/' && l.id === 'reel');
             return (
