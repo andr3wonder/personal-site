@@ -75,47 +75,104 @@ function Header() {
   );
 }
 
-function Hero() {
+function OpeningDesktop() {
   const ref = useRef<HTMLElement>(null);
-  const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const bookY = useTransform(scrollYProgress, [0, 1], ['0%', '-14%']);
-  const bookScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
-  const titleY = useTransform(scrollYProgress, [0, 0.75], ['0%', '-26%']);
-  const titleOpacity = useTransform(scrollYProgress, [0.45, 0.8], [1, 0]);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  const coverRotate = useTransform(scrollYProgress, [0.04, 0.34], [0, -110]);
+  const coverShade = useTransform(scrollYProgress, [0.06, 0.3], [0, 0.58]);
+  const pageScale = useTransform(scrollYProgress, [0.56, 0.88], [1, 1.12]);
+  const pageFade = useTransform(scrollYProgress, [0.96, 1], [1, 0]);
+  const portalScale = useTransform(scrollYProgress, [0.6, 0.93], [1, 15]);
+  const copyOpacity = useTransform(scrollYProgress, [0.24, 0.4, 0.94, 1], [0, 1, 1, 0]);
 
   return (
-    <section id="open" ref={ref} aria-labelledby="atlas-title" className="atlas-hero">
-      <div className="sticky top-0 h-[100svh] overflow-hidden">
-        <div aria-hidden className="atlas-hero-terrain" />
-        <motion.div className="atlas-book-stage" style={reduced ? undefined : { y: bookY, scale: bookScale }}>
-          <div className="atlas-book-shadow" />
-          <div className="atlas-book atlas-book-left">
-            <span className="atlas-page-number">02</span>
-            <div className="atlas-route atlas-route-left" />
-            <p className="atlas-imprint">A moving atlas</p>
-            <div className="atlas-photo-aperture"><img src={photos.hero.src} alt="" /></div>
-          </div>
-          <div className="atlas-spine" />
-          <div className="atlas-book atlas-book-right">
-            <span className="atlas-page-number">20</span>
-            <div className="atlas-route atlas-route-right" />
-            <p className="atlas-coordinate">25.0330° N<br />121.5654° E</p>
-            <p className="atlas-signal">Taipei begins here</p>
-          </div>
+    <section id="open" ref={ref} aria-labelledby="atlas-title" className="atlas-opening atlas-opening-desktop">
+      <div className="atlas-opening-sticky">
+        <motion.div className="atlas-frontispiece" style={{ scale: pageScale, opacity: pageFade }}>
+          <div aria-hidden className="atlas-relief atlas-relief-far" />
+          <div aria-hidden className="atlas-relief atlas-relief-near" />
+          <div className="atlas-frontispiece-top"><span>Sheet 02 · 25.0330° N 121.5654° E</span><span>The Moving Atlas</span></div>
+          <motion.div className="atlas-joy-title" style={{ opacity: copyOpacity }}>
+            <h1 id="atlas-title">
+              <span>Foster</span>
+              <span className="atlas-joy-word">J<motion.i className="atlas-joy-aperture" style={{ scale: portalScale }}><img src="/img/genz-group.jpg" alt="" /></motion.i>Y</span>
+              <span>For Humanity</span>
+            </h1>
+          </motion.div>
+          <motion.div className="atlas-frontispiece-foot" style={{ opacity: copyOpacity }}>
+            <div><strong>{identity.name}</strong><span>{identity.fullNameZh}</span><small>{identity.role} at {identity.employer}</small></div>
+            <div><small>{identity.bornIn} · Now {identity.basedIn}</small><b>02&nbsp;&nbsp;20&nbsp;&nbsp;47</b></div>
+          </motion.div>
         </motion.div>
-        <motion.div className="atlas-hero-copy" style={reduced ? undefined : { y: titleY, opacity: titleOpacity }}>
-          <p className="atlas-kicker">Field notes 02.20.47</p>
-          <h1 id="atlas-title">Moving<br /><em>Atlas</em></h1>
-          <div className="atlas-hero-caption">
-            <p>{identity.name}</p>
-            <p>From Taipei, toward Berkeley and San Francisco.</p>
+        <motion.div className="atlas-cloth-cover" style={{ rotateY: coverRotate, transformOrigin: 'left center', transformStyle: 'preserve-3d' }}>
+          <div className="atlas-cover-spine" />
+          <div className="atlas-cover-frame">
+            <p>Plate 02 · Edition 20</p>
+            <h2>Andrew<br />Chuang</h2>
+            <span lang="zh-Hant">{identity.fullNameZh}</span>
+            <i />
+            <small>Taipei → Berkeley → San Francisco</small>
           </div>
+          <motion.span className="atlas-cover-shade" style={{ opacity: coverShade }} />
+          <em>Scroll to open</em>
         </motion.div>
-        <a className="atlas-scroll-cue" href="#taipei"><span>Turn the page</span><i aria-hidden /></a>
       </div>
     </section>
   );
+}
+
+function OpeningMobile() {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  const flapRotate = useTransform(scrollYProgress, [0.04, 0.34], [0, -104]);
+  const portalScale = useTransform(scrollYProgress, [0.6, 0.93], [1, 22]);
+  const copyOpacity = useTransform(scrollYProgress, [0.22, 0.4, 0.94, 1], [0, 1, 1, 0]);
+
+  return (
+    <section id="open-mobile" ref={ref} aria-labelledby="atlas-mobile-title" className="atlas-opening atlas-opening-mobile">
+      <div className="atlas-opening-sticky">
+        <div className="atlas-mobile-frontispiece">
+          <p>Sheet 02<br />25.0330° N<br />121.5654° E</p>
+          <motion.div style={{ opacity: copyOpacity }}>
+            <h1 id="atlas-mobile-title"><span>Foster</span><span>J<motion.i className="atlas-joy-aperture" style={{ scale: portalScale }}><img src="/img/genz-group.jpg" alt="" /></motion.i>Y</span><span>For<br />Humanity</span></h1>
+            <div className="atlas-mobile-frontispiece-foot"><strong>{identity.name}</strong><span>{identity.fullNameZh}</span><small>{identity.role} at {identity.employer}</small><b>02&nbsp;&nbsp;20&nbsp;&nbsp;47</b></div>
+          </motion.div>
+        </div>
+        <motion.div className="atlas-mobile-flap" style={{ rotateX: flapRotate, transformOrigin: 'center bottom', transformStyle: 'preserve-3d' }}>
+          <p>Plate 02 · Edition 20</p>
+          <h2>Andrew<br />Chuang</h2>
+          <span lang="zh-Hant">{identity.fullNameZh}</span>
+          <i />
+          <small>Taipei → Berkeley<br />→ San Francisco</small>
+          <em>Scroll to unfold</em>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+function StaticOpening() {
+  return (
+    <section id="open" aria-labelledby="atlas-static-title" className="atlas-opening-static">
+      <div className="atlas-cloth-cover">
+        <div className="atlas-cover-spine" />
+        <div className="atlas-cover-frame">
+          <p>Plate 02 · Edition 20</p>
+          <h1 id="atlas-static-title">Andrew<br />Chuang</h1>
+          <span lang="zh-Hant">{identity.fullNameZh}</span>
+          <i />
+          <small>Taipei → Berkeley → San Francisco</small>
+        </div>
+      </div>
+      <div className="atlas-static-next"><img src="/img/genz-group.jpg" alt="A large group of GenZ Taiwan participants crowded together for a photo in a bright workshop space, holding handmade signs." /><p>Sheet 02 · Taipei follows</p></div>
+    </section>
+  );
+}
+
+function AtlasOpening() {
+  const reduced = useReducedMotion();
+  if (reduced) return <StaticOpening />;
+  return <><OpeningDesktop /><OpeningMobile /></>;
 }
 
 function TaipeiChapter() {
@@ -125,7 +182,13 @@ function TaipeiChapter() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   const imageY = useTransform(scrollYProgress, [0, 1], ['-7%', '7%']);
   return (
-    <section id="taipei" ref={ref} aria-labelledby="taipei-title" className="atlas-chapter">
+    <section id="taipei" ref={ref} aria-labelledby="taipei-title" className="atlas-chapter atlas-taipei-chapter">
+      <div className="atlas-taipei-landing">
+        <motion.img src={chapter.images![0].src} alt={chapter.images![0].alt} loading="eager" style={reduced ? undefined : { y: imageY }} />
+        <div className="atlas-taipei-landing-shade" />
+        <div className="atlas-taipei-landing-meta"><span>Chapter I · 臺北 Taipei</span><span>Sheet 02 of 47</span></div>
+        <div className="atlas-taipei-landing-title"><span>02</span><h2>Put people in<br />the same room.</h2><p>GenZ Taiwan · Founder</p></div>
+      </div>
       <div className="atlas-chapter-intro">
         <p className="atlas-kicker">Chapter one <span>02 / 20 / 47</span></p>
         <div className="atlas-title-row"><h2 id="taipei-title">Taipei</h2><AtlasMark className="atlas-mark h-7 w-14" /></div>
@@ -344,7 +407,7 @@ export function AtlasLens() {
       <a href="#main" className="skip-link">Skip to content</a>
       <Header />
       <main id="main">
-        <Hero />
+        <AtlasOpening />
         <TaipeiChapter />
         <CommunityRoute />
         <BerkeleyAndBlaze />
