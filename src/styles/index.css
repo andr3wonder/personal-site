@@ -58,21 +58,74 @@
   }
 }
 
-/* 35mm grain, generated rather than downloaded. Used only by the Reel lens.
-   The overlay is inset past the edges, so the container must clip or it
-   expands the page's scroll width and creates a horizontal scrollbar. */
-.grain {
-  overflow-x: clip;
-}
-
-.grain::after {
-  content: '';
-  position: absolute;
-  inset: -50%;
+/* A fixed texture for Reel. Fixed positioning keeps it from changing page geometry. */
+.reel-noise {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
   pointer-events: none;
-  opacity: 0.055;
+  opacity: 0.038;
+  mix-blend-mode: soft-light;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
   animation: grain-shift 900ms steps(3) infinite;
+}
+
+.reel-link {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  transition: background-size 280ms cubic-bezier(0.16, 0.84, 0.24, 1);
+}
+
+.font-display {
+  font-weight: 600;
+}
+
+.reel-link:hover,
+.reel-link:focus-visible {
+  background-size: calc(100% - 0.9rem) 1px;
+}
+
+.reel-link-no-arrow:hover,
+.reel-link-no-arrow:focus-visible {
+  background-size: 100% 1px;
+}
+
+.reel-photo {
+  filter: grayscale(1) contrast(1.1) brightness(0.94);
+}
+
+.reel-present-photo {
+  filter: saturate(0.78) contrast(1.05) brightness(0.9);
+}
+
+.reel-product-frame {
+  overflow: hidden;
+  border: 1px solid hsl(160 20% 8% / 0.22);
+  background: #f4f3f0;
+}
+
+.reel-archive summary::-webkit-details-marker {
+  display: none;
+}
+
+html:has(.reel-noise) {
+  scrollbar-color: hsl(199 26% 61% / 0.72) hsl(160 34% 6%);
+  scrollbar-width: thin;
+}
+
+html:has(.reel-noise)::-webkit-scrollbar {
+  width: 6px;
+}
+
+html:has(.reel-noise)::-webkit-scrollbar-track {
+  background: hsl(160 34% 6%);
+}
+
+html:has(.reel-noise)::-webkit-scrollbar-thumb {
+  border-radius: 0;
+  background: hsl(199 26% 61% / 0.72);
 }
 
 @keyframes grain-shift {
@@ -94,7 +147,7 @@
     scroll-behavior: auto;
   }
 
-  .grain::after {
+  .reel-noise {
     animation: none;
   }
 

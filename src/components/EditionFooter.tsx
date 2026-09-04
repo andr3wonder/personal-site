@@ -12,6 +12,50 @@ export function EditionFooter({ variant }: { variant: Variant }) {
   const { pathname } = useLocation();
   const paper = variant === 'volume';
 
+  if (variant === 'reel') {
+    return (
+      <nav
+        aria-label="Versions of this site"
+        className="border-t border-jade-800 bg-jade-950 text-jade-50"
+      >
+        <div className="mx-auto w-full max-w-6xl px-5 py-16 sm:px-8">
+          <p className="font-serif text-[clamp(2.2rem,4vw,4rem)] font-light leading-none tracking-[-0.04em]">
+            Other editions
+          </p>
+          <ul className="mt-10 grid list-none border-t border-jade-800 pl-0 sm:grid-cols-3">
+            {lenses.map((lens, index) => {
+              const isCurrent =
+                lens.path === pathname || (pathname === '/' && lens.id === 'reel');
+              return (
+                <li
+                  key={lens.id}
+                  className="border-b border-jade-800 sm:border-r sm:last:border-r-0"
+                >
+                  <Link
+                    to={lens.path}
+                    aria-current={isCurrent ? 'page' : undefined}
+                    className="group block py-6 sm:px-6"
+                  >
+                    <span className="font-reel text-[9px] font-medium tracking-[0.1em] text-[#7fa5b6]">
+                      0{index + 1}
+                    </span>
+                    <span className="mt-4 flex items-baseline justify-between gap-5">
+                      <span className="font-display text-3xl uppercase">{lens.name}</span>
+                      <span className="text-sm text-jade-100/55">
+                        {isCurrent ? 'Current' : 'Open'}
+                      </span>
+                    </span>
+                    <span className="mt-3 block h-px origin-left scale-x-0 bg-[#7fa5b6] transition-transform duration-300 group-hover:scale-x-100 group-focus-visible:scale-x-100" />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </nav>
+    );
+  }
+
   const label = paper ? 'This life, set three ways' : 'This life, told three ways';
 
   return (

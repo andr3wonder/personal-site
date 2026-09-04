@@ -26,18 +26,17 @@ The warm counterpoint (amber/ember) is not from the seed — it is sampled from
 Andrew's own photographs: the sunrise on the paddleboard, and the gold-and-
 magenta light tunnel.
 
-### The spine
+### The organizing structure
 
-`414` produced the single structural idea that unifies everything: a narrow
-vertical **spine** running down the page with content fields either side. It
-reads differently in each lens but is the same grid:
+`414` produced the initial structural idea. The final lenses use it differently
+so each version has its own composition:
 
-- Reel → a film sprocket strip with a running timecode
-- Volume → the gutter of an open book, with margin annotations
-- Line → a rail line drawn along a route
+- Reel: a chronological documentary cut with editorial plates
+- Volume: the gutter of an open book, with margin annotations
+- Line: a rail line drawn along a route
 
-One structure, three grammars. That is what makes these three complete
-interpretations rather than three recolors.
+Three structures and three grammars make the versions complete interpretations
+rather than recolors.
 
 ## 2. Go broad — concept directions explored
 
@@ -81,13 +80,16 @@ typography, transition grammar and interaction model.
 
 ### Reel — `/reel`
 Andrew has logged 650+ films. The site is cut like one.
-- **Composition** 2.39:1 letterboxed stage, hard black bars, full-bleed stills.
-- **Type** Condensed uppercase slates against a humanist body face; numerals
-  tabular so the timecode never jitters.
-- **Transition grammar** Hard cuts, not fades. A two-frame flash between scenes
-  (the `vv` beat). Scenes hold, then cut.
-- **Interaction** A sprocket ladder on the left is a scrubber — the page is a
-  timeline you can scrub. Running timecode.
+- **Composition** Full-bleed documentary scenes alternate with strict editorial
+  plates. The story moves from Taipei to Berkeley to San Francisco.
+- **Type** Archivo carries names and project plates. Spectral carries Andrew's
+  first-person voice. Small labels use Archivo, not a third type family.
+- **Color** Sky blue and deep ocean come from the opening photograph. Past
+  documentary images are monochrome; present-day scenes and product work use color.
+- **Transition grammar** Hard color cuts and controlled image parallax create
+  the chapter changes without literal film decoration.
+- **Interaction** Chapter links, external references, and expandable credits
+  keep the full source material discoverable.
 
 ### Volume — `/volume`
 Andrew has 295 books on Goodreads and reads across nine subject areas.
