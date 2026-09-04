@@ -50,7 +50,7 @@ export default {
         },
       },
       fontFamily: {
-        display: ['"Bebas Neue"', '"Oswald"', 'Impact', 'sans-serif'],
+        display: ['"Archivo"', '"Inter"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         sans: ['"Inter"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         // text companion to the condensed display face used by Reel
         reel: ['"Archivo"', '"Inter"', 'ui-sans-serif', 'sans-serif'],
